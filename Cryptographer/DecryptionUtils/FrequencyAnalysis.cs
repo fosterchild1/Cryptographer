@@ -1,8 +1,8 @@
 ﻿class FrequencyAnalysis
 {
-    public static SortedList<char, int> AnalyzeFrequency(string input)
+    public static List<KeyValuePair<char, int>> AnalyzeFrequency(string input)
     {
-        SortedList<char, int> analysis = new();
+        Dictionary<char, int> analysis = new();
 
         foreach (char c in input)
         {
@@ -14,8 +14,8 @@
             analysis[c] += 1;
         }
 
-        analysis.Order();
-        return analysis;
+        List<KeyValuePair<char, int>> kvpAnalysis = analysis.OrderByDescending(pair => pair.Value).ToList();
+        return kvpAnalysis;
     }
 
 }

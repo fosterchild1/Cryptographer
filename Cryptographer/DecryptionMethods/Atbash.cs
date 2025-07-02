@@ -5,7 +5,7 @@ namespace Cryptographer.DecryptionMethods
 
     public class Atbash : IDecryptionMethod
     {
-        public string Decrypt(string input, SortedList<char, int> analysis)
+        public string Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {           
             char[] chars = input.ToCharArray();
             StringBuilder sb = new();

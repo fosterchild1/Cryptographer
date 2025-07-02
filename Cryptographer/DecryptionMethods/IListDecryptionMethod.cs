@@ -2,7 +2,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public interface IListDecryptionMethod
     {
-        List<string> Decrypt(string input, SortedList<char, int> analysis);
+        List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis);
         string Name { get; }
     }
 }

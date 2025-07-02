@@ -13,6 +13,7 @@ class Program
     private static List<IListDecryptionMethod> listMethods = new()
     {
         new Morse(),
+        new Baconian(),
     };
 
     private static int maxDepth = 0;
@@ -28,7 +29,7 @@ class Program
         }
 
         List<string> decrypted = new();
-        SortedList<char, int> analysis = FrequencyAnalysis.AnalyzeFrequency(input);
+        List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(input);
         
         // single output ones
         foreach (IDecryptionMethod method in methods)
