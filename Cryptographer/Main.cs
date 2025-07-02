@@ -8,6 +8,7 @@ class Program
     {
         new Reverse(),
         new Atbash(),
+        new Base64(),
     };
 
     private static List<IListDecryptionMethod> listMethods = new()

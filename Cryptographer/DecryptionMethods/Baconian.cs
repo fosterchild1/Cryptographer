@@ -5,6 +5,7 @@ namespace Cryptographer.DecryptionMethods
     public class Baconian : IListDecryptionMethod
     {
 
+        // baconian has TWO!! dictionaries!!
         private static Dictionary<string, string> Baconian26 = MethodDictionaries.Baconian26;
         private static Dictionary<string, string> Baconian24 = MethodDictionaries.Baconian24;
 
@@ -12,13 +13,14 @@ namespace Cryptographer.DecryptionMethods
         {
             string modifiedInput = input.Replace(ah, "A").Replace(bah, "B").Replace(" ", "");
 
-            // split at each space
+
             StringBuilder output = new();
             int length = modifiedInput.Length;
+            // split every 5 characters
+
             for (int i=0; i <= length; i +=5) 
             {
                 string bacon = modifiedInput.Substring(i, Math.Min(5, length - i));
-                Console.WriteLine(bacon);
                 string? find;
                 dict.TryGetValue(bacon, out find);
                 if (string.IsNullOrEmpty(find)) { continue; }
@@ -44,8 +46,6 @@ namespace Cryptographer.DecryptionMethods
             string c1 = analysis[0].Key.ToString();
             string c2 = analysis[1].Key.ToString();
 
-            Console.WriteLine(c1);
-            Console.WriteLine(c2);
             List<string> output = new()
             {
                 DecryptBacon(input, c1, c2, Baconian24),
