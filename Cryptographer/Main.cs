@@ -1,11 +1,6 @@
 ﻿using Cryptographer;
 using Cryptographer.DecryptionMethods;
 
-enum DecryptionMethod
-{
-    Reverse,
-}
-
 class Program
 {
 
@@ -34,7 +29,7 @@ class Program
 
         List<string> decrypted = new();
         SortedList<char, int> analysis = FrequencyAnalysis.AnalyzeFrequency(input);
-           
+        
         // single output ones
         foreach (IDecryptionMethod method in methods)
         {
@@ -75,14 +70,21 @@ class Program
         string input = Utils.GetInput();
         Console.Clear();
         maxDepth = Utils.GetDepth();
+        Console.Clear();
+        Console.WriteLine("Working...");
 
         // output
         List<string> outputs = GetDecrypted(input, 1);
+        List<string> printedOutputs = new();
 
-        Console.WriteLine($"Possible outputs ({outputs.Count.ToString()}):");
+        Console.WriteLine($"Possible outputs:");
         foreach (string output in outputs)
         {
+            // dont print duplicates
+            if (printedOutputs.Contains(output)) { continue; }
+
             Console.WriteLine(output);
+            printedOutputs.Add(output);
         }
 
     }

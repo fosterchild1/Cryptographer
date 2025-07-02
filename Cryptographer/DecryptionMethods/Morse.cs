@@ -15,12 +15,10 @@ namespace Cryptographer.DecryptionMethods
             StringBuilder output = new();
             foreach (string morse in modifiedInput.Split(" "))
             {
-                Console.WriteLine(morse);
                 string? find;
                 MorseDictionary.TryGetValue(morse, out find);
                 if (string.IsNullOrEmpty(find)) { continue; }
 
-                Console.WriteLine(find);
                 output.Append(find);
             }
 
