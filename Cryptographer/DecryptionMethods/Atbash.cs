@@ -5,14 +5,8 @@ namespace Cryptographer.DecryptionMethods
 
     public class Atbash : IDecryptionMethod
     {
-        public string Decrypt(string input)
+        public string Decrypt(string input, SortedList<char, int> analysis)
         {           
-            if (string.IsNullOrEmpty(input))
-            {
-                throw new ArgumentException("Input cannot be empty", nameof(input));
-            }
-
-            
             char[] chars = input.ToCharArray();
             StringBuilder sb = new();
 

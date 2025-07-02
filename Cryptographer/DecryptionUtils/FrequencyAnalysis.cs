@@ -1,8 +1,8 @@
 ﻿class FrequencyAnalysis
 {
-    public static Dictionary<char, int> AnalyzeFrequency(string input)
+    public static SortedList<char, int> AnalyzeFrequency(string input)
     {
-        Dictionary<char, int> analysis = new();
+        SortedList<char, int> analysis = new();
 
         foreach (char c in input)
         {
@@ -14,6 +14,7 @@
             analysis[c] += 1;
         }
 
+        analysis.Order();
         return analysis;
     }
 
