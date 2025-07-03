@@ -1,5 +1,6 @@
 ﻿using Cryptographer;
 using Cryptographer.DecryptionMethods;
+using Cryptographer.DecryptionUtils;
 
 class Program
 {
@@ -85,7 +86,9 @@ class Program
             // dont print duplicates
             if (printedOutputs.Contains(output)) { continue; }
 
-            Console.WriteLine(output);
+            float score = StringScorer.Score(output);
+            Console.WriteLine($"{output} ({score})");
+
             printedOutputs.Add(output);
         }
 
