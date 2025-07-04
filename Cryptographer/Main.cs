@@ -16,6 +16,7 @@ class Program
     {
         new Morse(),
         new Baconian(),
+        new KeyboardSubstitution()
     };
 
     private static int maxDepth = 0;

@@ -16,7 +16,7 @@ namespace Cryptographer.DecryptionMethods
                 if (c > 64 && c < 91)
                 {
                     char atbashedUpper = (char)(90 - c + 65);
-                    sb.Append(atbashedUpper.ToString());
+                    sb.Append(atbashedUpper);
                     continue;
                 }
 
@@ -24,11 +24,11 @@ namespace Cryptographer.DecryptionMethods
                 if (c > 96 && c < 123)
                 {
                     char atbashed = (char)(122 - c + 97);
-                    sb.Append(atbashed.ToString());
+                    sb.Append(atbashed);
                     continue;
                 }
 
-                sb.Append(((char)c).ToString());
+                sb.Append((char)c);
             }
 
             return sb.ToString();

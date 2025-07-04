@@ -30,7 +30,7 @@ namespace Cryptographer
             string? inputLine = Console.ReadLine();
             if (string.IsNullOrEmpty(inputLine))
             {
-                Console.WriteLine("Input can't be empty. Please try again.");
+                Console.WriteLine("Depth can't be empty. Please try again.");
                 return GetDepth();
             }
 
