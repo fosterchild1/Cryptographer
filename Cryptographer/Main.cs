@@ -1,6 +1,7 @@
 ﻿using Cryptographer;
 using Cryptographer.DecryptionMethods;
 using Cryptographer.DecryptionUtils;
+using System.Diagnostics;
 
 class Program
 {
@@ -21,77 +22,62 @@ class Program
 
     private static int maxDepth = 0;
 
-
-    public static async Task<List<string>> GetDecrypted(string input, int depth = 1, string lastMethod = "")
+    public static List<string> GetDecrypted(string input, int depth = 1, string lastMethod = "")
     {
-        // almost no puzzle has a 1 letter solution due to how easy it is to bruteforce
-        if (depth > maxDepth) {
-            return new List<string>() { input };
-        }
+        if (depth > maxDepth)
+            return new List<string> { input };
 
         List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(input);
+        List<string> decrypted = new List<string>();
 
-        List<Task<List<string>>> tasks = new();
-        
-        // single output ones
+        // single output methods
         foreach (IDecryptionMethod method in methods)
         {
-            // atbashing/reversing twice doesnt make sense
             if (lastMethod == method.Name && (method.Name == "Reverse" || method.Name == "Atbash"))
-            {
                 continue;
-            }
 
-            // decrypt and go deeper
+            Utils.StartTimer(method.Name);
             string output = method.Decrypt(input, analysis);
-            // doesnt make sense for a puzzle solution to be only spaces/two letters because of how easily they can be bruteforced
+            Console.WriteLine($"{method.Name}: {Utils.StopTimer(method.Name)}");
             if (output.Replace(" ", "").Length <= 2)
-            {
                 continue;
-            }
 
-            tasks.Add(Task.Run(() => GetDecrypted(output, depth + 1, method.Name)));
+            decrypted.AddRange(GetDecrypted(output, depth + 1, method.Name));
         }
 
-        // multiple output ones
+        // multiple output methods
         foreach (IListDecryptionMethod method in listMethods)
         {
+           // Utils.StartTimer(method.Name);
             List<string> outputs = method.Decrypt(input, analysis);
+           // Console.WriteLine($"{method.Name}: {Utils.StopTimer(method.Name)}");
             foreach (string output in outputs)
             {
-                tasks.Add(Task.Run(() => GetDecrypted(output, depth + 1, method.Name)));
+                decrypted.AddRange(GetDecrypted(output, depth + 1, method.Name));
             }
         }
-
-        List<string> decrypted = new();
-        List<string>[] decryptedList = await Task.WhenAll(tasks);
-        foreach (List<string> list in decryptedList)
-            // remove duplicates
-            decrypted.AddRange(list.ToHashSet().ToArray());
 
         return decrypted;
     }
 
-    static async Task Main(string[] args)
+    static void Main(string[] args)
     {
         Console.WriteLine("cryptographer is a tool for decrypting text");
-        // get user input
+
         string input = Utils.GetInput();
         Console.Clear();
         maxDepth = Utils.GetDepth();
         Console.Clear();
         Console.WriteLine("Working...");
 
-        // output
-        List<string> outputs = await GetDecrypted(input, 1);
+        List<string> outputs = GetDecrypted(input, 1);
+        HashSet<string> noDupes = outputs.ToHashSet();
 
-        Console.WriteLine($"Possible outputs:");
-        foreach (string output in outputs)
+        Console.WriteLine("Possible outputs:");
+        foreach (string output in noDupes)
         {
-            // dont print duplicates
             float score = StringScorer.Score(output);
             Console.WriteLine($"{output} ({score})");
         }
-
     }
 }
