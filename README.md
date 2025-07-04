@@ -7,3 +7,4 @@ A Program that deciphers encoded strings, even if they are behind multiple encry
 | Atbash |
 | Baconian |
 | Morse |
+| Keyboard Substitution |
