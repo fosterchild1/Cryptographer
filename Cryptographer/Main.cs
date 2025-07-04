@@ -22,17 +22,16 @@ class Program
     private static int maxDepth = 0;
 
 
-    public static List<string> GetDecrypted(string input, int depth = 1, string lastMethod = "")
+    public static async Task<List<string>> GetDecrypted(string input, int depth = 1, string lastMethod = "")
     {
         // almost no puzzle has a 1 letter solution due to how easy it is to bruteforce
         if (depth > maxDepth) {
-            return new List<string>() {
-               input
-            };
+            return new List<string>() { input };
         }
 
-        List<string> decrypted = new();
         List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(input);
+
+        List<Task<List<string>>> tasks = new();
         
         // single output ones
         foreach (IDecryptionMethod method in methods)
@@ -51,7 +50,7 @@ class Program
                 continue;
             }
 
-            decrypted.AddRange(GetDecrypted(output, depth + 1, method.Name));
+            tasks.Add(Task.Run(() => GetDecrypted(output, depth + 1, method.Name)));
         }
 
         // multiple output ones
@@ -60,14 +59,20 @@ class Program
             List<string> outputs = method.Decrypt(input, analysis);
             foreach (string output in outputs)
             {
-                decrypted.AddRange(GetDecrypted(output, depth + 1, method.Name));
+                tasks.Add(Task.Run(() => GetDecrypted(output, depth + 1, method.Name)));
             }
         }
+
+        List<string> decrypted = new();
+        List<string>[] decryptedList = await Task.WhenAll(tasks);
+        foreach (List<string> list in decryptedList)
+            // remove duplicates
+            decrypted.AddRange(list.ToHashSet().ToArray());
 
         return decrypted;
     }
 
-    static void Main(string[] args)
+    static async Task Main(string[] args)
     {
         Console.WriteLine("cryptographer is a tool for decrypting text");
         // get user input
@@ -78,19 +83,14 @@ class Program
         Console.WriteLine("Working...");
 
         // output
-        List<string> outputs = GetDecrypted(input, 1);
-        List<string> printedOutputs = new();
+        List<string> outputs = await GetDecrypted(input, 1);
 
         Console.WriteLine($"Possible outputs:");
         foreach (string output in outputs)
         {
             // dont print duplicates
-            if (printedOutputs.Contains(output)) { continue; }
-
             float score = StringScorer.Score(output);
             Console.WriteLine($"{output} ({score})");
-
-            printedOutputs.Add(output);
         }
 
     }
