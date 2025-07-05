@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Cryptographer.Utils;
+using System.Text;
 
 namespace Cryptographer.DecryptionMethods
 {

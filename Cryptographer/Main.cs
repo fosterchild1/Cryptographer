@@ -1,6 +1,6 @@
-﻿using Cryptographer;
-using Cryptographer.DecryptionMethods;
+﻿using Cryptographer.DecryptionMethods;
 using Cryptographer.DecryptionUtils;
+using Cryptographer.Utils;
 using Microsoft.Win32.SafeHandles;
 using System.Diagnostics;
 

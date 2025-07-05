@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Cryptographer
+namespace Cryptographer.Utils
 {
     internal class MethodDictionaries
     {
