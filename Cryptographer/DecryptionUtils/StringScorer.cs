@@ -7,13 +7,15 @@ namespace Cryptographer.DecryptionUtils
     internal class StringScorer
     {
         public static string json = File.ReadAllText("trigrams.json");
+        public static string qjson = File.ReadAllText("quadgrams.json");
 
         public static Dictionary<string, float>? trigrams = JsonSerializer.Deserialize<Dictionary<string, float>>(json);
+         public static Dictionary<string, float>? quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson);
 
         public static float Score(string input)
         {
             // to stop compiler from being an annoyance
-            if (trigrams == null)
+            if (quadgrams == null)
             {
                 return 0;
             }
@@ -23,8 +25,8 @@ namespace Cryptographer.DecryptionUtils
             float totalScore = 0.0f;
             for (int i=0; i<= modifiedInput.Length; i++)
             {
-                string substr = modifiedInput.Substring(i, Math.Min(3, modifiedInput.Length - i));
-                if (!trigrams.TryGetValue(substr, out float score)) { continue; }
+                string substr = modifiedInput.Substring(i, Math.Min(4, modifiedInput.Length - i));
+                if (!quadgrams.TryGetValue(substr, out float score)) { continue; }
 
                 totalScore += score;
             }

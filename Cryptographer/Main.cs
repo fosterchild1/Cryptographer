@@ -25,6 +25,20 @@ class Program
 
     // cache inputs and their outputs
     private static Dictionary<string, List<string>> memoCache = new();
+    private static Dictionary<string, int> seenInputs = new();
+
+    public static bool CheckOutput(string output, int depth = 1)
+    {
+        // aka useless string
+        if (output.Replace(" ", "").Length <= 2)
+            return false;
+
+        bool found = seenInputs.TryGetValue(output, out int seenDepth);
+        if (found && seenDepth <= depth)
+            return false;
+
+        return true;
+    }
 
     public static List<string> GetDecrypted(string input, int depth = 1, string lastMethod = "")
     {
@@ -50,8 +64,7 @@ class Program
                 continue;
 
             string output = method.Decrypt(input, analysis);
-            if (output.Replace(" ", "").Length <= 2)
-                continue;
+            if (!CheckOutput(output, depth)) continue;
 
             decrypted.AddRange(GetDecrypted(output, depth + 1, method.Name));
         }
@@ -65,11 +78,18 @@ class Program
 
             foreach (string output in outputs)
             {
+                if (!CheckOutput(output, depth)) continue;
                 decrypted.AddRange(GetDecrypted(output, depth + 1, method.Name));
             }
         }
 
+        // add to seen
         memoCache.TryAdd(input, decrypted);
+        foreach (string output in decrypted)
+        {
+            seenInputs.TryAdd(output, depth);
+        }
+
         return decrypted;
     }
 
@@ -86,11 +106,19 @@ class Program
         List<string> outputs = GetDecrypted(input, 1);
         HashSet<string> noDupes = outputs.ToHashSet();
 
+        Dictionary<string, float> scoreDict = new();
+
         Console.WriteLine("Possible outputs:");
         foreach (string output in noDupes)
         {
             float score = StringScorer.Score(output);
-            Console.WriteLine($"{output} ({score})");
+            if (score < Constants.scoreThreshold) continue;
+            scoreDict[output] = score;
+        }
+
+        foreach (KeyValuePair<string, float> output in scoreDict.OrderBy(kv => kv.Value))
+        {
+            Console.WriteLine($"{output.Key} ({output.Value})");
         }
     }
 }

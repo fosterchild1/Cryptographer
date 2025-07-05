@@ -13,4 +13,10 @@
 		</None>
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="..\resources\quadgrams.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
 </Project>
