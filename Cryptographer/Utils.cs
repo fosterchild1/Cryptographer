@@ -57,17 +57,17 @@ namespace Cryptographer
             timers.Add(name, Stopwatch.StartNew());
         }
 
-        public static int StopTimer(string name)
+        public static void StopTimer(string name)
         {
-            if (!loggingEnabled) { return 0; }
+            if (!loggingEnabled) { return; }
 
             Stopwatch? timer;
-            if (!timers.TryGetValue(name, out timer)) { return 0; }
+            if (!timers.TryGetValue(name, out timer)) { return; }
 
             timer.Stop();
             timers.Remove(name);
 
-            return timer.Elapsed.Nanoseconds;
+            Console.WriteLine(timer.Elapsed.Nanoseconds);
         }
     }
 }
