@@ -8,6 +8,6 @@ namespace Cryptographer.DecryptionUtils
 {
     internal class Constants
     {
-        public static float scoreThreshold = 100;
+        public static float scoreThreshold = 10;
     }
 }
