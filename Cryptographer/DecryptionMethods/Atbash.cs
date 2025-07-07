@@ -5,7 +5,7 @@ namespace Cryptographer.DecryptionMethods
 
     public class Atbash : IDecryptionMethod
     {
-        public string Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {           
             char[] chars = input.ToCharArray();
             StringBuilder sb = new();
@@ -31,7 +31,7 @@ namespace Cryptographer.DecryptionMethods
                 sb.Append((char)c);
             }
 
-            return sb.ToString();
+           return new List<string>() { sb.ToString() };
         }
 
         public string Name { get { return "Atbash"; } }

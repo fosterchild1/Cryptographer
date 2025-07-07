@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Cryptographer.DecryptionMethods
 {
-    public class KeyboardSubstitution : IListDecryptionMethod
+    public class KeyboardSubstitution : IDecryptionMethod
     {
 
         private List<string> Layouts = new() {

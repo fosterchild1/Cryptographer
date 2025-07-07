@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Cryptographer.DecryptionMethods
 {
-    public class Morse : IListDecryptionMethod
+    public class Morse : IDecryptionMethod
     {
 
         private static Dictionary<string, string> MorseDictionary = MethodDictionaries.Morse;

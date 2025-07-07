@@ -12,13 +12,9 @@ class Program
         new Reverse(),
         new Atbash(),
         new Base64(),
-    };
-
-    private static List<IListDecryptionMethod> listMethods = new()
-    {
         new Morse(),
         new Baconian(),
-        new KeyboardSubstitution()
+        new KeyboardSubstitution(),
     };
 
     private static int maxDepth = 0;
@@ -42,7 +38,7 @@ class Program
 
     public static List<string> GetDecrypted(string input, int depth = 1, string lastMethod = "")
     {
-        // see if weve met this input before
+        // see if we ve met this input before
         List<string>? values;
         if (memoCache.TryGetValue(input, out values))
         {
@@ -56,23 +52,11 @@ class Program
         List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(input);
         List<string> decrypted = new();
 
-
-        // single output methods
+        // backtrack methods
         foreach (IDecryptionMethod method in methods)
         {
             if (lastMethod == method.Name && (method.Name == "Reverse" || method.Name == "Atbash"))
                 continue;
-
-            string output = method.Decrypt(input, analysis);
-            if (!CheckOutput(output, depth)) continue;
-
-            decrypted.AddRange(GetDecrypted(output, depth + 1, method.Name));
-        }
-
-
-        // multiple output methods
-        foreach (IListDecryptionMethod method in listMethods)
-        {
 
             List<string> outputs = method.Decrypt(input, analysis);
 

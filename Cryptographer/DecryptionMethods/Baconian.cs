@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Cryptographer.DecryptionMethods
 {
-    public class Baconian : IListDecryptionMethod
+    public class Baconian : IDecryptionMethod
     {
 
         // baconian has TWO!! dictionaries!!
