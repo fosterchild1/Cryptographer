@@ -10,28 +10,31 @@ namespace Cryptographer.DecryptionUtils
         public static string qjson = File.ReadAllText("quadgrams.json");
 
         public static Dictionary<string, float>? trigrams = JsonSerializer.Deserialize<Dictionary<string, float>>(json);
-         public static Dictionary<string, float>? quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson);
+        public static Dictionary<string, float>? quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson);
 
         public static float Score(string input)
         {
             // to stop compiler from being an annoyance
-            if (quadgrams == null)
+            if (quadgrams == null || trigrams == null)
             {
                 return 0;
             }
 
             string modifiedInput = input.Replace(" ", "").ToUpper();
 
-            float totalScore = 0.0f;
+            float quadScore = 0.0f;
             for (int i=0; i<= modifiedInput.Length; i++)
             {
                 string substr = modifiedInput.Substring(i, Math.Min(4, modifiedInput.Length - i));
-                if (!quadgrams.TryGetValue(substr, out float score)) { continue; }
+                if (!quadgrams.TryGetValue(substr, out float score)) {
+                    quadScore -= 2;
+                    continue; 
+                }
 
-                totalScore += score;
+                quadScore += score;
             }
 
-            return totalScore;
+            return quadScore;
         }
     }
 }
