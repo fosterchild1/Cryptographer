@@ -10,7 +10,7 @@ namespace Cryptographer.DecryptionMethods
 
         private string DecryptMorse(string input, string dot, string dash)
         {
-            string modifiedInput = input.Replace(dot, ".").Replace(dash, "-").Replace("/", " ");
+            string modifiedInput = input.Replace(dot, ".").Replace(dash, "-").Replace("/", " / ");
 
             // split at each space
             StringBuilder output = new();

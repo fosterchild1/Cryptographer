@@ -10,11 +10,29 @@ namespace Cryptographer.Utils
     internal class Utils
     {
         public static bool loggingEnabled = true;
+        private static string ReadLine()
+        {
+            StringBuilder read = new StringBuilder();
+            ConsoleKeyInfo key;
+
+            while (true)
+            {
+                key = Console.ReadKey(true);
+
+                if (key.Key == ConsoleKey.Enter)
+                    break;
+
+                read.Append(key.KeyChar);
+                Console.Write(key.KeyChar);
+            }
+
+            return read.ToString();
+        }
 
         public static string GetInput()
         {
             Console.WriteLine("Please input the text you want to decrypt:");
-            string? input = Console.ReadLine();
+            string? input = ReadLine();
 
             if (string.IsNullOrEmpty(input))
             {
@@ -30,7 +48,7 @@ namespace Cryptographer.Utils
             Console.WriteLine("Please input the maximum depth of the search:");
 
             //is something?
-            string? inputLine = Console.ReadLine();
+            string? inputLine = ReadLine();
             if (string.IsNullOrEmpty(inputLine))
             {
                 Console.WriteLine("Depth can't be empty. Please try again.");

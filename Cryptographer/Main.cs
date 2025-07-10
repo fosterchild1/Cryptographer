@@ -32,6 +32,21 @@ class DecryptionNode
             child.GetLeaves(results);
         }
     }
+
+    public int GetMaxDepth(int max = 0)
+    {
+        if (Children.Count == 0)
+        {
+            return Math.Max(Depth, max);
+        }
+
+        foreach (DecryptionNode child in Children)
+        {
+            max = child.GetMaxDepth(max);
+        }
+
+        return max;
+    }
 }
 
 class Program
@@ -50,12 +65,13 @@ class Program
     private static int maxDepth = 0;
 
     // to not redo them
+    private static Dictionary<string, DecryptionNode> memo = new();
     private static Dictionary<string, int> seenInputs = new();
 
     public static bool CheckOutput(string output, int depth = 1)
     {
         // aka useless string
-        if (output.Replace(" ", "").Length <= 3)
+        if (string.IsNullOrWhiteSpace(output))
             return false;
 
         bool found = seenInputs.TryGetValue(output, out int seenDepth);
@@ -74,6 +90,25 @@ class Program
         }
 
         DecryptionNode node = new DecryptionNode(input, depth, lastMethod);
+  
+        // memo cache
+        if (memo.TryGetValue(input, out DecryptionNode? memoNode))
+        {
+            int maxDepth = memoNode.GetMaxDepth();
+            int diff = Math.Max(maxDepth - memoNode.Depth, 1);
+
+            List<string> leaves = new List<string>();
+            memoNode.GetLeaves(leaves);
+
+            foreach (string leaf in leaves)
+            {
+                DecryptionNode child = GetDecrypted(leaf, depth + diff);
+                node.Children.Add(child);
+            }
+
+            return node;
+        }
+
 
         List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(input);
 
@@ -93,12 +128,19 @@ class Program
             {
                 if (!CheckOutput(output, depth)) continue;
                 seenInputs.TryAdd(output, depth);
+                if (StringScorer.Score(output) > 100)
+                {
+                    Console.WriteLine(output);
+                    break;
+                }
+
 
                 DecryptionNode child = GetDecrypted(output, depth + 1, methodName);
                 node.Children.Add(child);
             }
         }
 
+        memo.TryAdd(input, node);
         return node;
     }
 

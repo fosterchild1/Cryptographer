@@ -27,7 +27,7 @@ namespace Cryptographer.DecryptionUtils
             {
                 string substr = modifiedInput.Substring(i, Math.Min(4, modifiedInput.Length - i));
                 if (!quadgrams.TryGetValue(substr, out float score)) {
-                    quadScore -= 2;
+                    quadScore -= input.Length;
                     continue; 
                 }
 
