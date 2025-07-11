@@ -7,11 +7,11 @@ using System.Reflection;
 class DecryptionNode
 {
     public string Text;
-    public int Depth;
+    public byte Depth; // i dont see why youd need to go further than 255.
     public string Method;
     public List<DecryptionNode> Children = new();
 
-    public DecryptionNode(string text, int depth, string method)
+    public DecryptionNode(string text, byte depth, string method)
     {
         Text = text;
         Depth = depth;
@@ -32,7 +32,7 @@ class DecryptionNode
         }
     }
 
-    public int GetMaxDepth(int max = 0)
+    public byte GetMaxDepth(byte max = 0)
     {
         if (Children.Count == 0)
         {
@@ -62,13 +62,13 @@ class Program
         new Binary(),
     };
 
-    private static int maxDepth = 0;
+    private static byte maxDepth = 0;
 
     // to not redo them
     private static Dictionary<string, DecryptionNode> memo = new();
     private static Dictionary<string, int> seenInputs = new();
 
-    public static bool CheckOutput(string output, int depth = 1)
+    public static bool CheckOutput(string output, string input, byte depth = 1)
     {
         // aka useless string
         if (string.IsNullOrWhiteSpace(output) || ProjUtils.RemoveWhitespaces(output).Length <= 3)
@@ -78,10 +78,13 @@ class Program
         if (found && seenDepth <= depth)
             return false;
 
+        if (input == output)
+            return false;
+
         return true;
     }
 
-    public static DecryptionNode GetDecrypted(string input, int depth = 1, string lastMethod = "")
+    public static DecryptionNode GetDecrypted(string input, byte depth = 1, string lastMethod = "")
     {
         // dont go past max depth
         if (depth > maxDepth)
@@ -94,19 +97,18 @@ class Program
         // memo cache
         if (memo.TryGetValue(input, out DecryptionNode? memoNode))
         {
-            ProjUtils.StartTimer("emmo");
-            int maxDepth = memoNode.GetMaxDepth();
-            int diff = Math.Max(maxDepth - memoNode.Depth, 1);
+            byte maxDepth = memoNode.GetMaxDepth();
+            byte diff = (byte)Math.Max(maxDepth - memoNode.Depth, 1);
 
             List<string> leaves = new List<string>();
             memoNode.GetLeaves(leaves);
 
             foreach (string leaf in leaves)
             {
-                DecryptionNode child = GetDecrypted(leaf, depth + diff);
+                DecryptionNode child = GetDecrypted(leaf, (byte)(depth + diff));
                 node.Children.Add(child);
             }
-            ProjUtils.StopTimer("emmo");
+
             return node;
         }
 
@@ -127,16 +129,16 @@ class Program
 
             foreach (string output in outputs)
             {
-                if (!CheckOutput(output, depth)) continue;
+                if (!CheckOutput(output, input, depth)) continue;
                 seenInputs.TryAdd(output, depth);
-                if (StringScorer.Score(output, analysis) > 100)
+                if (StringScorer.Score(output, analysis) > Constants.scoreBreakSearchThreshold)
                 {
                     Console.WriteLine(output);
                     break;
                 }
 
 
-                DecryptionNode child = GetDecrypted(output, depth + 1, methodName);
+                DecryptionNode child = GetDecrypted(output, (byte)(depth + 1), methodName);
                 node.Children.Add(child);
             }
         }
@@ -165,7 +167,7 @@ class Program
         foreach (string output in outputs)
         {
             float score = StringScorer.Score(output, FrequencyAnalysis.AnalyzeFrequency(output));
-            if (score < Constants.scoreThreshold) continue;
+            if (score < Constants.scorePrintThreshold) continue;
             scoreDict[output] = score;
         }
 

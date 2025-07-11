@@ -6,6 +6,7 @@ namespace Cryptographer.DecryptionMethods
     public class KeyboardSubstitution : IDecryptionMethod
     {
 
+        // try as many different layouts without having too many outputs, AZERTY and QWERTZ only have 1 character difference
         private List<string> Layouts = new() {
             MethodDictionaries.QwertyLayout,
             MethodDictionaries.DvorakLayout,

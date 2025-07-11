@@ -34,13 +34,10 @@ namespace Cryptographer.DecryptionMethods
 
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
-            // baconian with less than 2 unique characters doesnt make sense
-            if (analysis.Count < 2)
+            // it can have more than 2 characters (ABBAB DCCDD) but thats too performance heavy
+            if (analysis.Count < 2 || analysis.Count > 2)
             {
-                return new List<string>()
-                {
-                    input
-                };
+                return new List<string>();
             }
 
             // they can be either ah or bah

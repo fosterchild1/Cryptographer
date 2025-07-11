@@ -41,7 +41,7 @@ class ProjUtils
         return input;
     }
 
-    public static int GetDepth()
+    public static byte GetDepth()
     {
         Console.WriteLine("Please input the maximum depth of the search:");
 
@@ -60,8 +60,7 @@ class ProjUtils
             Console.WriteLine("Input isn't an integer. Please try again.");
             return GetDepth();
         }
-
-        return Math.Max(input, 1);
+        return (byte)Math.Max(input, 1);
     }
 
     public static Dictionary<string, Stopwatch> timers = new();
