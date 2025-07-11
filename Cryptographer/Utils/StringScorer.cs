@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
-namespace Cryptographer.DecryptionUtils
+namespace Cryptographer.Utils
 {
     internal class StringScorer
     {

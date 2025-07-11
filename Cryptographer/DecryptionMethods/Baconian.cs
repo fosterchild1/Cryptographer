@@ -19,7 +19,7 @@ namespace Cryptographer.DecryptionMethods
             int length = modifiedInput.Length;
             // split every 5 characters
 
-            for (int i=0; i <= length; i +=5) 
+            for (int i=0; i <= length - 5; i += 5) 
             {
                 string bacon = modifiedInput.Substring(i, Math.Min(5, length - i));
                 string? find;

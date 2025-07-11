@@ -1,5 +1,4 @@
 ﻿using Cryptographer.DecryptionMethods;
-using Cryptographer.DecryptionUtils;
 using Cryptographer.Utils;
 using Microsoft.Win32.SafeHandles;
 using System.Diagnostics;
@@ -60,6 +59,7 @@ class Program
         new Morse(),
         new Baconian(),
         new KeyboardSubstitution(),
+        new Binary(),
     };
 
     private static int maxDepth = 0;
@@ -148,9 +148,9 @@ class Program
     {
         Console.WriteLine("cryptographer is a tool for decrypting text");
 
-        string input = Utils.GetInput();
+        string input = ProjUtils.GetInput();
         Console.Clear();
-        maxDepth = Utils.GetDepth();
+        maxDepth = ProjUtils.GetDepth();
         Console.Clear();
         Console.WriteLine("Working...");
 
