@@ -12,13 +12,15 @@ namespace Cryptographer.Utils
         public static Dictionary<string, float>? trigrams = JsonSerializer.Deserialize<Dictionary<string, float>>(json);
         public static Dictionary<string, float>? quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson);
 
-        public static float Score(string input)
+        public static float Score(string input, List<KeyValuePair<char, int>> analysis)
         {
             // to stop compiler from being an annoyance
             if (quadgrams == null || trigrams == null)
-            {
                 return 0;
-            }
+
+            // if it has less than 3 unique characters (and also check if tehre even is an analysis)
+            if (analysis.Count > 0 && analysis.Count <= 3)
+                return 0;
 
             string modifiedInput = input.Replace(" ", "").ToUpper();
 
@@ -27,7 +29,7 @@ namespace Cryptographer.Utils
             {
                 string substr = modifiedInput.Substring(i, Math.Min(4, modifiedInput.Length - i));
                 if (!quadgrams.TryGetValue(substr, out float score)) {
-                    quadScore -= input.Length;
+                    quadScore -= input.Length; // penalize by str length
                     continue; 
                 }
 

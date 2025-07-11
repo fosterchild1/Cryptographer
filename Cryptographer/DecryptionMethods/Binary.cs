@@ -5,10 +5,9 @@ namespace Cryptographer.DecryptionMethods
 
     public class Binary : IDecryptionMethod
     {
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public string DecryptBinary(string input, string zero, string one)
         {
-
-            string modifiedInput = ProjUtils.RemoveWhitespaces(input);
+            string modifiedInput = input.Replace(zero, "0").Replace(one, "1");
             int length = modifiedInput.Length;
 
             StringBuilder sb = new();
@@ -23,13 +22,30 @@ namespace Cryptographer.DecryptionMethods
                     // outside binary range
                     if (c > 255 || c < 0)
                         continue;
-
                     sb.Append(c);
                 }
                 catch { }
             }
 
-           return new List<string>() { sb.ToString() };
+            return sb.ToString();
+        }
+        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        {
+            // it can be stuff like: ABBABBCCDCCDD where it changes mid way. thats too performance heavy to check each case.
+            if (analysis.Count > 2 || analysis.Count < 2)
+                return new List<string>();
+
+            // they can be either one or zero
+            string c1 = analysis[0].Key.ToString();
+            string c2 = analysis[1].Key.ToString();
+
+            input = ProjUtils.RemoveWhitespaces(input);
+
+            return new List<string>()
+            {
+                DecryptBinary(input, c1, c2),
+                DecryptBinary(input, c2, c1)
+            };
         }
 
         public string Name { get { return "Binary"; } }

@@ -71,7 +71,7 @@ class Program
     public static bool CheckOutput(string output, int depth = 1)
     {
         // aka useless string
-        if (string.IsNullOrWhiteSpace(output))
+        if (string.IsNullOrWhiteSpace(output) || ProjUtils.RemoveWhitespaces(output).Length <= 3)
             return false;
 
         bool found = seenInputs.TryGetValue(output, out int seenDepth);
@@ -94,6 +94,7 @@ class Program
         // memo cache
         if (memo.TryGetValue(input, out DecryptionNode? memoNode))
         {
+            ProjUtils.StartTimer("emmo");
             int maxDepth = memoNode.GetMaxDepth();
             int diff = Math.Max(maxDepth - memoNode.Depth, 1);
 
@@ -105,7 +106,7 @@ class Program
                 DecryptionNode child = GetDecrypted(leaf, depth + diff);
                 node.Children.Add(child);
             }
-
+            ProjUtils.StopTimer("emmo");
             return node;
         }
 
@@ -128,7 +129,7 @@ class Program
             {
                 if (!CheckOutput(output, depth)) continue;
                 seenInputs.TryAdd(output, depth);
-                if (StringScorer.Score(output) > 100)
+                if (StringScorer.Score(output, analysis) > 100)
                 {
                     Console.WriteLine(output);
                     break;
@@ -163,9 +164,17 @@ class Program
 
         foreach (string output in outputs)
         {
-            float score = StringScorer.Score(output);
+            float score = StringScorer.Score(output, FrequencyAnalysis.AnalyzeFrequency(output));
             if (score < Constants.scoreThreshold) continue;
             scoreDict[output] = score;
+        }
+
+        // :(
+        if (scoreDict.Count == 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("sorry, i wasn't able to find a meaningful decryption =(");
+            return;
         }
 
         Console.WriteLine("Possible outputs:");
