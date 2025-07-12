@@ -18,16 +18,17 @@ namespace Cryptographer.Utils
             if (quadgrams == null || trigrams == null)
                 return 0;
 
-            // if it has less than 3 unique characters (and also check if tehre even is an analysis)
+            // if it has less than 3 unique characters (and also check if there even is an analysis)
             if (analysis.Count > 0 && analysis.Count <= 3)
                 return 0;
 
             string modifiedInput = input.Replace(" ", "").ToUpper();
+            int length = modifiedInput.Length;
 
             float quadScore = 0.0f;
-            for (int i=0; i<= modifiedInput.Length; i++)
+            for (int i = 0; i <= length; i++)
             {
-                string substr = modifiedInput.Substring(i, Math.Min(4, modifiedInput.Length - i));
+                string substr = modifiedInput.Substring(i, Math.Min(4, length - i));
                 if (!quadgrams.TryGetValue(substr, out float score)) {
                     quadScore -= input.Length; // penalize by str length
                     continue; 

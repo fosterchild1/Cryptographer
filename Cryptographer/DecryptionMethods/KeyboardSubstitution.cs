@@ -31,6 +31,9 @@ namespace Cryptographer.DecryptionMethods
 
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
+            if (analysis.Count <= 2)
+                return new List<string>();
+
             List<string> output = new();
 
             // ugly, layouts(layouts - 1), we cant find out what keyboard layout its using

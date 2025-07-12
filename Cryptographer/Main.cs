@@ -1,6 +1,7 @@
 ﻿using Cryptographer.DecryptionMethods;
 using Cryptographer.Utils;
 using Microsoft.Win32.SafeHandles;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Reflection;
 
@@ -74,6 +75,7 @@ class Program
         if (string.IsNullOrWhiteSpace(output) || ProjUtils.RemoveWhitespaces(output).Length <= 3)
             return false;
 
+        // seen somewhere higher up the tree
         bool found = seenInputs.TryGetValue(output, out int seenDepth);
         if (found && seenDepth <= depth)
             return false;
@@ -131,19 +133,23 @@ class Program
             {
                 if (!CheckOutput(output, input, depth)) continue;
                 seenInputs.TryAdd(output, depth);
+
                 if (StringScorer.Score(output, analysis) > Constants.scoreBreakSearchThreshold)
                 {
                     Console.WriteLine(output);
                     break;
                 }
-
-
+ 
                 DecryptionNode child = GetDecrypted(output, (byte)(depth + 1), methodName);
                 node.Children.Add(child);
             }
         }
 
-        memo.TryAdd(input, node);
+        if (memo.TryGetValue(input, out DecryptionNode? val) && val.GetMaxDepth() > depth)
+            memo[input] = node;
+        else
+            memo.Add(input, node);
+
         return node;
     }
 
