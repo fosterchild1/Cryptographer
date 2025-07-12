@@ -22,19 +22,20 @@ namespace Cryptographer.Utils
             if (analysis.Count > 0 && analysis.Count <= 3)
                 return 0;
 
-            string modifiedInput = input.Replace(" ", "").ToUpper();
+            string modifiedInput = ProjUtils.RemoveWhitespaces(input).ToUpper();
             int length = modifiedInput.Length;
 
             float quadScore = 0.0f;
             for (int i = 0; i <= length; i++)
             {
+                // .TryGetValue is less performant, because most times the substr is not present in the dictionary
                 string substr = modifiedInput.Substring(i, Math.Min(4, length - i));
-                if (!quadgrams.TryGetValue(substr, out float score)) {
+                if (!quadgrams.ContainsKey(substr)) {
                     quadScore -= input.Length; // penalize by str length
                     continue; 
                 }
 
-                quadScore += score;
+                quadScore += quadgrams[substr];
             }
 
             return quadScore;

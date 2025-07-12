@@ -31,6 +31,8 @@ namespace Cryptographer.DecryptionMethods
 
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
+            // if it has just 2 characters, that means its either morse, bacon or binary. we already substitute the characters in those
+            // so we dont need to substitute layouts
             if (analysis.Count <= 2)
                 return new List<string>();
 
