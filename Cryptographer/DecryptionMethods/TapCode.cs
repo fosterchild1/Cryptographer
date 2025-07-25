@@ -18,7 +18,7 @@ namespace Cryptographer.DecryptionMethods
             StringBuilder output = new();
             bool check = true;
 
-            for (int i = 0; i <= split.Length; i++)
+            for (int i = 0; i < split.Length; i++)
             {
                 check = !check;
                 if (!check) continue;
@@ -26,8 +26,8 @@ namespace Cryptographer.DecryptionMethods
                 int curLength = split[i].Length;
                 int prevLength = split[i - 1].Length;
 
-                if (curLength  > 5 || curLength == 0) continue;
-                if (prevLength > 5 || prevLength == 0) continue;
+                if (curLength > 5 || curLength <= 0) continue;
+                if (prevLength > 5 || prevLength <= 0) continue;
 
                 output.Append(TapDictionary[prevLength - 1][curLength - 1]);
             }

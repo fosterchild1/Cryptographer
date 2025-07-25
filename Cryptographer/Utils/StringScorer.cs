@@ -6,8 +6,8 @@ namespace Cryptographer.Utils
 {
     internal class StringScorer
     {
-        public static string json = File.ReadAllText("trigrams.json");
-        public static string qjson = File.ReadAllText("quadgrams.json");
+        public static string json = File.ReadAllText("resources/trigrams.json");
+        public static string qjson = File.ReadAllText("resources/quadgrams.json");
 
         public static Dictionary<string, float>? trigrams = JsonSerializer.Deserialize<Dictionary<string, float>>(json);
         public static Dictionary<string, float>? quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson);

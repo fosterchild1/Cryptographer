@@ -137,7 +137,7 @@ class Program
 
                 if (StringScorer.Score(output, analysis) > Constants.scoreBreakSearchThreshold)
                 {
-                    Console.WriteLine(output);
+                    Console.WriteLine($"Possible Output: {output}");
                     break;
                 }
  
@@ -191,5 +191,7 @@ class Program
         {
             Console.WriteLine($"{output.Key} ({output.Value})");
         }
+
+        Console.Read();
     }
 }
