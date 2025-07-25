@@ -2,9 +2,9 @@
 A Program that deciphers encoded strings, even if they are behind multiple encryptions.
 <br/><br/>
 
-| <b>Supported ciphers</b> |
-| ---  |
-| Reverse |
+| <b>Supported ciphers</b> | <b>Supported ciphers</b> |
+| ---  | --- |
+| Reverse | Tap Code |
 | Atbash |
 | Baconian |
 | Morse |
