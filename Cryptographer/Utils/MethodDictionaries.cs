@@ -123,5 +123,14 @@ namespace Cryptographer.Utils
         public static string DvorakLayout = """`1234567890[]',.pyfgcrl/=\aoeuidhtns-;qjkxbmwvz~!@#$%^&*(){}"<>PYFGCRL?+|AOEUIDHTNS_:QJKXBMWVZ""";
         public static string ColemakLayout = """`1234567890-=qwfpgjluy;[]\arstdhneio'zxcvbkm,./~!@#$%^&*()_+QWFPGJLUY:{}|ARSTDHNEIO"ZXCVBKM<>?""";
         public static string WorkmanLayout = """`1234567890-=qdrwbjfup;[]\ashtgyneoi'zxmcvkl,./~!@#$%^&*()_+QDRWBJFUP:{}|ASHTGYNEOI"ZXMCVKL<>?""";
+
+        public static List<List<string>> TapCode = new()
+        {
+            new List<string>() {"A", "B", "C", "D", "E"},
+            new List<string>() {"F", "G", "H", "I", "J"},
+            new List<string>() {"L", "M", "N", "O", "P"},
+            new List<string>() {"Q", "R", "S", "T", "U"},
+            new List<string>() {"V", "W", "X", "Y", "Z"}
+        };
     }
 }

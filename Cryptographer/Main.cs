@@ -61,6 +61,7 @@ class Program
         new Baconian(),
         new KeyboardSubstitution(),
         new Binary(),
+        new TapCode(),
     };
 
     private static byte maxDepth = 0;
