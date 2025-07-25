@@ -35,7 +35,7 @@ namespace Cryptographer.DecryptionMethods
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
             // it can have more than 2 characters (ABBAB DCCDD) but thats too performance heavy
-            if (analysis.Count < 2 || analysis.Count > 2)
+            if (analysis.Count != 2)
             {
                 return new List<string>();
             }

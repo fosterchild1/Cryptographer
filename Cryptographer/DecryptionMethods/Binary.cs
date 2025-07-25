@@ -32,7 +32,7 @@ namespace Cryptographer.DecryptionMethods
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
             // it can be stuff like: ABBABBCCDCCDD where it changes mid way. thats too performance heavy to check each case.
-            if (analysis.Count > 2 || analysis.Count < 2)
+            if (analysis.Count != 2)
                 return new List<string>();
 
             // they can be either one or zero

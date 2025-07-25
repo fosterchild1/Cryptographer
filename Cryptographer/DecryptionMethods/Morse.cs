@@ -29,7 +29,7 @@ namespace Cryptographer.DecryptionMethods
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
             // morse with no space has to be bruteforced with a looooooooooooooot of cases
-            if (analysis.Count < 3 || analysis.Count > 3)
+            if (analysis.Count < 3 || analysis.Count > 4)
             {
                 return new List<string>();
             }
