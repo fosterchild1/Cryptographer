@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<OutputType>Exe</OutputType>
@@ -10,12 +10,14 @@
 	<ItemGroup>
 		<None Include="..\resources\trigrams.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>resources\trigrams.json</TargetPath>
 		</None>
 	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\resources\quadgrams.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>resources\quadgrams.json</TargetPath>
 		</None>
 	</ItemGroup>
 
