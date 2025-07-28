@@ -5,7 +5,7 @@ A Program that deciphers encoded strings, even if they are behind multiple encry
 | <b>Supported ciphers</b> | <b>Supported ciphers</b> |
 | ---  | --- |
 | Reverse | Tap Code |
-| Atbash |
+| Atbash | DNA |
 | Baconian |
 | Morse |
 | Keyboard Substitution |
