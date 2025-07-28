@@ -175,7 +175,6 @@ class Program
         foreach (string output in outputs)
         {
             float score = StringScorer.Score(output, FrequencyAnalysis.AnalyzeFrequency(output));
-            Console.WriteLine($"{input}, {score}");
             if (score < Constants.scorePrintThreshold) continue;
             scoreDict[output] = score;
         }
