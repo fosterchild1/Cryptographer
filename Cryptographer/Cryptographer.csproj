@@ -8,6 +8,7 @@
 		<Authors>fosterchilld</Authors>
 		<Description> A Program that deciphers encoded strings, even if they are behind multiple encryptions. </Description>
 		<PackageProjectUrl>https://github.com/fosterchild1/Cryptographer</PackageProjectUrl>
+		<ApplicationIcon>icon.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -18,6 +19,10 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
 	  <DebugType>none</DebugType>
 	</PropertyGroup>
+
+	<ItemGroup>
+	  <Content Include="..\resources\icon.ico" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\resources\trigrams.json">
