@@ -132,5 +132,36 @@ namespace Cryptographer.Utils
             new List<string>() {"Q", "R", "S", "T", "U"},
             new List<string>() {"V", "W", "X", "Y", "Z"}
         };
+
+        public static Dictionary<string, string> DNA = new()
+        {
+            ["AAA"] = "A",
+            ["AAC"] = "B",
+            ["AAG"] = "C",
+            ["AAT"] = "D",
+            ["ACA"] = "E",
+            ["ACC"] = "F",
+            ["ACG"] = "G",
+            ["ACT"] = "H",
+            ["AGA"] = "I",
+            ["AGC"] = "J",
+            ["AGG"] = "K",
+            ["AGT"] = "L",
+            ["ATA"] = "M",
+            ["ATC"] = "N",
+            ["ATG"] = "O",
+            ["ATT"] = "P",
+            ["CAA"] = "Q",
+            ["CAC"] = "R",
+            ["CAG"] = "S",
+            ["CAT"] = "T",
+            ["CCA"] = "U",
+            ["CCC"] = "V",
+            ["CCG"] = "W",
+            ["CCT"] = "X",
+            ["CGA"] = "Y",
+            ["CGC"] = "Z",
+            ["CGG"] = " "
+        };
     }
 }
