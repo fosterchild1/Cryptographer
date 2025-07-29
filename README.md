@@ -18,7 +18,7 @@ Running the app through the terminal offers better customization than double cli
 
 | Argument | What it does |
 | ---  | --- |
-| input= | self-explanatory |
+| input= | self-explanatory, does not need to be wrapped in quotes |
 | maxdepth= | sets the max depth |
 | score_print= | minimum score needed for an output to be logged at the end of the search |
 | score_breaksearch= | same as above, but it logs during the search |
