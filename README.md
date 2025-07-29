@@ -3,7 +3,7 @@
 A Program that deciphers encoded strings, even if they are behind multiple encryptions.
 <br/><br/>
 
-| <b>Supported ciphers</b> | <b>Supported ciphers</b> |
+| Supported ciphers | Supported ciphers |
 | ---  | --- |
 | Reverse | Tap Code |
 | Atbash | DNA |
@@ -11,3 +11,14 @@ A Program that deciphers encoded strings, even if they are behind multiple encry
 | Morse |
 | Keyboard Substitution |
 | Binary |
+
+# Console Arguments
+Running the app through the terminal offers better customization than double clicking the .exe.
+<br/>
+
+| Argument | What it does |
+| ---  | --- |
+| input= | self-explanatory |
+| maxdepth= | sets the max depth |
+| score_print= | minimum score needed for an output to be logged at the end of the search |
+| score_breaksearch= | same as above, but it logs during the search |
