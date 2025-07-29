@@ -1,4 +1,5 @@
-<img src="https://github.com/fosterchild1/Cryptographer/blob/master/resources/text.png" width="381" height="61">
+<img src="https://github.com/fosterchild1/Cryptographer/blob/master/resources/icon.ico" width="64" height="64"> <img src="https://github.com/fosterchild1/Cryptographer/blob/master/resources/text.png" width="381" height="61"> 
+
 A Program that deciphers encoded strings, even if they are behind multiple encryptions.
 <br/><br/>
 
