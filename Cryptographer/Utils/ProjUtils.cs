@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 class ProjUtils
 {
     public static bool loggingEnabled = true;
+
+    // to bypass the limit
     private static string ReadLine()
     {
         StringBuilder read = new StringBuilder();
+        StreamWriter stdout = new StreamWriter(Console.OpenStandardOutput());
+
         ConsoleKeyInfo key;
 
         while (true)
@@ -21,8 +25,9 @@ class ProjUtils
                 break;
 
             read.Append(key.KeyChar);
-            Console.Write(key.KeyChar);
+            stdout.Write(key.KeyChar);
         }
+        
 
         return read.ToString();
     }
