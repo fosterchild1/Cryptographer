@@ -38,7 +38,7 @@ namespace Cryptographer.DecryptionMethods
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
             // no spaces just dots
-            if (analysis.Count < 2)
+            if (analysis.Count != 2)
             {
                 return new List<string>();
             }
