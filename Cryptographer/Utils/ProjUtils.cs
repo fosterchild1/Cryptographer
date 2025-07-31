@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 class ProjUtils
+    // for general utils
 {
     public static bool loggingEnabled = true;
 
@@ -19,7 +20,7 @@ class ProjUtils
 
         while (true)
         {
-            key = Console.ReadKey(true);
+            key = Console.ReadKey();
 
             if (key.Key == ConsoleKey.Enter)
                 break;
