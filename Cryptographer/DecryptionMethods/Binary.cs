@@ -39,8 +39,6 @@ namespace Cryptographer.DecryptionMethods
             string c1 = analysis[0].Key.ToString();
             string c2 = analysis[1].Key.ToString();
 
-            input = ProjUtils.RemoveWhitespaces(input);
-
             return new List<string>()
             {
                 DecryptBinary(input, c1, c2),

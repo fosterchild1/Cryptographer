@@ -120,8 +120,9 @@ namespace Cryptographer
                     {
                         continue;
                     }
-
+                    ProjUtils.StartTimer(methodName);
                     List<string> outputs = method.Decrypt(newInput, analysis);
+                    ProjUtils.StopTimer(methodName);
 
                     foreach (string output in outputs)
                     {
