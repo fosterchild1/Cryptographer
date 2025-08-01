@@ -69,7 +69,7 @@ namespace Cryptographer
         };
 
         // to not redo them
-        private static Dictionary<string, int> seenInputs = new();
+        private static List<string> seenInputs = new();
 
         public static bool CheckOutput(string output, string input)
         {
@@ -78,8 +78,7 @@ namespace Cryptographer
                 return false;
 
             // TO NOT LOG IN CONSOLE
-            bool found = seenInputs.TryGetValue(output, out int seenDepth);
-            if (found)
+            if (seenInputs.Contains(output))
                 return false;
 
             if (input == output)
@@ -136,7 +135,6 @@ namespace Cryptographer
                             Console.WriteLine($"Possible Output: {output}");
                             //break;
                         }
-
                         DecryptionNode newNode = new(output, (byte)(currentNode.Depth + 1), methodName, currentNode);
                         queue.Enqueue(newNode);
                         currentNode.Children.Add(newNode);
