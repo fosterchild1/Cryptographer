@@ -38,7 +38,7 @@ namespace Cryptographer.DecryptionMethods
 
             List<string> output = new();
 
-            // ugly, layouts(layouts - 1), we cant find out what keyboard layout its using
+            // uuuuuuugly
             foreach (string layout in Layouts)
             {
                 foreach (string layout2 in Layouts)

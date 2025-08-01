@@ -35,7 +35,7 @@ namespace Cryptographer.Utils
                     continue; 
                 }
 
-                quadScore += quadgrams[substr] * input.Length;
+                quadScore += quadgrams[substr] * input.Length / 3;
             }
 
             return quadScore;

@@ -32,10 +32,7 @@ class Program
 
         Console.WriteLine("Working...");
 
-        DecryptionNode root = Searcher.Search(input, 1);
-
-        List<string> outputs = new List<string>();
-        root.GetLeaves(outputs);
+        List<string> outputs = Searcher.Search(input);
 
         Dictionary<string, float> scoreDict = new();
 
