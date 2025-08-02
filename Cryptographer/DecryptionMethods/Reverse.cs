@@ -6,7 +6,7 @@
         {           
             char[] letters = input.ToCharArray();
             Array.Reverse(letters);
-            string output = new string(letters);
+            string output = new(letters);
 
             return new List<string>() { output };
         }

@@ -80,10 +80,10 @@ class ProjUtils
 
     public static void StopTimer(string name)
     {
-        if (!loggingEnabled) { return; }
+        if (!loggingEnabled) return;
 
         Stopwatch? timer;
-        if (!timers.TryGetValue(name, out timer)) { return; }
+        if (!timers.TryGetValue(name, out timer)) return;
 
         timer.Stop();
         timers.Remove(name);
@@ -92,10 +92,15 @@ class ProjUtils
     }
     public static string RemoveWhitespaces(string input)
     {
-        return new string(
-            input
-            .Where(c => !Char.IsWhiteSpace(c))
-            .ToArray()
-        );
+        StringBuilder withoutWhitespaces = new();
+
+        foreach (char c in input)
+        {
+            if (string.IsNullOrWhiteSpace(c.ToString())) continue;
+
+            withoutWhitespaces.Append(c);
+        }
+
+        return withoutWhitespaces.ToString();
     }
 }

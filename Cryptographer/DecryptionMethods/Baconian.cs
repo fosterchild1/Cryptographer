@@ -24,7 +24,7 @@ namespace Cryptographer.DecryptionMethods
                 string bacon = modifiedInput.Substring(i, Math.Min(5, length - i));
                 string? find;
                 dict.TryGetValue(bacon, out find);
-                if (string.IsNullOrEmpty(find)) { continue; }
+                if (string.IsNullOrEmpty(find)) continue;
 
                 output.Append(find);
             }
@@ -37,7 +37,7 @@ namespace Cryptographer.DecryptionMethods
             // it can have more than 2 characters (ABBAB DCCDD) but thats too performance heavy
             if (analysis.Count != 2)
             {
-                return new List<string>();
+                return new();
             }
 
             // they can be either ah or bah
