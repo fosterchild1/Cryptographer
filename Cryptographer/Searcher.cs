@@ -66,6 +66,7 @@ namespace Cryptographer
             new Binary(),
             new TapCode(),
             new DNA(),
+            new Hexadecimal(),
         };
 
         private static List<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution" };
