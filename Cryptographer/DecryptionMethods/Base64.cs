@@ -11,7 +11,7 @@ namespace Cryptographer.DecryptionMethods
 
             if (!success)
                 return new List<string>();
-
+            
             return new List<string>() { Encoding.UTF8.GetString(buffer.Slice(0, bytes)) };
         }
 
