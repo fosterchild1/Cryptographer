@@ -7,7 +7,7 @@ namespace Cryptographer.DecryptionMethods
     public class Base32 : IDecryptionMethod
     {
         private static Dictionary<char, int> Base32Map = MethodDictionaries.Base32Map;
-        private static bool TryFromBase32String(string input, out string? output)
+        private static bool TryFromBase32String(string input, out byte[]? output)
         {
             output = null;
 
@@ -34,15 +34,15 @@ namespace Cryptographer.DecryptionMethods
                 }
             }
 
-            output = Encoding.UTF8.GetString(result.ToArray());
+            output = result.ToArray();
             return true;
         }
 
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
-            if (!TryFromBase32String(input, out string? output)) return new();
+            if (!TryFromBase32String(input, out byte[]? output)) return new();
 
-            return new() { output != null ? output : "" };
+            return new() { output != null ? Encoding.UTF8.GetString(output) : "" };
         }
 
         public string Name { get { return "Base32"; } }
