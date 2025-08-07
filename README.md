@@ -7,7 +7,7 @@ A Program that deciphers encoded strings, even if they are behind multiple encry
 | ---  | --- |
 | Reverse | Tap Code |
 | Atbash | DNA |
-| Baconian |
+| Baconian | Hexadecimal |
 | Morse |
 | Keyboard Substitution |
 | Binary |
