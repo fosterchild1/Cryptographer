@@ -45,6 +45,10 @@ namespace Cryptographer.DecryptionMethods
                 DecryptBinary(input, c2, c1)
             };
         }
+        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        {
+            return (analysis.Count != 2 ? 1 : 0);
+        }
 
         public string Name { get { return "Binary"; } }
     }

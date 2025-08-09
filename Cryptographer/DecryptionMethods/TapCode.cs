@@ -37,18 +37,18 @@ namespace Cryptographer.DecryptionMethods
 
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
-            // no spaces just dots
-            if (analysis.Count != 2)
-            {
-                return new List<string>();
-            }
-
             // always second
             string space = analysis[1].Key.ToString();
 
             return new List<string>() {
                  DecryptTap(input, space)
             };
+        }
+
+        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        {
+            // no spaces just dots = analysis count 1
+            return (analysis.Count != 2 ? 1 : 0);
         }
 
         public string Name { get { return "Tap Code"; } }

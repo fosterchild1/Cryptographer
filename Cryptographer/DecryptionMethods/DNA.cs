@@ -27,6 +27,11 @@ namespace Cryptographer.DecryptionMethods
             return new() { output.ToString() };
         }
 
+        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        {
+            return (analysis.Count != 4 ? 1 : 0);
+        }
+
         public string Name { get { return "DNA"; } }
     }
 }

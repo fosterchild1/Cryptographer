@@ -34,11 +34,6 @@ namespace Cryptographer.DecryptionMethods
 
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
-            // it can have more than 2 characters (ABBAB DCCDD) but thats too performance heavy
-            if (analysis.Count != 2)
-            {
-                return new();
-            }
 
             // they can be either ah or bah
             string c1 = analysis[0].Key.ToString();
@@ -53,6 +48,11 @@ namespace Cryptographer.DecryptionMethods
             };
 
             return output;
+        }
+
+        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        {
+            return (analysis.Count != 2 ? 1 : 0);
         }
 
         public string Name { get { return "Baconian"; } }

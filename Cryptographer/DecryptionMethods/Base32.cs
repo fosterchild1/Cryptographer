@@ -40,9 +40,14 @@ namespace Cryptographer.DecryptionMethods
 
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
-            if (!TryFromBase32String(input, out byte[]? output)) return new();
-
+            TryFromBase32String(input, out byte[]? output);
             return new() { output != null ? Encoding.UTF8.GetString(output) : "" };
+        }
+
+
+        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        {
+            return !TryFromBase32String(input, out byte[]? output) ? 1 : 0;
         }
 
         public string Name { get { return "Base32"; } }

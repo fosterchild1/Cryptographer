@@ -7,11 +7,6 @@ namespace Cryptographer.DecryptionMethods
     {
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
-            // if it has just 2 characters, that means its either morse, bacon or binary. we already change the characters in those
-            // so we dont need to change
-            if (analysis.Count <= 2)
-                return new List<string>();
-
             char[] chars = input.ToCharArray();
             StringBuilder sb = new();
 
@@ -37,6 +32,13 @@ namespace Cryptographer.DecryptionMethods
             }
 
            return new List<string>() { sb.ToString() };
+        }
+
+        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        {
+            // if it has just 2 characters, that means its either morse, bacon or binary. we already change the characters in those
+            // so we dont need to change
+            return (analysis.Count <= 2 ? 1 : 0.7);
         }
 
         public string Name { get { return "Atbash"; } }

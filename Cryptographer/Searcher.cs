@@ -93,17 +93,18 @@ namespace Cryptographer
 
         public static List<string> Search(string input)
         {
-            // bfs, has many advantages over dfs
+            // use a priorityqueue alongside a CalculateProbability function
+            // probabilities < 0.1 dont get checked
 
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
-            Queue<DecryptionNode> queue = new();
-            queue.Enqueue(root); // Pretty ugly
+            PriorityQueue<DecryptionNode, double> queue = new();
+            queue.Enqueue(root, 1);
 
             // loop
             while (queue.Count > 0)
             {
                 DecryptionNode currentNode = queue.Dequeue();
-
+                
                 // conditions
                 if (currentNode.Depth > Constants.maxDepth) continue;
                 if (seenInputs.Contains(currentNode.Text) || currentNode.Parent == null) continue; // == null to stop annoyances
@@ -111,7 +112,7 @@ namespace Cryptographer
                 string lastMethod = currentNode.Parent.Method;
                 string newInput = currentNode.Text;
 
-                List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(currentNode.Parent.Text);
+                List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(newInput);
 
                 foreach (IDecryptionMethod method in methods)
                 {
@@ -120,6 +121,10 @@ namespace Cryptographer
                     // these dont make sense to do twice in a row
                     if (lastMethod == methodName && disallowedTwice.Contains(methodName)) continue;
 
+                    // check probability
+                    double probability = method.CalculateProbability(newInput, analysis);
+                    if (probability >= 0.9) continue;
+
                     List<string> outputs = method.Decrypt(newInput, analysis);
 
                     foreach (string output in outputs)
@@ -127,14 +132,14 @@ namespace Cryptographer
                         if (!CheckOutput(output, newInput)) continue;
                         seenInputs.Add(newInput);
 
-                        if (StringScorer.Score(output, analysis) > Constants.scoreBreakSearchThreshold * input.Length)
+                        if (StringScorer.Score(output, analysis) > Constants.scoreBreakSearchThreshold)
                         {
                             Console.WriteLine($"Possible Output: {output}");
                             //break;
                         }
 
                         DecryptionNode newNode = new(output, (byte)(currentNode.Depth + 1), methodName, currentNode);
-                        queue.Enqueue(newNode);
+                        queue.Enqueue(newNode, probability);
                         currentNode.Children.Add(newNode);
                     }
                 }

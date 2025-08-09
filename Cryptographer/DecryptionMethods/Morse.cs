@@ -28,11 +28,6 @@ namespace Cryptographer.DecryptionMethods
 
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
-            // morse with no space has to be bruteforced with a looooooooooooooot of cases
-            if (analysis.Count < 3 || analysis.Count > 4)
-            {
-                return new List<string>();
-            }
 
             // they can be dash or dot
             string c1 = analysis[0].Key.ToString();
@@ -45,6 +40,12 @@ namespace Cryptographer.DecryptionMethods
             };
 
             return output;
+        }
+
+        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        {
+            // morse with no space has to be bruteforced with a lot of cases
+            return (analysis.Count != 3 ? 1 : 0);
         }
 
         public string Name { get { return "Morse"; } }
