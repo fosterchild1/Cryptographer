@@ -8,17 +8,17 @@ A Program that deciphers encoded strings, even if they are behind multiple encry
 | Reverse | Tap Code |
 | Atbash | DNA |
 | Baconian | Hexadecimal |
-| Morse |
-| Keyboard Substitution |
+| Morse | Base64 |
+| Keyboard Substitution | Base32 |
 | Binary |
 
 # Console Arguments
 Running the app through the terminal offers better customization than double clicking the .exe.
 <br/>
 
-| Argument | What it does |
-| ---  | --- |
-| input= | self-explanatory, does not need to be wrapped in quotes |
-| maxdepth= | sets the max depth |
-| score_print= | minimum score needed for an output to be logged at the end of the search |
-| score_breaksearch= | same as above, but it logs during the search |
+| Argument | Data type | What it does |
+| ---  | --- | --- |
+| input= | string | self-explanatory, does not need to be wrapped in quotes |
+| maxdepth= | int | sets the max depth |
+| score_print= | float | minimum score needed for an output to be logged at the end of the search |
+| score_breaksearch= | float | same as above, but it logs during the search |
