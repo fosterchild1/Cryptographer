@@ -1,4 +1,5 @@
-﻿using Cryptographer.Utils;
+﻿using Cryptographer.Classes;
+using Cryptographer.Utils;
 using System.Reflection;
 using System.Text;
 
@@ -47,6 +48,9 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
         {
+            // 32 + padding character
+            if (analysis.Count <= 2 || analysis.Count > 32) return 1;
+
             return !TryFromBase32String(input, out byte[]? output) ? 1 : 0;
         }
 

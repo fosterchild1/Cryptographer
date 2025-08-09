@@ -1,4 +1,6 @@
-﻿namespace Cryptographer.DecryptionMethods
+﻿using Cryptographer.Classes;
+
+namespace Cryptographer.DecryptionMethods
 {
     public class Reverse : IDecryptionMethod
     {

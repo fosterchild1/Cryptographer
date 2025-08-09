@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Cryptographer.Classes;
+using System.Text;
 
 namespace Cryptographer.DecryptionMethods
 {
@@ -13,8 +14,8 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
         {
-            // Binary and stuff
-            if (analysis.Count <= 2) return 1;
+            // 64 + padding character
+            if (analysis.Count <= 2 || analysis.Count > 65) return 1;
 
             Span<byte> buffer = new byte[input.Length];
             return !Convert.TryFromBase64String(input, buffer, out int bytes2) ? 1 : 0;

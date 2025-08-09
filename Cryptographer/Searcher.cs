@@ -1,4 +1,5 @@
-﻿using Cryptographer.DecryptionMethods;
+﻿using Cryptographer.Classes;
+using Cryptographer.DecryptionMethods;
 using Cryptographer.Utils;
 using System;
 using System.Collections.Generic;
@@ -91,10 +92,48 @@ namespace Cryptographer
             return true;
         }
 
+        private static void SearchMethods(PriorityQueue<DecryptionNode, double> queue, DecryptionNode currentNode)
+        {
+            string lastMethod = currentNode.Parent.Method;
+            string newInput = currentNode.Text;
+
+            List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(newInput);
+
+            foreach (IDecryptionMethod method in methods)
+            {
+                string methodName = method.Name;
+
+                // these dont make sense to do twice in a row
+                if (lastMethod == methodName && disallowedTwice.Contains(methodName)) continue;
+
+                // check probability
+                double probability = method.CalculateProbability(newInput, analysis);
+                if (probability >= 0.9) continue;
+
+                List<string> outputs = method.Decrypt(newInput, analysis);
+
+                foreach (string output in outputs)
+                {
+                    if (!CheckOutput(output, newInput)) continue;
+                    seenInputs.Add(newInput);
+
+                    if (StringScorer.Score(output, analysis) > Constants.scoreBreakSearchThreshold)
+                    {
+                       // Console.WriteLine($"Possible Output: {output}");
+                        //break;
+                    }
+
+                    DecryptionNode newNode = new(output, (byte)(currentNode.Depth + 1), methodName, currentNode);
+                    queue.Enqueue(newNode, probability);
+                    currentNode.Children.Add(newNode);
+                }
+            }
+        }
+
         public static List<string> Search(string input)
         {
-            // use a priorityqueue alongside a CalculateProbability function
-            // probabilities < 0.1 dont get checked
+            // use a priority queue alongside a CalculateProbability function
+            // probabilities < 0.1 don't get checked
 
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
             PriorityQueue<DecryptionNode, double> queue = new();
@@ -104,45 +143,12 @@ namespace Cryptographer
             while (queue.Count > 0)
             {
                 DecryptionNode currentNode = queue.Dequeue();
-                
+
                 // conditions
                 if (currentNode.Depth > Constants.maxDepth) continue;
                 if (seenInputs.Contains(currentNode.Text) || currentNode.Parent == null) continue; // == null to stop annoyances
-              
-                string lastMethod = currentNode.Parent.Method;
-                string newInput = currentNode.Text;
 
-                List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(newInput);
-
-                foreach (IDecryptionMethod method in methods)
-                {
-                    string methodName = method.Name;
-
-                    // these dont make sense to do twice in a row
-                    if (lastMethod == methodName && disallowedTwice.Contains(methodName)) continue;
-
-                    // check probability
-                    double probability = method.CalculateProbability(newInput, analysis);
-                    if (probability >= 0.9) continue;
-
-                    List<string> outputs = method.Decrypt(newInput, analysis);
-
-                    foreach (string output in outputs)
-                    {
-                        if (!CheckOutput(output, newInput)) continue;
-                        seenInputs.Add(newInput);
-
-                        if (StringScorer.Score(output, analysis) > Constants.scoreBreakSearchThreshold)
-                        {
-                            Console.WriteLine($"Possible Output: {output}");
-                            //break;
-                        }
-
-                        DecryptionNode newNode = new(output, (byte)(currentNode.Depth + 1), methodName, currentNode);
-                        queue.Enqueue(newNode, probability);
-                        currentNode.Children.Add(newNode);
-                    }
-                }
+                SearchMethods(queue, currentNode);
             }
 
             List<string> results = new();

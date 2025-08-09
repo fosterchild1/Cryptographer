@@ -1,4 +1,4 @@
-namespace Cryptographer.DecryptionMethods
+namespace Cryptographer.Classes
 {
     public interface IDecryptionMethod
     {

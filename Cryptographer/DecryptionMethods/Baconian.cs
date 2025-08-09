@@ -1,4 +1,6 @@
-﻿using Cryptographer.Utils;
+﻿using Cryptographer.Classes;
+using Cryptographer.Utils;
+using System.Collections.Concurrent;
 using System.Text;
 
 namespace Cryptographer.DecryptionMethods
@@ -13,7 +15,7 @@ namespace Cryptographer.DecryptionMethods
         private string DecryptBacon(string input, string ah, string bah, Dictionary<string, string> dict)
         {
             string modifiedInput = input.Replace(ah, "A").Replace(bah, "B").Replace(" ", "");
-
+            ConcurrentQueue<DecryptionNode> queue = new();
 
             StringBuilder output = new();
             int length = modifiedInput.Length;
