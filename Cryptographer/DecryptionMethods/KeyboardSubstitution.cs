@@ -21,7 +21,7 @@ namespace Cryptographer.DecryptionMethods
             foreach (char c in input.ToCharArray())
             {
                 int idx = layout.IndexOf(c);
-                if (idx == -1) { output.Append(c); continue; }
+                if (idx == -1) return "";
 
                 output.Append(layout2[idx]);
             }
