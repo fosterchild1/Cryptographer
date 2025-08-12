@@ -49,7 +49,7 @@ namespace Cryptographer.DecryptionMethods
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
         {
             // no spaces just dots = analysis count 1
-            return (analysis.Count != 2 ? 0.9 : 0); // you meet this less frequently than stuff like binary, morse, baconian.
+            return (analysis.Count != 2 ? 1 : 0.2); // you meet this less frequently than stuff like binary, morse, baconian.
         }
 
         public string Name { get { return "Tap Code"; } }

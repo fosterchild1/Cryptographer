@@ -68,7 +68,8 @@ namespace Cryptographer
             new TapCode(),
             new DNA(),
             new Hexadecimal(),
-            new Base32()
+            new Base32(),
+            new ASCII(),
         };
 
         private static List<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution" };
@@ -133,7 +134,7 @@ namespace Cryptographer
         public static List<string> Search(string input)
         {
             // use a priority queue alongside a CalculateProbability function
-            // probabilities < 0.1 don't get checked
+            // probabilities > 0.9 don't get checked
 
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
             PriorityQueue<DecryptionNode, double> queue = new();

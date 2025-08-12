@@ -54,7 +54,7 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
         {
-            return (analysis.Count != 2 ? 0.9 : 0); // met less than binary/morse
+            return (analysis.Count != 2 ? 1 : 0.1); // met less than binary/morse
         }
 
         public string Name { get { return "Baconian"; } }
