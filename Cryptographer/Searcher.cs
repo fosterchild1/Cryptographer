@@ -97,9 +97,9 @@ namespace Cryptographer
         private static void SearchMethods(SearchQueue<DecryptionNode, double> queue, DecryptionNode currentNode)
         {
             string lastMethod = currentNode.Parent?.Method ?? "";
-            string newInput = currentNode.Text;
+            string input = currentNode.Text;
 
-            List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(newInput);
+            List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(input);
 
             foreach (IDecryptionMethod method in methods)
             {
@@ -109,18 +109,20 @@ namespace Cryptographer
                 if (lastMethod == methodName && disallowedTwice.Contains(methodName)) continue;
 
                 // check probability
-                double probability = method.CalculateProbability(newInput, analysis);
+                double probability = method.CalculateProbability(input, analysis);
                 if (probability >= 0.9) continue;
 
-                List<string> outputs = method.Decrypt(newInput, analysis);
+                List<string> outputs = method.Decrypt(input, analysis);
 
                 foreach (string output in outputs)
                 {
-                    if (!CheckOutput(output, newInput)) continue;;
+                    if (!CheckOutput(output, input)) continue;
 
-                    if (StringScorer.Score(output, analysis) > Constants.scorePrintThreshold)
+                    // TEMP
+                    List<KeyValuePair<char, int>> newAnalysis = FrequencyAnalysis.AnalyzeFrequency(output);
+                    if (StringScorer.Score(output, newAnalysis) > Constants.scorePrintThreshold)
                     {
-                       Console.WriteLine($"Possible Output: {output}");
+                        Console.WriteLine($"Possible Output: {output}");
                     }
 
                     DecryptionNode newNode = new(output, (byte)(currentNode.Depth + 1), methodName, currentNode);

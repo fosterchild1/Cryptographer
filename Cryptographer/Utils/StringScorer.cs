@@ -28,7 +28,7 @@ namespace Cryptographer.Utils
             float quadScore = 0.0f;
             for (int i = 0; i <= length; i++)
             {
-               string substr = modifiedInput.AsSpan(i, Math.Min(4, length - i)).ToString();
+                string substr = modifiedInput.AsSpan(i, Math.Min(4, length - i)).ToString();
 
                 float val = quadgrams.GetValueOrDefault(substr);
                 if (val == 0f) {
