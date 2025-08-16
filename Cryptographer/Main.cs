@@ -32,31 +32,11 @@ class Program
 
         Console.WriteLine("Working...");
 
-        List<string> outputs = Searcher.Search(input);
-
-        Dictionary<string, float> scoreDict = new();
-
-        foreach (string output in outputs)
-        {
-            float score = StringScorer.Score(output, FrequencyAnalysis.AnalyzeFrequency(output));
-            if (score < Constants.scorePrintThreshold) continue;
-            scoreDict[output] = score;
-        }
+        Searcher.Search(input);
 
         // :(
-        if (scoreDict.Count == 0)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("sorry, i wasn't able to find a meaningful decryption =(");
-            return;
-        }
-
-        Console.WriteLine("Possible outputs:");
-        foreach (KeyValuePair<string, float> output in scoreDict.OrderBy(kv => kv.Value))
-        {
-            Console.WriteLine($"{output.Key} ({output.Value})");
-        }
-
-        Console.Read();
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("sorry, i wasn't able to find a meaningful decryption =(");
+        Console.ReadKey();
     }
 }

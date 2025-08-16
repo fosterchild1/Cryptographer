@@ -94,7 +94,7 @@ namespace Cryptographer
             return true;
         }
 
-        private static void SearchMethods(CustomSearchQueue<DecryptionNode, double> queue, DecryptionNode currentNode)
+        private static void SearchMethods(SearchQueue<DecryptionNode, double> queue, DecryptionNode currentNode)
         {
             string lastMethod = currentNode.Parent?.Method ?? "";
             string newInput = currentNode.Text;
@@ -120,8 +120,7 @@ namespace Cryptographer
 
                     if (StringScorer.Score(output, analysis) > Constants.scorePrintThreshold)
                     {
-                       // Console.WriteLine($"Possible Output: {output}");
-                        //break;
+                       Console.WriteLine($"Possible Output: {output}");
                     }
 
                     DecryptionNode newNode = new(output, (byte)(currentNode.Depth + 1), methodName, currentNode);
@@ -132,7 +131,7 @@ namespace Cryptographer
             }
         }
 
-        public static List<string> Search(string input)
+        public static void Search(string input)
         {
             // use a priority queue alongside a CalculateProbability function
             // probabilities > 0.9 don't get checked
@@ -140,7 +139,7 @@ namespace Cryptographer
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
 
             int workers = Environment.ProcessorCount;
-            CustomSearchQueue<DecryptionNode, double> queue = new(workers);
+            SearchQueue<DecryptionNode, double> queue = new(workers);
             queue.Enqueue(root, 0);
 
             int active = 0;
@@ -157,7 +156,7 @@ namespace Cryptographer
                         if (!queue.TryDequeueBatch(out var batch))
                         {
                             if (queue.IsEmpty() && Volatile.Read(ref active) == 0) break;
-
+                            Thread.SpinWait(64);
                             continue;
                         }
 
@@ -167,6 +166,7 @@ namespace Cryptographer
                         {
                             foreach (var (node, _) in batch)
                             {
+                                if (node == null) continue;
                                 if (seenInputs.ContainsKey(node.Text) || node.Depth > Constants.maxDepth) continue;
                                 seenInputs.TryAdd(node.Text, 0);
 
@@ -195,10 +195,6 @@ namespace Cryptographer
                 }
                 throw;
             }
-
-            List<string> results = new();
-            root.GetLeaves(results);
-            return results;
         }
     }
 }

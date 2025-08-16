@@ -1,9 +1,11 @@
 using System.Collections;
+using System.Data.Common;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 
 // batched work stealing priority queue 
 // sorry about the name not being descriptive, i didnt want it to be long :(
-public class CustomSearchQueue<TElement, TPriority>
+public class SearchQueue<TElement, TPriority>
 {
     // thread-level queue
     private class LocalQueue
@@ -42,7 +44,7 @@ public class CustomSearchQueue<TElement, TPriority>
                     return false;
                 }
 
-                int batchSize = (int)MathF.Ceiling(queue.Count / 2f);
+                int batchSize = Math.Max((int)MathF.Ceiling(queue.Count / 2f), 32);
 
                 batch = new();
 
@@ -62,7 +64,7 @@ public class CustomSearchQueue<TElement, TPriority>
     private int workers_ = 1;
 
     // global queue
-    public CustomSearchQueue(int workerCount)
+    public SearchQueue(int workerCount)
     {
         workers_ = workerCount;
 
@@ -103,12 +105,36 @@ public class CustomSearchQueue<TElement, TPriority>
         // try on self first
         if (queues[index.Value].TryDequeueBatch(out batch)) return true;
 
-        // try stealing from others
+        // try stealing from the biggest
+        LocalQueue? bestQueue = null;
+        int maxCount = 0;
+
         for (int i = 0; i < workers_; i++)
         {
             if (i == index.Value) continue;
 
-            if (queues[i].TryDequeueBatch(out batch)) return true;
+            LocalQueue q = queues[i];
+            lock (q.lockObj)
+            {
+                int count = q.queue.Count;
+                if (count <= maxCount) continue;
+
+                maxCount = count;
+                bestQueue = q;
+            }
+        }
+
+        // none had items
+        if (bestQueue == null || maxCount == 0)
+        {
+            batch = default!;
+            return false;
+        }
+
+        // batch failed
+        if (bestQueue.TryDequeueBatch(out batch))
+        {
+            return batch.Count > 0;
         }
 
         batch = default!;
