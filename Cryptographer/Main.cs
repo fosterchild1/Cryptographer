@@ -25,7 +25,7 @@ class Program
         Console.Clear();
 
         argDict.TryGetValue("maxdepth", out string? depth);
-        Constants.maxDepth = float.TryParse(depth, out float floatDepth) ? floatDepth : ProjUtils.GetDepth();
+        Constants.maxDepth = byte.TryParse(depth, out byte byteDepth) ? byteDepth : ProjUtils.GetDepth();
 
         Console.Clear();
 

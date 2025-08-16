@@ -2,6 +2,7 @@
 using Cryptographer.DecryptionMethods;
 using Cryptographer.Utils;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -74,7 +75,7 @@ namespace Cryptographer
 
         private static List<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution" };
         // to not redo them
-        private static HashSet<string> seenInputs = new();
+        private static ConcurrentDictionary<string, byte> seenInputs = new();
 
         public static bool CheckOutput(string output, string input)
         {
@@ -83,7 +84,7 @@ namespace Cryptographer
                 return false;
 
             // TO NOT LOG IN CONSOLE
-            if (seenInputs.Contains(output))
+            if (seenInputs.ContainsKey(output))
                 return false;
 
             // hasnt changed
@@ -93,9 +94,9 @@ namespace Cryptographer
             return true;
         }
 
-        private static void SearchMethods(PriorityQueue<DecryptionNode, double> queue, DecryptionNode currentNode)
+        private static void SearchMethods(CustomSearchQueue<DecryptionNode, double> queue, DecryptionNode currentNode)
         {
-            string lastMethod = currentNode.Parent.Method;
+            string lastMethod = currentNode.Parent?.Method ?? "";
             string newInput = currentNode.Text;
 
             List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(newInput);
@@ -115,16 +116,16 @@ namespace Cryptographer
 
                 foreach (string output in outputs)
                 {
-                    if (!CheckOutput(output, newInput)) continue;
-                    seenInputs.Add(newInput);
+                    if (!CheckOutput(output, newInput)) continue;;
 
-                    if (StringScorer.Score(output, analysis) > Constants.scoreBreakSearchThreshold)
+                    if (StringScorer.Score(output, analysis) > Constants.scorePrintThreshold)
                     {
                        // Console.WriteLine($"Possible Output: {output}");
                         //break;
                     }
 
                     DecryptionNode newNode = new(output, (byte)(currentNode.Depth + 1), methodName, currentNode);
+
                     queue.Enqueue(newNode, probability);
                     currentNode.Children.Add(newNode);
                 }
@@ -137,19 +138,62 @@ namespace Cryptographer
             // probabilities > 0.9 don't get checked
 
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
-            PriorityQueue<DecryptionNode, double> queue = new();
-            queue.Enqueue(root, 1);
+
+            int workers = Environment.ProcessorCount;
+            CustomSearchQueue<DecryptionNode, double> queue = new(workers);
+            queue.Enqueue(root, 0);
+
+            int active = 0;
+            Task[] tasks = new Task[workers];
 
             // loop
-            while (queue.Count > 0)
+            for (int i = 0; i < workers; i++)
             {
-                DecryptionNode currentNode = queue.Dequeue();
+                tasks[i] = Task.Run(() =>
+                {
+                    while (true)
+                    {
+                        // get next batch
+                        if (!queue.TryDequeueBatch(out var batch))
+                        {
+                            if (queue.IsEmpty() && Volatile.Read(ref active) == 0) break;
 
-                // conditions
-                if (currentNode.Depth > Constants.maxDepth) continue;
-                if (seenInputs.Contains(currentNode.Text) || currentNode.Parent == null) continue; // == null to stop annoyances
+                            continue;
+                        }
 
-                SearchMethods(queue, currentNode);
+                        // expand batch
+                        Interlocked.Increment(ref active);
+                        try
+                        {
+                            foreach (var (node, _) in batch)
+                            {
+                                if (seenInputs.ContainsKey(node.Text) || node.Depth > Constants.maxDepth) continue;
+                                seenInputs.TryAdd(node.Text, 0);
+
+                                SearchMethods(queue, node);
+                            }
+                        }
+                        finally
+                        {
+                            Interlocked.Decrement(ref active);
+                        }
+
+                    }
+                });
+            }
+
+            // wait for all to finish
+            try
+            {
+                Task.WaitAll(tasks);
+            }
+            catch (AggregateException ae)
+            {
+                foreach (var ex in ae.InnerExceptions)
+                {
+                    Console.WriteLine("Task failed: " + ex);
+                }
+                throw;
             }
 
             List<string> results = new();
