@@ -96,7 +96,7 @@ class ProjUtils
 
         foreach (char c in input)
         {
-            if (string.IsNullOrWhiteSpace(c.ToString())) continue;
+            if (char.IsWhiteSpace(c)) continue;
 
             withoutWhitespaces.Append(c);
         }
