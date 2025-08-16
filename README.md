@@ -21,4 +21,3 @@ Running the app through the terminal offers better customization than double cli
 | input= | string | self-explanatory, does not need to be wrapped in quotes |
 | maxdepth= | int | sets the max depth |
 | score_print= | float | minimum score needed for an output to be logged at the end of the search |
-| score_breaksearch= | float | same as above, but it logs during the search |
