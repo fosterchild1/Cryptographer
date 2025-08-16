@@ -1,5 +1,6 @@
 ﻿using Cryptographer.Classes;
 using Cryptographer.Utils;
+using System;
 using System.Text;
 
 namespace Cryptographer.DecryptionMethods
@@ -9,13 +10,11 @@ namespace Cryptographer.DecryptionMethods
 
         private static Dictionary<string, string> MorseDictionary = MethodDictionaries.Morse;
 
-        private string DecryptMorse(string input, string dot, string dash)
+        private string DecryptMorse(string input)
         {
-            string modifiedInput = input.Replace(dot, ".").Replace(dash, "-").Replace("/", " / ");
-
             // split at each space
             StringBuilder output = new();
-            foreach (string morse in modifiedInput.Split(" "))
+            foreach (string morse in input.Split(" "))
             {
                 string? find;
                 MorseDictionary.TryGetValue(morse, out find);
@@ -30,23 +29,13 @@ namespace Cryptographer.DecryptionMethods
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
 
-            // they can be dash or dot
-            string c1 = analysis[0].Key.ToString();
-            string c2 = analysis[1].Key.ToString();
-
-            List<string> output = new()
-            {
-                DecryptMorse(input, c1, c2),
-                DecryptMorse(input, c2, c1),
-            };
-
-            return output;
+            return new() { DecryptMorse(input) };
         }
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
         {
             // morse with no space has to be bruteforced with a lot of cases
-            return (analysis.Count != 3 ? 1 : 0);
+            return (analysis.Count > 4 ? 1 : 0);
         }
 
         public string Name { get { return "Morse"; } }

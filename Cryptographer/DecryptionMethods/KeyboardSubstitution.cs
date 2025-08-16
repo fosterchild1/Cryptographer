@@ -50,8 +50,7 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
         {
-            // if it has just 2 characters, that means its either morse, bacon or binary. we already substitute the characters in those
-            // so we dont need to substitute layouts
+            // if it has just 2 characters, that means its either morse, bacon or binary.
             if (analysis.Count <= 2) return 1;
 
             return 0.85;

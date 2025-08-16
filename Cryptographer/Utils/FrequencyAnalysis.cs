@@ -6,12 +6,7 @@
 
         foreach (char c in input)
         {
-            if (!analysis.ContainsKey(c))
-            {
-                analysis[c] = 1;
-                continue;
-            }
-            analysis[c] += 1;
+            analysis[c] = analysis.GetValueOrDefault(c) + 1;
         }
 
         List<KeyValuePair<char, int>> kvpAnalysis = analysis.OrderByDescending(pair => pair.Value).ToList();
