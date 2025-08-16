@@ -77,29 +77,54 @@ public class SearchQueue<TElement, TPriority>
         index = new(() => Interlocked.Increment(ref counter) % workerCount);
     }
 
-    public void Enqueue(TElement item, TPriority priority)
+    /// <summary>
+    ///  Adds the specified element with associated priority to the <see cref="SearchQueue{TElement, TPriority}"/>.
+    /// </summary>
+    /// <param name="element">The element to add to the <see cref="SearchQueue{TElement, TPriority}"/>.</param>
+    /// <param name="priority">The priority with which to associate the new element.</param>
+    public void Enqueue(TElement element, TPriority priority)
     {
-        queues[index.Value].Enqueue(item, priority);
+        queues[index.Value].Enqueue(element, priority);
     }
 
-    public bool TryDequeue(out TElement item, out TPriority priority)
+    /// <summary>
+    ///  Removes the minimal element from the <see cref="SearchQueue{TElement, TPriority}"/>,
+    ///  and copies it to the <paramref name="element"/> parameter,
+    ///  and its associated priority to the <paramref name="priority"/> parameter.
+    /// </summary>
+    /// <param name="element">The removed element.</param>
+    /// <param name="priority">The priority associated with the removed element.</param>
+    /// <returns>
+    ///  <see langword="true"/> if the element is successfully removed;
+    ///  <see langword="false"/> if the <see cref="SearchQueue{TElement, TPriority}"/> is empty or it fails to remove.
+    /// </returns>
+    public bool TryDequeue(out TElement element, out TPriority priority)
     {
         // try on self first
-        if (queues[index.Value].TryDequeue(out item, out priority)) return true;
+        if (queues[index.Value].TryDequeue(out element, out priority)) return true;
 
         // try stealing from others
         for (int i = 0; i < workers_; i++)
         {
             if (i == index.Value) continue;
 
-            if (queues[i].TryDequeue(out item, out priority)) return true;
+            if (queues[i].TryDequeue(out element, out priority)) return true;
         }
 
-        item = default!;
+        element = default!;
         priority = default!;
         return false;
     }
 
+    /// <summary>
+    ///  Removes half of the minimal elements from the <see cref="SearchQueue{TElement, TPriority}"/>,
+    ///  and copies it and their priority to the <paramref name="batch"/> parameter,
+    /// </summary>
+    /// <param name="batch">List of tuples</param>
+    /// <returns>
+    ///  <see langword="true"/> if the elements are successfully removed;
+    ///  <see langword="false"/> if the <see cref="SearchQueue{TElement, TPriority}"/> is empty or it fails to remove.
+    /// </returns>
     public bool TryDequeueBatch(out List<(TElement, TPriority)> batch)
     {
         // try on self first
@@ -141,6 +166,10 @@ public class SearchQueue<TElement, TPriority>
         return false;
     }
 
+    /// <returns>
+    /// <see langword="true"/> if the <see cref="SearchQueue{TElement, TPriority}"/> is empty;
+    /// <see langword="false"/> if it isn't.
+    /// </returns>
     public bool IsEmpty()
     {
         for (int i = 0; i < workers_; i++)
