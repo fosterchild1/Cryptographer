@@ -28,14 +28,15 @@ namespace Cryptographer.Utils
             float quadScore = 0.0f;
             for (int i = 0; i <= length; i++)
             {
-                // .TryGetValue is less performant, because most times the substr is not present in the dictionary
-                string substr = modifiedInput.Substring(i, Math.Min(4, length - i));
-                if (!quadgrams.ContainsKey(substr)) {
-                    quadScore -= input.Length; // penalize by str length
+               string substr = modifiedInput.AsSpan(i, Math.Min(4, length - i)).ToString();
+
+                float val = quadgrams.GetValueOrDefault(substr);
+                if (val == 0f) {
+                    quadScore -= length; // penalize by str length
                     continue; 
                 }
 
-                quadScore += quadgrams[substr] * input.Length / 3;
+                quadScore += val * length / 3.5f;
             }
 
             return quadScore;
