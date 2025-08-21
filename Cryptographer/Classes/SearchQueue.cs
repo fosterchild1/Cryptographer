@@ -78,7 +78,7 @@ public class SearchQueue<TElement, TPriority>
     }
 
     /// <summary>
-    ///  Adds the specified element with associated priority to the <see cref="SearchQueue{TElement, TPriority}"/>.
+    ///  Adds the specified element with associated priority to one <see cref="LocalQueue"/>.
     /// </summary>
     /// <param name="element">The element to add to the <see cref="SearchQueue{TElement, TPriority}"/>.</param>
     /// <param name="priority">The priority with which to associate the new element.</param>
@@ -88,7 +88,7 @@ public class SearchQueue<TElement, TPriority>
     }
 
     /// <summary>
-    ///  Removes the minimal element from the <see cref="SearchQueue{TElement, TPriority}"/>,
+    ///  Removes the minimal element from one <see cref="LocalQueue"/>,
     ///  and copies it to the <paramref name="element"/> parameter,
     ///  and its associated priority to the <paramref name="priority"/> parameter.
     /// </summary>
@@ -117,7 +117,7 @@ public class SearchQueue<TElement, TPriority>
     }
 
     /// <summary>
-    ///  Removes half of the minimal elements from the <see cref="SearchQueue{TElement, TPriority}"/>,
+    ///  Removes half of the minimal elements from one <see cref="LocalQueue"/>,
     ///  and copies it and their priority to the <paramref name="batch"/> parameter,
     /// </summary>
     /// <param name="batch">List of tuples</param>

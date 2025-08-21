@@ -28,11 +28,14 @@ namespace Cryptographer
             new Hexadecimal(),
             new Base32(),
             new ASCII(),
+            new Octal(),
         };
 
         private static List<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution" };
         // to not redo them
         private static ConcurrentDictionary<string, byte> seenInputs = new();
+
+        public static bool success = false;
 
         public static bool CheckOutput(string output, string input)
         {
@@ -80,6 +83,7 @@ namespace Cryptographer
                     if (StringScorer.Score(output, newAnalysis) > Constants.scorePrintThreshold)
                     {
                         Console.WriteLine($"Possible Output: {output}");
+                        success = true;
                     }
 
                     DecryptionNode newNode = new(output, (byte)(currentNode.Depth + 1), methodName, currentNode);

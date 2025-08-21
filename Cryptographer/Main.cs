@@ -32,9 +32,11 @@ class Program
 
         Console.WriteLine("Working...");
 
-        Searcher.Search(input);
+        Searcher.Search(input ?? "");
 
         // :(
+        if (Searcher.success) { Console.ReadKey(); return; }
+
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("sorry, i wasn't able to find a meaningful decryption =(");
         Console.ReadKey();
