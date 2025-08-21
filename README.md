@@ -6,11 +6,12 @@ A Program that deciphers encoded strings, even if they are behind multiple encry
 | Supported ciphers | Supported ciphers |
 | ---  | --- |
 | Reverse | Binary |
+| DNA | Octal |
 | Atbash | Hexadecimal |
 | Baconian | ASCII |
 | Morse | Base64 |
 | Keyboard Substitution | Base32 |
-| Tap Code | DNA |
+| Tap Code |  |
 
 # Console Arguments
 Running the app through the terminal offers better customization than double clicking the .exe.
