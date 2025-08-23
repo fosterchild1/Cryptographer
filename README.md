@@ -10,8 +10,8 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | Atbash | Hexadecimal |
 | Baconian | ASCII |
 | Morse | Base64 |
-| Keyboard Substitution | Base32 |
-| Tap Code |  |
+| Baudot | Base32 |
+| Tap Code | Keyboard Substitution |
 
 # Console Arguments
 Running the app through the terminal offers better customization than double clicking the .exe.
