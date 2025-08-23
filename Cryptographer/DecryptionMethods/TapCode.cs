@@ -8,7 +8,7 @@ namespace Cryptographer.DecryptionMethods
     public class TapCode : IDecryptionMethod
     {
 
-        private static List<List<string>> TapDictionary = MethodDictionaries.TapCode;
+        private List<List<string>> TapDictionary = MethodDictionaries.TapCode;
 
         private string DecryptTap(string input, string space)
         {

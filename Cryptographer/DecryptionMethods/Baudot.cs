@@ -8,7 +8,7 @@ namespace Cryptographer.DecryptionMethods
     public class Baudot : IDecryptionMethod
     {
 
-        private static Dictionary<string, char> BaudotDictionary = MethodDictionaries.Baudot;
+        private Dictionary<string, char> BaudotDictionary = MethodDictionaries.Baudot;
 
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {

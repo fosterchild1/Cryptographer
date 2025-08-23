@@ -29,6 +29,7 @@ namespace Cryptographer
             new Base32(),
             new ASCII(),
             new Octal(),
+            new Baudot(),
         };
 
         private static List<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution" };

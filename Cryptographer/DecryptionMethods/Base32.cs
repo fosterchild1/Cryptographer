@@ -7,8 +7,8 @@ namespace Cryptographer.DecryptionMethods
 {
     public class Base32 : IDecryptionMethod
     {
-        private static Dictionary<char, int> Base32Map = MethodDictionaries.Base32Map;
-        private static bool TryFromBase32String(string input, out byte[]? output)
+        private Dictionary<char, int> Base32Map = MethodDictionaries.Base32Map;
+        private bool TryFromBase32String(string input, out byte[]? output)
         {
             output = null;
 

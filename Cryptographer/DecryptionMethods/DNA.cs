@@ -6,7 +6,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public class DNA : IDecryptionMethod
     {
-        private static Dictionary<string, string> DNADictionary = MethodDictionaries.DNA;
+        private Dictionary<string, string> DNADictionary = MethodDictionaries.DNA;
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
             if (analysis.Count != 4) return new List<string>();

@@ -6,7 +6,7 @@ namespace Cryptographer.DecryptionMethods
 
     public class Binary : IDecryptionMethod
     {
-        public string DecryptBinary(string input)
+        private string DecryptBinary(string input)
         {
             input = input.Replace(" ", "");
             int length = input.Length;

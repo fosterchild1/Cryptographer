@@ -9,8 +9,8 @@ namespace Cryptographer.DecryptionMethods
     {
 
         // baconian has TWO!! dictionaries!!
-        private static Dictionary<string, string> Baconian26 = MethodDictionaries.Baconian26;
-        private static Dictionary<string, string> Baconian24 = MethodDictionaries.Baconian24;
+        private Dictionary<string, string> Baconian26 = MethodDictionaries.Baconian26;
+        private Dictionary<string, string> Baconian24 = MethodDictionaries.Baconian24;
 
         private string DecryptBacon(string input, string ah, string bah, Dictionary<string, string> dict)
         {

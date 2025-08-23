@@ -8,7 +8,7 @@ namespace Cryptographer.DecryptionMethods
     public class Morse : IDecryptionMethod
     {
 
-        private static Dictionary<string, string> MorseDictionary = MethodDictionaries.Morse;
+        private Dictionary<string, string> MorseDictionary = MethodDictionaries.Morse;
 
         private string DecryptMorse(string input)
         {

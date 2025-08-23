@@ -1,10 +1,5 @@
 ﻿using Cryptographer;
-using Cryptographer.DecryptionMethods;
 using Cryptographer.Utils;
-using Microsoft.Win32.SafeHandles;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.Reflection;
 
 class Program
 {
