@@ -7,18 +7,32 @@ namespace Cryptographer.DecryptionMethods
 {
     public class Octal : IDecryptionMethod
     {
+        private string ConvertOctal(string oct)
+        {
+            try
+            {
+                int val = Convert.ToInt32(oct, 8);
+                return val.ToString();
+            }
+            catch
+            {
+                return "";
+            }
+        }
+
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
             StringBuilder output = new();
             foreach (string s in input.Split(" "))
             {
                 if (!int.TryParse(s, out int integer)) return new();
-                if (integer < 0 || integer > 255) return new();
 
-                int dec = Convert.ToInt32(s, 8);
-                output.Append((char)dec);
+                string dec = ConvertOctal(s);
+                if (dec == "") return new();
+
+                output.Append(dec);
             }
-
+            
             return new() { output.ToString() };
         }
 

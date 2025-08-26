@@ -9,7 +9,7 @@ namespace Cryptographer.DecryptionMethods
         private Dictionary<string, string> DNADictionary = MethodDictionaries.DNA;
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
-            if (analysis.Count != 4) return new List<string>();
+            input = input.Replace(" ", "");
 
             int length = input.Length;
             StringBuilder output = new();
@@ -30,7 +30,9 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
         {
-            return (analysis.Count != 4 ? 1 : 0);
+            if (analysis.Count > 5 || analysis.Count <= 2) return 1;
+
+            return 0;
         }
 
         public string Name { get { return "DNA"; } }
