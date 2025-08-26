@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +10,7 @@ namespace Cryptographer.Utils
 {
     internal class MethodDictionaries
     {
+        // Morse Code
         public static Dictionary<string, string> Morse = new()
         {
             ["/"] = " ", [ "-----"] = "0", [".----"] = "1", ["..---"] = "2", ["...--"] = "3",
@@ -22,6 +25,7 @@ namespace Cryptographer.Utils
             ["-.--.-"] = ")"
         };
 
+        // Baconian
         public static Dictionary<string, string> Baconian26 = new()
         {
             ["AAAAA"] = "A", ["AAAAB"] = "B", ["AAABA"] = "C", ["AAABB"] = "D", ["AABAA"] = "E",
@@ -42,12 +46,14 @@ namespace Cryptographer.Utils
             ["BABBB"] = "Z"
         };
 
+        // Keyboard substituition
         // even though qwertz and azerty exist, they only change the position of 2 letters and are less likely to have a meaningful impact
         public static string QwertyLayout = """`1234567890-=qwertyuiop[]\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?""";
         public static string DvorakLayout = """`1234567890[]',.pyfgcrl/=\aoeuidhtns-;qjkxbmwvz~!@#$%^&*(){}"<>PYFGCRL?+|AOEUIDHTNS_:QJKXBMWVZ""";
         public static string ColemakLayout = """`1234567890-=qwfpgjluy;[]\arstdhneio'zxcvbkm,./~!@#$%^&*()_+QWFPGJLUY:{}|ARSTDHNEIO"ZXCVBKM<>?""";
         public static string WorkmanLayout = """`1234567890-=qdrwbjfup;[]\ashtgyneoi'zxmcvkl,./~!@#$%^&*()_+QDRWBJFUP:{}|ASHTGYNEOI"ZXMCVKL<>?""";
 
+        // Tap code
         public static List<List<string>> TapCode = new()
         {
             new List<string>() {"A", "B", "C", "D", "E"},
@@ -57,6 +63,7 @@ namespace Cryptographer.Utils
             new List<string>() {"V", "W", "X", "Y", "Z"}
         };
 
+        // DNA cipher
         public static Dictionary<string, string> DNA = new()
         {
             ["AAA"] = "A", ["AAC"] = "B", ["AAG"] = "C", ["AAT"] = "D", ["ACA"] = "E",
@@ -67,6 +74,7 @@ namespace Cryptographer.Utils
             ["CGC"] = "Z", ["CGG"] = " "
         };
 
+        // Base32
         public static Dictionary<char, int> Base32Map = new()
         {
             {'A', 0}, {'B', 1}, {'C', 2}, {'D', 3}, {'E', 4}, {'F', 5}, {'G', 6}, {'H', 7},
@@ -75,6 +83,7 @@ namespace Cryptographer.Utils
             {'Y', 24}, {'Z', 25}, {'2', 26}, {'3', 27}, {'4', 28}, {'5', 29}, {'6', 30}, {'7', 31}
         };
 
+        // Baudot
         public static Dictionary<string, char> Baudot = new()
         {
             // letters
@@ -96,5 +105,67 @@ namespace Cryptographer.Utils
             ["00000"] = '\0', ["01000"] = '\n'
             // ["11011"] = "swicth to figures", ["11111"] = "switch to letters"
         };
+
+        // Trilateral
+        public static Dictionary<string, char> TrilateralNormal = new() 
+        {
+            ["AAA"] = 'A',
+            ["AAB"] = 'B',
+            ["AAC"] = 'C',
+            ["ABA"] = 'D',
+            ["ABB"] = 'E',
+            ["ABC"] = 'F',
+            ["ACA"] = 'G',
+            ["ACB"] = 'H',
+            ["ACC"] = 'I',
+            ["BAA"] = 'J',
+            ["BAB"] = 'K',
+            ["BAC"] = 'L',
+            ["BBA"] = 'M',
+            ["BBB"] = 'N',
+            ["BBC"] = 'O',
+            ["BCA"] = 'P',
+            ["BCB"] = 'Q',
+            ["BCC"] = 'R',
+            ["CAA"] = 'S',
+            ["CAB"] = 'T',
+            ["CAC"] = 'U',
+            ["CBA"] = 'V',
+            ["CBB"] = 'W',
+            ["CBC"] = 'X',
+            ["CCA"] = 'Y',
+            ["CCB"] = 'Z',
+            ["CCC"] = ' '
+        };
+
+        public static Dictionary<string, char> TrilateralSwapped = new()
+        {
+            ["AAA"] = ' ',
+            ["AAB"] = 'A',
+            ["AAC"] = 'B',
+            ["ABA"] = 'C',
+            ["ABB"] = 'D',
+            ["ABC"] = 'E',
+            ["ACA"] = 'F',
+            ["ACB"] = 'G',
+            ["ACC"] = 'H',
+            ["BAA"] = 'I',
+            ["BAB"] = 'J',
+            ["BAC"] = 'K',
+            ["BBA"] = 'L',
+            ["BBB"] = 'M',
+            ["BBC"] = 'N',
+            ["BCA"] = 'O',
+            ["BCB"] = 'P',
+            ["BCC"] = 'Q',
+            ["CAA"] = 'R',
+            ["CAB"] = 'S',
+            ["CAC"] = 'T',
+            ["CBA"] = 'U',
+            ["CBB"] = 'V',
+            ["CCA"] = 'X',
+            ["CCB"] = 'Y',
+            ["CCC"] = 'Z'
+        }; // the space in this one is swapped, and also P is the same as W for some reason. i chose P cause its more common
     }
 }
