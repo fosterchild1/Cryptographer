@@ -9,9 +9,10 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | DNA | Octal |
 | Atbash | Hexadecimal |
 | Baconian | ASCII |
-| Morse | Base64 |
-| Baudot | Base32 |
-| Tap Code | Keyboard Substitution |
+| Trilateral | Base64 |
+| Morse | Base32 |
+| Baudot | Keyboard Substitution |
+| Tap Code | |
 
 # Console Arguments
 Running the app through the terminal offers better customization than double clicking the .exe.
