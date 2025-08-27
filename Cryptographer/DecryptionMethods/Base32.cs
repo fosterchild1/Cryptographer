@@ -31,7 +31,7 @@ namespace Cryptographer.DecryptionMethods
                 if (bitsLeft >= 8)
                 {
                     bitsLeft -= 8;
-                    result.Add((byte)((buffer >> bitsLeft) & 0xFF));
+                    result.Add((byte)((buffer >> bitsLeft) & 0xFF)); // only first 8 bits
                 }
             }
 

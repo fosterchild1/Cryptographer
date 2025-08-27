@@ -27,6 +27,7 @@ namespace Cryptographer
             new DNA(),
             new Hexadecimal(),
             new Base32(),
+            new Base85(),
             new ASCII(),
             new Octal(),
             new Baudot(),
