@@ -76,11 +76,11 @@ namespace Cryptographer
                 if (probability >= 0.9) continue;
 
                 List<string> outputs = method.Decrypt(input, analysis);
-
+                bool prnted = false;
                 foreach (string output in outputs)
                 {
                     if (!CheckOutput(output, input)) continue;
-
+                   
                     // TEMP
                     List<KeyValuePair<char, int>> newAnalysis = FrequencyAnalysis.AnalyzeFrequency(output);
                     if (StringScorer.Score(output, newAnalysis) > Constants.scorePrintThreshold)
