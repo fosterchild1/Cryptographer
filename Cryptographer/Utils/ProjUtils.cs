@@ -47,6 +47,7 @@ class ProjUtils
         return input;
     }
 
+    [Obsolete]
     public static byte GetDepth()
     {
         Console.WriteLine("Please input the maximum depth of the search:");

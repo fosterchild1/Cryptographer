@@ -10,7 +10,7 @@ namespace Cryptographer.Utils
     {
         public static float scorePrintThreshold = 10;
 
-        public static byte maxDepth = 13;
+        public static byte maxDepth = 24;
 
         public static void Set(Dictionary<string, string?> args)
         {
