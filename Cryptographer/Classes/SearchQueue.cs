@@ -44,7 +44,7 @@ public class SearchQueue<TElement, TPriority>
                     return false;
                 }
 
-                int batchSize = Math.Max((int)MathF.Ceiling(queue.Count / 2f), 32);
+                int batchSize = Math.Min((int)MathF.Ceiling(queue.Count / 2f), 32);
 
                 batch = new();
 
