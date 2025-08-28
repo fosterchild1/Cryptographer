@@ -1,7 +1,4 @@
 ﻿using Cryptographer.Classes;
-using Cryptographer.Utils;
-using System.Runtime.Versioning;
-using System.Text;
 
 // placeholder
 namespace Cryptographer.DecryptionMethods

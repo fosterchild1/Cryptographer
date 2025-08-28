@@ -1,8 +1,6 @@
 ﻿using Cryptographer.Classes;
 using Cryptographer.Utils;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Cryptographer.DecryptionMethods
 {

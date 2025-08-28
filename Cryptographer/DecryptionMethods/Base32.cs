@@ -1,6 +1,5 @@
 ﻿using Cryptographer.Classes;
 using Cryptographer.Utils;
-using System.Reflection;
 using System.Text;
 
 namespace Cryptographer.DecryptionMethods
