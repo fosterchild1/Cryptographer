@@ -35,6 +35,7 @@ public class SearchQueue<TElement, TPriority>
 
         }
 
+        [Obsolete("Slower, because since its a priority queue if it hits a priority 0 it still has to process everything left in the batch.")]
         public bool TryDequeueBatch(out List<(TElement, TPriority)> batch)
         {
             lock (lockObj) {
@@ -125,6 +126,7 @@ public class SearchQueue<TElement, TPriority>
     ///  <see langword="true"/> if the elements are successfully removed;
     ///  <see langword="false"/> if the <see cref="SearchQueue{TElement, TPriority}"/> is empty or it fails to remove.
     /// </returns>
+    [Obsolete("Slower, because since its a priority queue if it hits a priority 0 it still has to process everything left in the batch.")]
     public bool TryDequeueBatch(out List<(TElement, TPriority)> batch)
     {
         // try on self first
@@ -165,7 +167,18 @@ public class SearchQueue<TElement, TPriority>
         batch = default!;
         return false;
     }
-
+    public int[] GetQueueSizes()
+    {
+        int[] sizes = new int[workers_];
+        for (int i = 0; i < workers_; i++)
+        {
+            lock (queues[i].lockObj)
+            {
+                sizes[i] = queues[i].queue.Count;
+            }
+        }
+        return sizes;
+    }
     /// <returns>
     /// <see langword="true"/> if the <see cref="SearchQueue{TElement, TPriority}"/> is empty;
     /// <see langword="false"/> if it isn't.

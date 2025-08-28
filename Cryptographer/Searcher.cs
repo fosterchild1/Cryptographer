@@ -5,16 +5,19 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace Cryptographer
 {
     internal class Searcher
     {
-        private static List<IDecryptionMethod> methods = new()
+        private List<IDecryptionMethod> methods = new()
         {
             new Reverse(),
             new Atbash(),
@@ -34,13 +37,14 @@ namespace Cryptographer
             new Trilateral(),
         };
 
-        private static List<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution" };
+        private HashSet<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution" };
         // to not redo them
-        private static ConcurrentDictionary<string, byte> seenInputs = new();
+        private ConcurrentDictionary<string, byte> seenInputs = new();
 
         public static bool success = false;
 
-        public static bool CheckOutput(string output, string input)
+        public SearchQueue<DecryptionBranch, double> queue = new(Environment.ProcessorCount);
+        private bool CheckOutput(string output, string input)
         {
             // aka useless string
             if (ProjUtils.RemoveWhitespaces(output).Length <= 3)
@@ -57,56 +61,57 @@ namespace Cryptographer
             return true;
         }
 
-        private static void SearchMethods(SearchQueue<DecryptionNode, double> queue, DecryptionNode currentNode)
+        private void ExpandNode(DecryptionNode node, List<KeyValuePair<char, int>> analysis)
         {
-            string lastMethod = currentNode.Parent?.Method ?? "";
-            string input = currentNode.Text;
-
-            List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(input);
+            string input = node.Text;
+            string lastMethod = node.Method;
 
             foreach (IDecryptionMethod method in methods)
             {
                 string methodName = method.Name;
+                if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
 
-                // these dont make sense to do twice in a row
-                if (lastMethod == methodName && disallowedTwice.Contains(methodName)) continue;
-
-                // check probability
                 double probability = method.CalculateProbability(input, analysis);
-                if (probability >= 0.9) continue;
+                if (probability > 0.9) continue;
 
-                List<string> outputs = method.Decrypt(input, analysis);
-
-                foreach (string output in outputs)
-                {
-                    if (!CheckOutput(output, input)) continue;
-                   
-                    // TEMP
-                    List<KeyValuePair<char, int>> newAnalysis = FrequencyAnalysis.AnalyzeFrequency(output);
-                    if (StringScorer.Score(output, newAnalysis) > Constants.scorePrintThreshold)
-                    {
-                        Console.WriteLine($"Possible Output: {output}");
-                        success = true;
-                    }
-
-                    DecryptionNode newNode = new(output, (byte)(currentNode.Depth + 1), methodName, currentNode);
-
-                    queue.Enqueue(newNode, probability);
-                    currentNode.Children.Add(newNode);
-                }
+                queue.Enqueue(new(node, probability, method), probability);
             }
         }
 
-        public static void Search(string input)
+        private void ExpandBranch(DecryptionBranch branch)
+        {
+            DecryptionNode branchParent = branch.Parent;
+            byte depth = branchParent.Depth;
+            string parentText = branchParent.Text;
+
+            List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(parentText);
+
+            List<string> outputs = branch.Method.Decrypt(parentText, analysis);
+            foreach (string output in outputs)
+            {
+                if (!CheckOutput(output, parentText)) continue;
+                seenInputs.TryAdd(output, 0);
+
+                // TEMP
+                List<KeyValuePair<char, int>> newAnalysis = FrequencyAnalysis.AnalyzeFrequency(output);
+                if (StringScorer.Score(output, newAnalysis) > Constants.scorePrintThreshold)
+                {
+                    Console.WriteLine($"Possible Output: {output}");
+                    success = true;
+                }
+                DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
+                ExpandNode(node, newAnalysis);
+            }
+        }
+        
+        public void Search(string input)
         {
             // use a priority queue alongside a CalculateProbability function
             // probabilities > 0.9 don't get checked
-
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
+            ExpandNode(root, FrequencyAnalysis.AnalyzeFrequency(input));
 
             int workers = Environment.ProcessorCount;
-            SearchQueue<DecryptionNode, double> queue = new(workers);
-            queue.Enqueue(root, 0);
 
             int active = 0;
             Task[] tasks = new Task[workers];
@@ -119,7 +124,7 @@ namespace Cryptographer
                     while (true)
                     {
                         // get next batch
-                        if (!queue.TryDequeueBatch(out var batch))
+                        if (!queue.TryDequeue(out DecryptionBranch branch, out double _))
                         {
                             if (queue.IsEmpty() && Volatile.Read(ref active) == 0) break;
                             Thread.SpinWait(64);
@@ -130,14 +135,10 @@ namespace Cryptographer
                         Interlocked.Increment(ref active);
                         try
                         {
-                            foreach (var (node, _) in batch)
-                            {
-                                if (node == null) continue;
-                                if (seenInputs.ContainsKey(node.Text) || node.Depth > Constants.maxDepth) continue;
-                                seenInputs.TryAdd(node.Text, 0);
+                            DecryptionNode node = branch.Parent;
+                            if (node.Depth > Constants.maxDepth) continue;
 
-                                SearchMethods(queue, node);
-                            }
+                            ExpandBranch(branch);
                         }
                         finally
                         {
@@ -155,7 +156,7 @@ namespace Cryptographer
             }
             catch (AggregateException ae)
             {
-                foreach (var ex in ae.InnerExceptions)
+                foreach (Exception ex in ae.InnerExceptions)
                 {
                     Console.WriteLine("Task failed: " + ex);
                 }

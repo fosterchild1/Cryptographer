@@ -22,7 +22,9 @@ class Program
 
         Console.Clear();
         Console.WriteLine("Working...");
-        Searcher.Search(input ?? "");
+
+        Searcher searcher = new();
+        searcher.Search(input ?? "");
 
         if (Searcher.success) { Console.ReadKey(); return; }
 
