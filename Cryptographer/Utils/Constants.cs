@@ -12,12 +12,25 @@ namespace Cryptographer.Utils
 
         public static byte maxDepth = 24;
 
+        private static void TryParse<T>(Dictionary<string, string?> args, string key, ref T arg)
+        {
+            if (!args.TryGetValue(key, out var str)) return;
+
+            T converted = arg;
+            try
+            {
+                converted = (T)Convert.ChangeType(str!, typeof(T));
+            }
+            catch { }
+
+            arg = converted;
+        }
+
         public static void Set(Dictionary<string, string?> args)
         {
 
-            float.TryParse(args.GetValueOrDefault("score_print"), out scorePrintThreshold);
-
-            byte.TryParse(args.GetValueOrDefault("maxdepth"), out maxDepth);
+            TryParse(args, "score_print", ref scorePrintThreshold);
+            TryParse(args, "maxdepth", ref maxDepth);
         }
     }
 }
