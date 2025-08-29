@@ -23,4 +23,4 @@ Running the app through the terminal offers better customization than double cli
 | input= | string | self-explanatory, does not need to be wrapped in quotes |
 | maxdepth= | int | sets the max depth |
 | score_print= | float | minimum score needed for an output to be logged |
-| threads= | byte | amount of cpu cores to be used by the program |
+| threads= | byte | amount of cpu cores to be used by the program. by default, this is equal to the amount of cores you have |
