@@ -25,6 +25,7 @@ namespace Cryptographer
             new Octal(),
             new Baudot(),
             new Trilateral(),
+            new ROT47(),
         };
 
         private HashSet<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution" };
@@ -101,7 +102,7 @@ namespace Cryptographer
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
             ExpandNode(root, FrequencyAnalysis.AnalyzeFrequency(input));
 
-            int workers = Environment.ProcessorCount;
+            int workers = Constants.threadCount;
 
             int active = 0;
             Task[] tasks = new Task[workers];

@@ -3,7 +3,6 @@ using System.Text;
 
 namespace Cryptographer.DecryptionMethods
 {
-
     public class Atbash : IDecryptionMethod
     {
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
@@ -32,7 +31,7 @@ namespace Cryptographer.DecryptionMethods
                 sb.Append((char)c);
             }
 
-           return new List<string>() { sb.ToString() };
+            return new List<string>() { sb.ToString() };
         }
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
