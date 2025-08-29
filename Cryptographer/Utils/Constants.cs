@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Cryptographer.Utils
+﻿namespace Cryptographer.Utils
 {
     internal class Constants
     {
         public static float scorePrintThreshold = 10;
 
         public static byte maxDepth = 24;
+
+        public static byte threadCount = (byte)Environment.ProcessorCount;
 
         private static void TryParse<T>(Dictionary<string, string?> args, string key, ref T arg)
         {
@@ -31,6 +27,7 @@ namespace Cryptographer.Utils
 
             TryParse(args, "score_print", ref scorePrintThreshold);
             TryParse(args, "maxdepth", ref maxDepth);
+            TryParse(args, "threads", ref threadCount);
         }
     }
 }

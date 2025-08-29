@@ -33,7 +33,7 @@ namespace Cryptographer
 
         public static bool success = false;
 
-        public SearchQueue<DecryptionBranch, double> queue = new(Environment.ProcessorCount);
+        public SearchQueue<DecryptionBranch, double> queue = new(Constants.threadCount);
         private bool CheckOutput(string output, string input)
         {
             // aka useless string
@@ -93,7 +93,7 @@ namespace Cryptographer
                 ExpandNode(node, newAnalysis);
             }
         }
-        
+
         public void Search(string input)
         {
             // use a priority queue alongside a CalculateProbability function
