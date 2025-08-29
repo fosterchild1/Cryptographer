@@ -13,6 +13,7 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | Morse | Base64 |
 | Baudot | Base85 |
 | Tap Code | Keyboard Substitution |
+| ROT-47 | |
 
 # Console Arguments
 Running the app through the terminal offers better customization than double clicking the .exe.
