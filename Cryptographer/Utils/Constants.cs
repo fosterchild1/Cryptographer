@@ -8,7 +8,7 @@
 
         public static byte threadCount = (byte)Environment.ProcessorCount;
 
-        private static void TryParse<T>(Dictionary<string, string?> args, string key, ref T arg)
+        private static void TryParse<T>(Dictionary<string, string> args, string key, ref T arg)
         {
             if (!args.TryGetValue(key, out var str)) return;
 
@@ -22,8 +22,9 @@
             arg = converted;
         }
 
-        public static void Set(Dictionary<string, string?> args)
+        public static void Set(Dictionary<string, string> args)
         {
+            if (args.Count == 0) return;
 
             TryParse(args, "score_print", ref scorePrintThreshold);
             TryParse(args, "maxdepth", ref maxDepth);

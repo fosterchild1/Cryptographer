@@ -9,26 +9,18 @@ namespace Cryptographer
     {
         private List<IDecryptionMethod> methods = new()
         {
-            new Reverse(),
-            new Atbash(),
-            new Base64(),
-            new Morse(),
-            new Baconian(),
-            new KeyboardSubstitution(),
-            new Binary(),
-            new TapCode(),
-            new DNA(),
-            new Hexadecimal(),
-            new Base32(),
-            new Base85(),
-            new ASCII(),
-            new Octal(),
-            new Baudot(),
-            new Trilateral(),
-            new ROT47(),
+            new Reverse(), new Atbash(), new Base64(), new Morse(), new Baconian(),
+            new KeyboardSubstitution(), new Binary(), new TapCode(), new DNA(),
+            new Hexadecimal(), new Base32(), new Base85(), new ASCII(), new Octal(),
+            new Baudot(), new Trilateral(), new ROT47(),
         };
 
-        private HashSet<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution" };
+        private List<IDecryptionMethod> fallbackMethods = new()
+        {
+            new Caesar(),
+        };
+
+        private HashSet<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution", "Caesar" };
         // to not redo them
         private ConcurrentDictionary<string, byte> seenInputs = new();
 
@@ -52,12 +44,14 @@ namespace Cryptographer
             return true;
         }
 
-        private void ExpandNode(DecryptionNode node, List<KeyValuePair<char, int>> analysis)
+        private void ExpandNode(DecryptionNode node, List<KeyValuePair<char, int>> analysis, bool fallback = false)
         {
             string input = node.Text;
             string lastMethod = node.Method;
 
-            foreach (IDecryptionMethod method in methods)
+            List<IDecryptionMethod> chosen = (fallback ? fallbackMethods : methods);
+
+            foreach (IDecryptionMethod method in chosen)
             {
                 string methodName = method.Name;
                 if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
@@ -67,6 +61,7 @@ namespace Cryptographer
 
                 queue.Enqueue(new(node, probability, method), probability);
             }
+
         }
 
         private void ExpandBranch(DecryptionBranch branch)
@@ -93,6 +88,9 @@ namespace Cryptographer
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
                 ExpandNode(node, newAnalysis);
             }
+
+            if (!(queue.TryPeek(out DecryptionBranch _, out double priority) && priority > 0.7)) return;
+            ExpandNode(branchParent, analysis, true); // run fallbacks
         }
 
         public void Search(string input)

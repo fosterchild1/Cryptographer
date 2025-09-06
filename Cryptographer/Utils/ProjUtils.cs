@@ -11,12 +11,13 @@ class ProjUtils
     {
         StringBuilder read = new StringBuilder();
         StreamWriter stdout = new StreamWriter(Console.OpenStandardOutput());
+        stdout.AutoFlush = true;
 
         ConsoleKeyInfo key;
 
         while (true)
         {
-            key = Console.ReadKey();
+            key = Console.ReadKey(true);
 
             if (key.Key == ConsoleKey.Enter)
                 break;
@@ -24,7 +25,6 @@ class ProjUtils
             read.Append(key.KeyChar);
             stdout.Write(key.KeyChar);
         }
-        
 
         return read.ToString();
     }

@@ -24,7 +24,7 @@ namespace Cryptographer.DecryptionMethods
         }
 
         // list of all non alphanumerical characters
-        private HashSet<char> importantChars = new() {'!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=', 
+        private HashSet<char> importantChars = new() {'!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=',
             '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~'};
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
@@ -36,7 +36,8 @@ namespace Cryptographer.DecryptionMethods
             int importantCount = importantChars.Count;
             double currentCount = FrequencyAnalysis.Exists(analysis, importantChars).Count;
 
-            return Math.Min((importantCount - currentCount) / importantCount, 0.8);
+            double probability = Math.Min((importantCount - currentCount) / importantCount, 0.8);
+            return probability;
         }
 
         public string Name { get { return "ROT47"; } }

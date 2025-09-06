@@ -6,15 +6,14 @@ class Program
     static void Main(string[] args)
     {
         // get console args
-        Dictionary<string, string?> argDict = new();
+        Dictionary<string, string> argDict = new();
         foreach (string s in args)
         {
             string[] split = s.Split("=");
             argDict.TryAdd(split[0], split[1]);
         }
 
-        if (args.Length > 0)
-            Constants.Set(argDict);
+        Constants.Set(argDict);
 
         string? input = "";
         if (!argDict.TryGetValue("input", out input))

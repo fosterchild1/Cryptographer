@@ -75,6 +75,7 @@
             {'Y', 24}, {'Z', 25}, {'2', 26}, {'3', 27}, {'4', 28}, {'5', 29}, {'6', 30}, {'7', 31}
         };
 
+
         // Base85
         public static Dictionary<char, int> Base85Map = new()
         {

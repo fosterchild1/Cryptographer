@@ -12,7 +12,7 @@ namespace Cryptographer.DecryptionMethods
             foreach (string s in input.Split(" "))
             {
                 if (!int.TryParse(s, out int integer)) return new();
-                if (integer < 0 || integer > 127) return new();
+                if (integer <= 0 || integer > 127) return new();
 
                 output.Append((char)integer);
             }

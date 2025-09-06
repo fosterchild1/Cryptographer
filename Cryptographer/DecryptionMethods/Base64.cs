@@ -9,7 +9,9 @@ namespace Cryptographer.DecryptionMethods
         {
             Span<byte> buffer = new byte[input.Length];
             Convert.TryFromBase64String(input, buffer, out int bytes);
-            return new List<string>() { Encoding.UTF8.GetString(buffer.Slice(0, bytes)) };
+
+            string output = Encoding.UTF8.GetString(buffer.Slice(0, bytes));
+            return new() { output };
         }
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)

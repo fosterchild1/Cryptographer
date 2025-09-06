@@ -163,6 +163,14 @@ public class SearchQueue<TElement, TPriority>
         batch = default!;
         return false;
     }
+
+    public bool TryPeek(out TElement element, out TPriority priority)
+    {
+        lock (queues[index.Value].lockObj)
+            return queues[index.Value].queue.TryPeek(out element!, out priority!);
+    }
+
+
     public int[] GetQueueSizes()
     {
         int[] sizes = new int[workers_];
@@ -175,6 +183,7 @@ public class SearchQueue<TElement, TPriority>
         }
         return sizes;
     }
+
     /// <returns>
     /// <see langword="true"/> if the <see cref="SearchQueue{TElement, TPriority}"/> is empty;
     /// <see langword="false"/> if it isn't.

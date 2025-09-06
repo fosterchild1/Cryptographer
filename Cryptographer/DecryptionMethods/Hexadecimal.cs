@@ -37,7 +37,7 @@ namespace Cryptographer.DecryptionMethods
         {
             if (analysis.Count > 17 || analysis.Count <= 3) return 1;
 
-            return 0.7;
+            return 0.75;
         }
 
         public string Name { get { return "Hexadecimal"; } }
