@@ -33,8 +33,8 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
         {
-            // morse with no space has to be bruteforced with a lot of cases
-            return (analysis.Count > 4 ? 1 : 0);
+            // space, dot, dash, slash OR without slash. 3-4 chars
+            return ((analysis.Count <= 2 || analysis.Count >= 5) ? 1 : 0);
         }
 
         public string Name { get { return "Morse"; } }

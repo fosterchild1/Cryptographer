@@ -16,7 +16,7 @@
 
     /// <param name="analysis">The frequency analysis</param>
     /// <param name="candidates">The characters you want to search for</param>
-    /// <returns>A hashset of the candidates seen in the analysis.</returns>
+    /// <returns>A hashset of the candidates seen in the analysis. O(n).</returns>
     public static HashSet<char> Exists(List<KeyValuePair<char, int>> analysis, HashSet<char> candidates)
     {
         if (analysis == null || candidates == null) return new();

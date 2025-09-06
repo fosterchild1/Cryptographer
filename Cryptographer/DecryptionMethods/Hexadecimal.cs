@@ -35,7 +35,7 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
         {
-            if (analysis.Count > 17 || analysis.Count == 1) return 1;
+            if (analysis.Count > 17 || analysis.Count <= 3) return 1;
 
             return 0.7;
         }

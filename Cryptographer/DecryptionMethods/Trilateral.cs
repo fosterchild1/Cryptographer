@@ -37,7 +37,7 @@ namespace Cryptographer.DecryptionMethods
         {
             if (analysis.Count != 3 || input.Length % 3 != 0) return 1; // it should only have A, B, C
 
-            return 0.6; // haven't seen it much really
+            return 0.5; // haven't seen it much really
         }
 
         public string Name { get { return "Trilateral"; } }

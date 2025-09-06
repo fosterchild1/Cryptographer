@@ -33,10 +33,6 @@ namespace Cryptographer.DecryptionMethods
         }
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
-            // zero, one and a space
-            if (analysis.Count > 3)
-                return new();
-
             return new() { DecryptBinary(input) };
         }
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)

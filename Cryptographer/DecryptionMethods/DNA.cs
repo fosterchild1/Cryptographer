@@ -30,9 +30,9 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
         {
-            if (analysis.Count > 5 || analysis.Count <= 2) return 1;
+            if (analysis.Count >= 4 || analysis.Count <= 2) return 1;
 
-            return 0;
+            return 0.3;
         }
 
         public string Name { get { return "DNA"; } }
