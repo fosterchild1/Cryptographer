@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Data.Common;
-using System.Diagnostics;
-using System.Reflection.Metadata.Ecma335;
-
 // batched work stealing priority queue 
 // sorry about the name not being descriptive, i didnt want it to be long :(
 public class SearchQueue<TElement, TPriority>
@@ -38,7 +33,8 @@ public class SearchQueue<TElement, TPriority>
         [Obsolete("Slower, because since its a priority queue if it hits a priority 0 it still has to process everything left in the batch.")]
         public bool TryDequeueBatch(out List<(TElement, TPriority)> batch)
         {
-            lock (lockObj) {
+            lock (lockObj)
+            {
                 if (queue.Count == 0)
                 {
                     batch = default!;

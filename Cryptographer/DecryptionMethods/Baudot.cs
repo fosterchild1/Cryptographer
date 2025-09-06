@@ -36,7 +36,7 @@ namespace Cryptographer.DecryptionMethods
         {
             // baudot only has 0s, 1s and a space
             // not seen that much
-            return (analysis.Count > 3 ? 1 : 0.4);
+            return (analysis.Count > 3 ? 1 : 0.4); // 0.4 relative to baconian, morse, binary etc
         }
 
         public string Name { get { return "Baudot"; } }
