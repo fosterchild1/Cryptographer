@@ -19,9 +19,9 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 Running the app through the terminal offers better customization than double clicking the .exe.
 <br/>
 
-| Argument | Data type | What it does |
-| ---  | --- | --- |
-| input= | string | self-explanatory, does not need to be wrapped in quotes |
-| maxdepth= | int | sets the max depth |
-| score_print= | float | minimum score needed for an output to be logged |
-| threads= | byte | amount of cpu cores to be used by the program. by default, this is equal to the amount of cores you have |
+| Argument | Data type | Default value | What it does |
+| ---  | --- | --- | --- |
+| input= | string | "" | self-explanatory, does not need to be wrapped in quotes |
+| maxdepth= | int | 24 | sets the max depth |
+| score_print= | float | 10 | minimum score needed for an output to be logged |
+| threads= | byte | Processor count |  amount of cpu cores to be used by the program. by default, this is equal to the amount of cores you have |
