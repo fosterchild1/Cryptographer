@@ -3,17 +3,14 @@
 A program that deciphers encoded strings, even if they have multiple layers of encryption.
 <br/>
 
-| Supported ciphers | Supported ciphers |
-| ---  | --- |
-| Reverse | Binary |
-| DNA | Octal |
-| Atbash | Hexadecimal |
-| Baconian | ASCII |
-| Trilateral | Base32 |
-| Morse | Base64 |
-| Baudot | Base85 |
-| Tap Code | Keyboard Substitution |
-| ROT-47 | Caesar |
+| Supported ciphers | Supported ciphers | Supported ciphers |
+| ---  | --- | --- |
+| Reverse | Binary | Baudot |
+| DNA | Octal | Morse |
+| Atbash | Hexadecimal | Tap Code |
+| Baconian | ASCII | Base32 |
+| Trilateral | Caesar | Base64 |
+| ROT-47 | Keyboard Substitution | Base85 |
 
 # Console Arguments
 Running the app through the terminal offers better customization than double clicking the .exe.
