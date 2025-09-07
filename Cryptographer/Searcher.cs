@@ -2,11 +2,13 @@
 using Cryptographer.DecryptionMethods;
 using Cryptographer.Utils;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 
 namespace Cryptographer
 {
     internal class Searcher
     {
+        // METHODS
         private List<IDecryptionMethod> methods = new()
         {
             new Base64(), new Morse(), new Baconian(), new Binary(), new TapCode(), 
@@ -19,6 +21,7 @@ namespace Cryptographer
             new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse()
         };
 
+        // OTHER
         private HashSet<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution", "Caesar" };
         // to not redo them
         private ConcurrentDictionary<string, byte> seenInputs = new();
@@ -26,6 +29,9 @@ namespace Cryptographer
         public static bool success = false;
 
         public SearchQueue<DecryptionBranch, double> queue = new(Constants.threadCount);
+
+        public Stopwatch timer = new();
+
         private bool CheckOutput(string output, string input)
         {
             // aka useless string
@@ -81,8 +87,15 @@ namespace Cryptographer
                 List<KeyValuePair<char, int>> newAnalysis = FrequencyAnalysis.AnalyzeFrequency(output);
                 if (StringScorer.Score(output, newAnalysis) > Constants.scorePrintThreshold)
                 {
+                    timer.Stop();
                     bool plaintext = ProjUtils.AskOutput(output);
-                    if (plaintext) { success = true; break; }
+                    if (plaintext) {
+                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                        Console.WriteLine($"Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
+                        success = true; 
+                        break; 
+                    }
+                    timer.Start();
 
                 }
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
@@ -106,6 +119,7 @@ namespace Cryptographer
             Task[] tasks = new Task[workers];
 
             // loop
+            timer.Start();
             for (int i = 0; i < workers; i++)
             {
                 int index = i;
