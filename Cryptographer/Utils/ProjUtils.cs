@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Text;
 
 class ProjUtils
@@ -64,6 +65,27 @@ class ProjUtils
             return GetDepth();
         }
         return (byte)Math.Max(input, 1);
+    }
+
+    private static ConcurrentQueue<string> askQueue = new();
+    public static bool AskOutput(string str)
+    {
+        askQueue.Enqueue(str);
+        if (askQueue.Count > 1) {
+            return false;
+        }
+
+        while (askQueue.Count > 0)
+        {
+            if (!askQueue.TryDequeue(out string? output)) continue;
+            Console.WriteLine($"Possible Output: {output} (Y/N)?");
+
+            ConsoleKeyInfo key = Console.ReadKey();
+            if (key.Key == ConsoleKey.Y)
+                return true;
+        }
+
+        return false;
     }
 
     public static Dictionary<string, Stopwatch> timers = new();

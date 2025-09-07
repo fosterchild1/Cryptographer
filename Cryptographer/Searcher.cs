@@ -9,7 +9,7 @@ namespace Cryptographer
     {
         private List<IDecryptionMethod> methods = new()
         {
-            new Reverse(), new Atbash(), new Base64(), new Morse(), new Baconian(),
+            new Reverse(), new Base64(), new Morse(), new Baconian(),
             new KeyboardSubstitution(), new Binary(), new TapCode(), new DNA(),
             new Hexadecimal(), new Base32(), new Base85(), new ASCII(), new Octal(),
             new Baudot(), new Trilateral(), new ROT47(),
@@ -18,6 +18,7 @@ namespace Cryptographer
         private List<IDecryptionMethod> fallbackMethods = new()
         {
             new Caesar(),
+            new Atbash(),
         };
 
         private HashSet<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution", "Caesar" };
@@ -82,8 +83,9 @@ namespace Cryptographer
                 List<KeyValuePair<char, int>> newAnalysis = FrequencyAnalysis.AnalyzeFrequency(output);
                 if (StringScorer.Score(output, newAnalysis) > Constants.scorePrintThreshold)
                 {
-                    Console.WriteLine($"Possible Output: {output}");
-                    success = true;
+                    bool plaintext = ProjUtils.AskOutput(output);
+                    if (plaintext) { success = true; break; }
+
                 }
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
                 ExpandNode(node, newAnalysis);
@@ -113,9 +115,9 @@ namespace Cryptographer
                     while (true)
                     {
                         // get next batch
-                        if (!queue.TryDequeue(out DecryptionBranch branch, out double _))
+                        if (!queue.TryDequeue(out DecryptionBranch branch, out double _) || success)
                         {
-                            if (queue.IsEmpty() && Volatile.Read(ref active) == 0) break;
+                            if ((queue.IsEmpty() && Volatile.Read(ref active) == 0) || success) break;
                             Thread.SpinWait(64);
                             continue;
                         }
