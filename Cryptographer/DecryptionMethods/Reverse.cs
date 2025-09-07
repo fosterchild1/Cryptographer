@@ -15,7 +15,7 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
         {
-            return 0.8;
+            return 0.5;
         }
 
         public string Name { get { return "Reverse"; } }

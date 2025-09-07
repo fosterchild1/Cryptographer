@@ -33,11 +33,9 @@ namespace Cryptographer.DecryptionMethods
             if (analysis.Count <= 2 || analysis.Count > 94) return 1;
 
             // MIN((32 - X) / 32, 0.8)
-            int importantCount = importantChars.Count;
             double currentCount = FrequencyAnalysis.Exists(analysis, importantChars).Count;
 
-            double probability = Math.Min((importantCount - currentCount) / importantCount, 0.8);
-            return probability;
+            return 0.7 * Math.Pow(0.9, currentCount);
         }
 
         public string Name { get { return "ROT47"; } }

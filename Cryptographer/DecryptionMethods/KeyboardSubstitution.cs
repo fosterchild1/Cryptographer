@@ -53,7 +53,7 @@ namespace Cryptographer.DecryptionMethods
             // this means its more likely to be morse, bacon or binary
             if (analysis.Count <= 3) return 1;
 
-            return 0.85;
+            return 0.65;
         }
 
         public string Name { get { return "Keyboard Substitution"; } }

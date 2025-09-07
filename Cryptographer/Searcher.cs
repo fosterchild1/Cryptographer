@@ -9,16 +9,14 @@ namespace Cryptographer
     {
         private List<IDecryptionMethod> methods = new()
         {
-            new Reverse(), new Base64(), new Morse(), new Baconian(),
-            new KeyboardSubstitution(), new Binary(), new TapCode(), new DNA(),
-            new Hexadecimal(), new Base32(), new Base85(), new ASCII(), new Octal(),
-            new Baudot(), new Trilateral(), new ROT47(),
+            new Base64(), new Morse(), new Baconian(), new Binary(), new TapCode(), 
+            new DNA(), new Hexadecimal(), new Base32(), new Base85(), new ASCII(), 
+            new Octal(), new Baudot(), new Trilateral(), new ROT47(),
         };
 
         private List<IDecryptionMethod> fallbackMethods = new()
         {
-            new Caesar(),
-            new Atbash(),
+            new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse()
         };
 
         private HashSet<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution", "Caesar" };
@@ -41,6 +39,11 @@ namespace Cryptographer
             // hasnt changed
             if (input == output)
                 return false;
+
+            foreach (char c in output)
+            {
+                if (c < 32 || c > 127) return false;
+            }
 
             return true;
         }
@@ -72,7 +75,6 @@ namespace Cryptographer
             string parentText = branchParent.Text;
 
             List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(parentText);
-
             List<string> outputs = branch.Method.Decrypt(parentText, analysis);
             foreach (string output in outputs)
             {
@@ -91,7 +93,8 @@ namespace Cryptographer
                 ExpandNode(node, newAnalysis);
             }
 
-            if (!(queue.TryPeek(out DecryptionBranch _, out double priority) && priority > 0.7)) return;
+            bool peeked = queue.TryPeek(out DecryptionBranch _, out double priority);
+            if (peeked && priority <= 0.7) return;
             ExpandNode(branchParent, analysis, true); // run fallbacks
         }
 

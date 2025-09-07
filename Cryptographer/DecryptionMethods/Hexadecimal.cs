@@ -1,5 +1,6 @@
 ﻿using Cryptographer.Classes;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Cryptographer.DecryptionMethods
 {
@@ -27,7 +28,7 @@ namespace Cryptographer.DecryptionMethods
                 string converted = ConvertHex(hex);
                 if (string.IsNullOrEmpty(converted)) return new();
 
-                output.Append(ConvertHex(hex));
+                output.Append(converted);
             }
 
             return new() { output.ToString() };
@@ -37,7 +38,8 @@ namespace Cryptographer.DecryptionMethods
         {
             if (analysis.Count > 17 || analysis.Count <= 3) return 1;
 
-            return 0.75;
+            string withoutNum = Regex.Replace(input, "[0-9a-f]", string.Empty);
+            return string.IsNullOrWhiteSpace(withoutNum) ? 0.2 : 1;
         }
 
         public string Name { get { return "Hexadecimal"; } }

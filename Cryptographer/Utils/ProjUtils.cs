@@ -68,23 +68,29 @@ class ProjUtils
     }
 
     private static ConcurrentQueue<string> askQueue = new();
+    private static int asking = 0;
     public static bool AskOutput(string str)
     {
         askQueue.Enqueue(str);
-        if (askQueue.Count > 1) {
+
+        // only one thread at a time is allowed to drain the queue
+        if (Interlocked.CompareExchange(ref asking, 1, 0) != 0)
             return false;
-        }
 
-        while (askQueue.Count > 0)
+
+        while (askQueue.TryDequeue(out string? output))
         {
-            if (!askQueue.TryDequeue(out string? output)) continue;
             Console.WriteLine($"Possible Output: {output} (Y/N)?");
+            ConsoleKeyInfo key = Console.ReadKey(true);
 
-            ConsoleKeyInfo key = Console.ReadKey();
             if (key.Key == ConsoleKey.Y)
+            {
+                Interlocked.Exchange(ref asking, 0);
                 return true;
+            }
         }
 
+        Interlocked.Exchange(ref asking, 0);
         return false;
     }
 
