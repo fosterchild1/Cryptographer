@@ -11,7 +11,7 @@ namespace Cryptographer.DecryptionMethods
             try
             {
                 int val = Convert.ToInt32(oct, 8);
-                return val.ToString();
+                return ((char)val).ToString();
             }
             catch
             {
@@ -28,10 +28,9 @@ namespace Cryptographer.DecryptionMethods
 
                 string dec = ConvertOctal(s);
                 if (dec == "") return new();
-
                 output.Append(dec);
             }
-            
+
             return new() { output.ToString() };
         }
 
