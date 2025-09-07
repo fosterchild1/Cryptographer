@@ -38,8 +38,8 @@ namespace Cryptographer.DecryptionMethods
         {
             if (analysis.Count > 17 || analysis.Count <= 3) return 1;
 
-            string withoutNum = Regex.Replace(input, "[0-9a-f]", string.Empty);
-            return string.IsNullOrWhiteSpace(withoutNum) ? 0.2 : 1;
+            string reg = Regex.Replace(input, "[0-9a-f]", string.Empty);
+            return string.IsNullOrWhiteSpace(reg) ? 0.2 : 1;
         }
 
         public string Name { get { return "Hexadecimal"; } }

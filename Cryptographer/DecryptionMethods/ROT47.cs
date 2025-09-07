@@ -35,7 +35,7 @@ namespace Cryptographer.DecryptionMethods
             // MIN((32 - X) / 32, 0.8)
             double currentCount = FrequencyAnalysis.Exists(analysis, importantChars).Count;
 
-            return 0.7 * Math.Pow(0.9, currentCount);
+            return 0.8 * Math.Pow(0.9, currentCount);
         }
 
         public string Name { get { return "ROT47"; } }

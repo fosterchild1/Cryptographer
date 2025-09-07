@@ -57,7 +57,6 @@ public class SearchQueue<TElement, TPriority>
     }
 
     private List<LocalQueue> queues = new();
-    private ThreadLocal<int> index;
     private int workers_ = 1;
 
     // global queue
@@ -67,11 +66,8 @@ public class SearchQueue<TElement, TPriority>
 
         for (int i = 0; i < workerCount; i++)
         {
-            queues.Add(new LocalQueue());
+            queues.Add(new());
         }
-
-        int counter = 0;
-        index = new(() => Interlocked.Increment(ref counter) % workerCount);
     }
 
     /// <summary>
@@ -79,9 +75,9 @@ public class SearchQueue<TElement, TPriority>
     /// </summary>
     /// <param name="element">The element to add to the <see cref="SearchQueue{TElement, TPriority}"/>.</param>
     /// <param name="priority">The priority with which to associate the new element.</param>
-    public void Enqueue(TElement element, TPriority priority)
+    public void Enqueue(TElement element, TPriority priority, int index)
     {
-        queues[index.Value].Enqueue(element, priority);
+        queues[index].Enqueue(element, priority);
     }
 
     /// <summary>
@@ -95,15 +91,15 @@ public class SearchQueue<TElement, TPriority>
     ///  <see langword="true"/> if the element is successfully removed;
     ///  <see langword="false"/> if the <see cref="SearchQueue{TElement, TPriority}"/> is empty or it fails to remove.
     /// </returns>
-    public bool TryDequeue(out TElement element, out TPriority priority)
+    public bool TryDequeue(out TElement element, out TPriority priority, int index)
     {
         // try on self first
-        if (queues[index.Value].TryDequeue(out element, out priority)) return true;
+        if (queues[index].TryDequeue(out element, out priority)) return true;
 
         // try stealing from others
         for (int i = 0; i < workers_; i++)
         {
-            if (i == index.Value) continue;
+            if (i == index) continue;
 
             if (queues[i].TryDequeue(out element, out priority)) return true;
         }
@@ -123,10 +119,10 @@ public class SearchQueue<TElement, TPriority>
     ///  <see langword="false"/> if the <see cref="SearchQueue{TElement, TPriority}"/> is empty or it fails to remove.
     /// </returns>
     [Obsolete("Slower, because since its a priority queue if it hits a priority 0 it still has to process everything left in the batch.")]
-    public bool TryDequeueBatch(out List<(TElement, TPriority)> batch)
+    public bool TryDequeueBatch(out List<(TElement, TPriority)> batch, int index)
     {
         // try on self first
-        if (queues[index.Value].TryDequeueBatch(out batch)) return true;
+        if (queues[index].TryDequeueBatch(out batch)) return true;
 
         // try stealing from the biggest
         LocalQueue? bestQueue = null;
@@ -134,7 +130,7 @@ public class SearchQueue<TElement, TPriority>
 
         for (int i = 0; i < workers_; i++)
         {
-            if (i == index.Value) continue;
+            if (i == index) continue;
 
             LocalQueue q = queues[i];
             lock (q.lockObj)
@@ -164,10 +160,10 @@ public class SearchQueue<TElement, TPriority>
         return false;
     }
 
-    public bool TryPeek(out TElement element, out TPriority priority)
+    public bool TryPeek(out TElement element, out TPriority priority, int index)
     {
-        lock (queues[index.Value].lockObj)
-            return queues[index.Value].queue.TryPeek(out element!, out priority!);
+        lock (queues[index].lockObj)
+            return queues[index].queue.TryPeek(out element!, out priority!);
     }
 
 

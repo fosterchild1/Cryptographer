@@ -26,9 +26,9 @@ namespace Cryptographer.DecryptionMethods
             {
                 if (!int.TryParse(s, out int integer)) return new();
 
-                string dec = ConvertOctal(s);
-                if (dec == "") return new();
-                output.Append(dec);
+                string str = ConvertOctal(s);
+                if (str == "") return new();
+                output.Append(str);
             }
 
             return new() { output.ToString() };

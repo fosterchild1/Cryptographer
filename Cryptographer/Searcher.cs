@@ -40,15 +40,10 @@ namespace Cryptographer
             if (input == output)
                 return false;
 
-            foreach (char c in output)
-            {
-                if (c < 32 || c > 127) return false;
-            }
-
             return true;
         }
 
-        private void ExpandNode(DecryptionNode node, List<KeyValuePair<char, int>> analysis, bool fallback = false)
+        private void ExpandNode(DecryptionNode node, List<KeyValuePair<char, int>> analysis, int workerIndex, bool fallback = false)
         {
             string input = node.Text;
             string lastMethod = node.Method;
@@ -63,12 +58,12 @@ namespace Cryptographer
                 double probability = method.CalculateProbability(input, analysis);
                 if (probability > 0.9) continue;
 
-                queue.Enqueue(new(node, probability, method), probability);
+                queue.Enqueue(new(node, probability, method), probability, workerIndex);
             }
 
         }
 
-        private void ExpandBranch(DecryptionBranch branch)
+        private void ExpandBranch(DecryptionBranch branch, int workerIndex)
         {
             DecryptionNode branchParent = branch.Parent;
             byte depth = branchParent.Depth;
@@ -76,6 +71,7 @@ namespace Cryptographer
 
             List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(parentText);
             List<string> outputs = branch.Method.Decrypt(parentText, analysis);
+
             foreach (string output in outputs)
             {
                 if (!CheckOutput(output, parentText)) continue;
@@ -90,12 +86,12 @@ namespace Cryptographer
 
                 }
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
-                ExpandNode(node, newAnalysis);
+                ExpandNode(node, newAnalysis, workerIndex);
             }
 
-            bool peeked = queue.TryPeek(out DecryptionBranch _, out double priority);
+            bool peeked = queue.TryPeek(out DecryptionBranch _, out double priority, workerIndex);
             if (peeked && priority <= 0.7) return;
-            ExpandNode(branchParent, analysis, true); // run fallbacks
+            ExpandNode(branchParent, analysis, workerIndex, true); // run fallbacks
         }
 
         public void Search(string input)
@@ -103,8 +99,7 @@ namespace Cryptographer
             // use a priority queue alongside a CalculateProbability function
             // probabilities > 0.9 don't get checked
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
-            ExpandNode(root, FrequencyAnalysis.AnalyzeFrequency(input));
-
+            ExpandNode(root, FrequencyAnalysis.AnalyzeFrequency(input), 0);
             int workers = Constants.threadCount;
 
             int active = 0;
@@ -113,12 +108,14 @@ namespace Cryptographer
             // loop
             for (int i = 0; i < workers; i++)
             {
+                int index = i;
                 tasks[i] = Task.Run(() =>
                 {
+                    int workerIndex = index; // needed....... sadly
                     while (true)
                     {
                         // get next batch
-                        if (!queue.TryDequeue(out DecryptionBranch branch, out double _) || success)
+                        if (!queue.TryDequeue(out DecryptionBranch branch, out double _, workerIndex) || success)
                         {
                             if ((queue.IsEmpty() && Volatile.Read(ref active) == 0) || success) break;
                             Thread.SpinWait(64);
@@ -132,7 +129,7 @@ namespace Cryptographer
                             DecryptionNode node = branch.Parent;
                             if (node.Depth > Constants.maxDepth) continue;
 
-                            ExpandBranch(branch);
+                            ExpandBranch(branch, workerIndex);
                         }
                         finally
                         {

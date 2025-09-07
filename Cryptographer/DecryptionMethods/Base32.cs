@@ -41,6 +41,7 @@ namespace Cryptographer.DecryptionMethods
         public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
         {
             TryFromBase32String(input, out byte[]? output);
+           // Console.WriteLine(Encoding.UTF8.GetString(output));
             return new() { output != null ? Encoding.UTF8.GetString(output) : "" };
         }
 
