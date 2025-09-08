@@ -1,7 +1,6 @@
 ﻿using Cryptographer.Classes;
 using System.Text;
 
-// placeholder
 namespace Cryptographer.DecryptionMethods
 {
     public class ROT47 : IDecryptionMethod
@@ -32,7 +31,6 @@ namespace Cryptographer.DecryptionMethods
             // alphabet of 94 chars
             if (analysis.Count <= 2 || analysis.Count > 94) return 1;
 
-            // MIN((32 - X) / 32, 0.8)
             double currentCount = FrequencyAnalysis.Exists(analysis, importantChars).Count;
 
             return 0.8 * Math.Pow(0.9, currentCount);

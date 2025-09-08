@@ -5,6 +5,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        Console.OutputEncoding = System.Text.Encoding.UTF8;
+
         // get console args
         Dictionary<string, string> argDict = new();
         foreach (string s in args)

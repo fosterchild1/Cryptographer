@@ -13,7 +13,7 @@ namespace Cryptographer
         {
             new Base64(), new Morse(), new Baconian(), new Binary(), new TapCode(), 
             new DNA(), new Hexadecimal(), new Base32(), new Base85(), new ASCII(), 
-            new Octal(), new Baudot(), new Trilateral(), new ROT47(),
+            new Octal(), new Baudot(), new Trilateral(), new ROT47(), new uuencoding(),
         };
 
         private List<IDecryptionMethod> fallbackMethods = new()

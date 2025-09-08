@@ -1,7 +1,6 @@
 ﻿using Cryptographer.Classes;
 using System.Text;
 
-// placeholder
 namespace Cryptographer.DecryptionMethods
 {
     public class Caesar : IDecryptionMethod

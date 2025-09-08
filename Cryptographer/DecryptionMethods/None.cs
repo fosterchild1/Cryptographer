@@ -1,6 +1,6 @@
 ﻿using Cryptographer.Classes;
 
-// placeholder
+// PLACEHOLDER
 namespace Cryptographer.DecryptionMethods
 {
     public class None : IDecryptionMethod
