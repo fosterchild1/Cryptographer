@@ -11,6 +11,7 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | Baconian | ASCII | Base32 |
 | Trilateral | Caesar | Base64 |
 | ROT-47 | Keyboard Substitution | Base85 |
+| uuencoding | |
 
 # Console Arguments
 Running the app through the terminal offers better customization than double clicking the .exe.
