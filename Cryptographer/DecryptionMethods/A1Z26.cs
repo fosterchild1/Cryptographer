@@ -2,7 +2,6 @@
 using System.Text;
 using System.Text.RegularExpressions;
 
-// PLACEHOLDER
 namespace Cryptographer.DecryptionMethods
 {
     public class A1Z26 : IDecryptionMethod

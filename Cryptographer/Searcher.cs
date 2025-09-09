@@ -12,9 +12,9 @@ namespace Cryptographer
         private List<IDecryptionMethod> methods = new()
         {
             new Base64(), new Morse(), new Baconian(), new Binary(), new TapCode(), 
-            new DNA(), new Hexadecimal(), new Base32(), new Base85(), new ASCII(), 
+            new DNA(), new Hexadecimal(), new Base32(), new Base85(), new Base62(), 
             new Octal(), new Baudot(), new Trilateral(), new ROT47(), new uuencoding(),
-            new A1Z26()
+            new A1Z26(), new ASCII()
         };
 
         private List<IDecryptionMethod> fallbackMethods = new()
