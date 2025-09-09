@@ -14,6 +14,7 @@ namespace Cryptographer
             new Base64(), new Morse(), new Baconian(), new Binary(), new TapCode(), 
             new DNA(), new Hexadecimal(), new Base32(), new Base85(), new ASCII(), 
             new Octal(), new Baudot(), new Trilateral(), new ROT47(), new uuencoding(),
+            new A1Z26()
         };
 
         private List<IDecryptionMethod> fallbackMethods = new()
@@ -87,6 +88,8 @@ namespace Cryptographer
                 List<KeyValuePair<char, int>> newAnalysis = FrequencyAnalysis.AnalyzeFrequency(output);
                 if (StringScorer.Score(output, newAnalysis) > Constants.scorePrintThreshold)
                 {
+                    bool isStopped = !timer.IsRunning; // avoid starting if its stopped
+
                     timer.Stop();
                     bool plaintext = ProjUtils.AskOutput(output);
                     if (plaintext) {
@@ -95,7 +98,8 @@ namespace Cryptographer
                         success = true; 
                         break; 
                     }
-                    timer.Start();
+
+                    if (!isStopped) timer.Start();
 
                 }
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
