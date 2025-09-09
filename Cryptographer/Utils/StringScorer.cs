@@ -1,16 +1,20 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Text.RegularExpressions;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Cryptographer.Utils
 {
     internal class StringScorer
     {
-        public static string json = File.ReadAllText("resources/trigrams.json");
-        public static string qjson = File.ReadAllText("resources/quadgrams.json");
+        private static JsonSerializerOptions options = new()
+        {
+            TypeInfoResolver = new DefaultJsonTypeInfoResolver()
+        };
 
-        public static Dictionary<string, float>? trigrams = JsonSerializer.Deserialize<Dictionary<string, float>>(json);
-        public static Dictionary<string, float>? quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson);
+        private static string json = File.ReadAllText("resources/trigrams.json");
+        private static string qjson = File.ReadAllText("resources/quadgrams.json");
+
+        private static Dictionary<string, float>? trigrams = JsonSerializer.Deserialize<Dictionary<string, float>>(json, options);
+        private static Dictionary<string, float>? quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson, options);
 
         public static float Score(string input, List<KeyValuePair<char, int>> analysis)
         {
