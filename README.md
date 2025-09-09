@@ -9,9 +9,9 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | DNA | Octal | Morse |
 | Atbash | Hexadecimal | Tap Code |
 | Baconian | ASCII | Base32 |
-| Trilateral | Caesar | Base64 |
-| ROT-47 | Keyboard Substitution | Base85 |
-| uuencoding | A1Z26 |
+| Trilateral | Caesar | Base62 |
+| ROT-47 | Keyboard Substitution | Base64 |
+| uuencoding | A1Z26 | Base85 |
 
 # Console Arguments
 Running the app through the terminal offers better customization than double clicking the .exe.
