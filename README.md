@@ -12,7 +12,7 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | Trilateral | Caesar | Base62 |
 | ROT-47 | Keyboard Substitution | Base64 |
 | ASCII Shift | A1Z26 | Base85 |
-| uuencoding | |
+| uuencoding | Brainfuck |
 
 # Console Arguments
 Running the app through the terminal offers better customization than double clicking the .exe.
