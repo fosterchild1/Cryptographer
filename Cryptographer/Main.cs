@@ -27,7 +27,11 @@ class Program
         Searcher searcher = new();
         searcher.Search(input ?? "");
 
-        if (Searcher.success) { Console.ReadKey(); return; }
+        if (Searcher.success) {
+            Console.ReadKey();
+            Console.ForegroundColor = ConsoleColor.Gray;
+            return; 
+        }
 
         // :(
         Console.ForegroundColor = ConsoleColor.Red;
