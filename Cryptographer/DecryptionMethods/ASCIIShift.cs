@@ -1,7 +1,6 @@
 ﻿using Cryptographer.Classes;
 using System.Text;
 
-// PLACEHOLDER
 namespace Cryptographer.DecryptionMethods
 {
     public class ASCIIShift : IDecryptionMethod
