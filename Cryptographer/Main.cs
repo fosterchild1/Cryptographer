@@ -7,7 +7,7 @@ class Program
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-        // get console args
+        // CONFIG
         Dictionary<string, string> argDict = new();
         foreach (string s in args)
         {
@@ -15,9 +15,12 @@ class Program
             argDict.TryAdd(split[0], split[1]);
         }
 
-        Config.Set(argDict);
+        if (args.Length > 0)
+            Config.Set(argDict);
+        else
+            Config.SetFromFile("config.ini");
 
-        string? input = "";
+            string? input = "";
         if (!argDict.TryGetValue("input", out input))
             input = ProjUtils.GetInput();
 

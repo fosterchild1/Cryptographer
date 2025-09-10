@@ -43,4 +43,11 @@
 		</None>
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Include="..\Cryptographer\config.ini">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<TargetPath>\config.ini</TargetPath>
+		</None>
+	</ItemGroup>
+
 </Project>

@@ -29,6 +29,25 @@
             TryParse(args, "plaintext", ref scorePrintThreshold);
             TryParse(args, "maxdepth", ref maxDepth);
             TryParse(args, "threads", ref threadCount);
+
+            if (threadCount == 0) threadCount = (byte)Environment.ProcessorCount;
+        }
+
+        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads" };
+        public static void SetFromFile(string path)
+        {
+            IniFile file = new(path);
+            if (file == null) return;
+
+            Dictionary<string, string> args = new();
+
+            foreach (string name in cfgList)
+            {
+                string value = file.Read(name, "Cryptographer");
+                args[name] = value;
+            }
+
+            Set(args);
         }
     }
 }
