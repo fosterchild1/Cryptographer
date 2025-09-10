@@ -22,4 +22,4 @@ The console offers some extra arguments that the config.ini file doesn't have. A
 | ---  | --- | --- | --- |
 | input= | string | "" | self-explanatory, does not need to be wrapped in quotes |
 <br/>
-Plus the ones in config.ini. (eg. `Cryptographer.exe input="aGVsbG8=" maxdepth=1`)
+Plus the ones in config.ini. (eg. <code>Cryptographer.exe input="aGVsbG8=" maxdepth=1</code>)
