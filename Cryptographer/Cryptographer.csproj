@@ -8,8 +8,12 @@
 		<Authors>fosterchilld</Authors>
 		<Description> A Program that deciphers encoded strings, even if they are behind multiple encryptions. </Description>
 		<PackageProjectUrl>https://github.com/fosterchild1/Cryptographer</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/fosterchild1/Cryptographer</RepositoryUrl>
 		<ApplicationIcon>icon.ico</ApplicationIcon>
 		<PublishTrimmed>True</PublishTrimmed>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+		<SignAssembly>False</SignAssembly>
+		<SelfContained>true</SelfContained>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

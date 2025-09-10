@@ -1,4 +1,4 @@
-// batched work stealing priority queue 
+// work stealing priority queue 
 // sorry about the name not being descriptive, i didnt want it to be long :(
 public class SearchQueue<TElement, TPriority>
 {

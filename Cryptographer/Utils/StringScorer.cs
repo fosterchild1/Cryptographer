@@ -10,8 +10,8 @@ namespace Cryptographer.Utils
             TypeInfoResolver = new DefaultJsonTypeInfoResolver()
         };
 
-        private static string json = File.ReadAllText("resources/trigrams.json");
-        private static string qjson = File.ReadAllText("resources/quadgrams.json");
+        private static string json = File.ReadAllText($"{AppContext.BaseDirectory}/resources/trigrams.json");
+        private static string qjson = File.ReadAllText($"{AppContext.BaseDirectory}resources/quadgrams.json");
 
         private static Dictionary<string, float>? trigrams = JsonSerializer.Deserialize<Dictionary<string, float>>(json, options);
         private static Dictionary<string, float>? quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson, options);

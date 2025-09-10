@@ -94,7 +94,9 @@ class ProjUtils
         return false;
     }
 
+    [Obsolete("only for debugging")]
     public static Dictionary<string, Stopwatch> timers = new();
+    [Obsolete("only for debugging")]
     public static void StartTimer(string name)
     {
         if (!loggingEnabled) { return; }
@@ -102,6 +104,7 @@ class ProjUtils
 
         timers.Add(name, Stopwatch.StartNew());
     }
+    [Obsolete("only for debugging")]
 
     public static void StopTimer(string name)
     {

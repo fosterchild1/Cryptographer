@@ -1,6 +1,5 @@
 using Cryptographer.Classes;
 using Cryptographer.DecryptionMethods;
-
 class DecryptionBranch(DecryptionNode Parent, double Probability, IDecryptionMethod Method = default!)
 {
     public IDecryptionMethod Method = Method ?? new None();
