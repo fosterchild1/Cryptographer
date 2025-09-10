@@ -33,6 +33,8 @@ namespace Cryptographer.DecryptionMethods
             // if it does have one then the string should only look like "------", and if we trim the first character we should get an empty string
 
             string withoutNum = Regex.Replace(input, "[0-9]", string.Empty);
+
+            if (withoutNum == string.Empty) return 0.3;
             return withoutNum.Trim(withoutNum[1]) == string.Empty ? 0.3 : 1;
         }
 

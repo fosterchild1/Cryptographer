@@ -10,8 +10,8 @@ class ProjUtils
     // to bypass the limit
     private static string ReadLine()
     {
-        StringBuilder read = new StringBuilder();
-        StreamWriter stdout = new StreamWriter(Console.OpenStandardOutput());
+        StringBuilder read = new();
+        StreamWriter stdout = new(Console.OpenStandardOutput());
         stdout.AutoFlush = true;
 
         ConsoleKeyInfo key;
@@ -80,7 +80,7 @@ class ProjUtils
 
         while (askQueue.TryDequeue(out string? output))
         {
-            Console.WriteLine($"Possible Output: {output} (Y/N)?");
+            Console.WriteLine($"Possible plaintext: {output} (Y/N)?");
             ConsoleKeyInfo key = Console.ReadKey(true);
 
             if (key.Key == ConsoleKey.Y)

@@ -19,7 +19,7 @@ namespace Cryptographer
 
         private List<IDecryptionMethod> fallbackMethods = new()
         {
-            new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse()
+            new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift()
         };
 
         // OTHER

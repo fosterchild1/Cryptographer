@@ -16,9 +16,10 @@ namespace Cryptographer.Utils
         private static Dictionary<string, float>? trigrams = JsonSerializer.Deserialize<Dictionary<string, float>>(json, options);
         private static Dictionary<string, float>? quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson, options);
 
+        // link stuff
         private static  List<string> prefixes = new() { "https://", "http://" };
-        private static HashSet<string> subdomains = new() { "www.", "api.", "dev.", "docs.", "store.", "en.", "fr.", "wiki." };
-        private static HashSet<string> topdomains = new() { ".com", ".net", ".org", ".tv", ".fr", ".en", ".edu", ".gov", ".pro", ".lol", ".io" };
+        private static HashSet<string> subdomains = new() { "www.", "api.", "dev.", "docs.", "store.", "en.", "fr.", "wiki.", "ro." };
+        private static HashSet<string> topdomains = new() { ".com", ".net", ".org", ".tv", ".fr", ".en", ".ro", ".edu", ".gov", ".pro", ".lol", ".io", ".co" };
         private static HashSet<string> extensions = new() { ".htm", ".html", ".php", ".css", ".js", ".json" };
 
 
@@ -26,7 +27,7 @@ namespace Cryptographer.Utils
         {
             int score = 0;
 
-            // prefixes
+            // prefixes (https://)
             foreach (string pref in prefixes)
             {
                 if (!input.StartsWith(pref)) continue;
@@ -35,20 +36,20 @@ namespace Cryptographer.Utils
                 break;
             }
 
-            input = input.Replace("https://", "").Replace("http://", "");
+            input = input.Replace("https://", "").Replace("http://", ""); // ugly
             string[] split = input.Split(".");
             int splitLength = split.Length;
 
-            // subdomains
+            // subdomains (www.)
             string subdomain = split[0];
             if (subdomains.Contains(subdomain))
                 score += 2;
 
-            // topdomains
+            // topdomains (.com)
             if ((splitLength >= 2 && topdomains.Contains(split[1])) || (splitLength >= 3 && topdomains.Contains(split[2])))
                 score += 4;
 
-            // extensions
+            // extensions (.html)
             string extension = split[split.Length - 1];
             if (extensions.Contains(extension))
                 score += 7;

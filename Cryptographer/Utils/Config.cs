@@ -26,7 +26,7 @@
         {
             if (args.Count == 0) return;
 
-            TryParse(args, "score_print", ref scorePrintThreshold);
+            TryParse(args, "plaintext", ref scorePrintThreshold);
             TryParse(args, "maxdepth", ref maxDepth);
             TryParse(args, "threads", ref threadCount);
         }
