@@ -14,12 +14,12 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | ASCII Shift | A1Z26 | Base85 |
 | uuencoding | Brainfuck |
 
-# Console Argument
+# Console Arguments
 The console offers some extra arguments that the config.ini file doesn't have. Any argument written in the console will override the one in config.ini. These are:
 <br/>
 
 | Argument | Data type | Default value | What it does |
 | ---  | --- | --- | --- |
-| input= | string | "" | self-explanatory, does not need to be wrapped in quotes |
+| input= | string | "" | self-explanatory, doesn't need to be wrapped in quotes |
 <br/>
-Plus the ones in config.ini. (eg. <code>Cryptographer.exe input="aGVsbG8=" maxdepth=1</code>)
+Plus the ones in config.ini. (eg. <code>Cryptographer.exe input=aGVsbG8= maxdepth=1</code>)
