@@ -29,7 +29,7 @@ namespace Cryptographer
 
         public static bool success = false;
 
-        public SearchQueue<DecryptionBranch, double> queue = new(Constants.threadCount);
+        public SearchQueue<DecryptionBranch, double> queue = new(Config.threadCount);
 
         public Stopwatch timer = new();
 
@@ -86,7 +86,7 @@ namespace Cryptographer
 
                 // TEMP
                 List<KeyValuePair<char, int>> newAnalysis = FrequencyAnalysis.AnalyzeFrequency(output);
-                if (StringScorer.Score(output, newAnalysis) > Constants.scorePrintThreshold)
+                if (StringScorer.Score(output, newAnalysis) > Config.scorePrintThreshold)
                 {
                     bool isStopped = !timer.IsRunning; // avoid starting if its stopped
 
@@ -117,7 +117,7 @@ namespace Cryptographer
             // probabilities > 0.9 don't get checked
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
             ExpandNode(root, FrequencyAnalysis.AnalyzeFrequency(input), 0);
-            int workers = Constants.threadCount;
+            int workers = Config.threadCount;
 
             int active = 0;
             Task[] tasks = new Task[workers];
@@ -145,7 +145,7 @@ namespace Cryptographer
                         try
                         {
                             DecryptionNode node = branch.Parent;
-                            if (node.Depth > Constants.maxDepth) continue;
+                            if (node.Depth > Config.maxDepth) continue;
 
                             ExpandBranch(branch, workerIndex);
                         }

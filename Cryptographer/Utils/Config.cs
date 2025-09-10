@@ -1,6 +1,6 @@
 ﻿namespace Cryptographer.Utils
 {
-    internal class Constants
+    internal class Config
     {
         public static float scorePrintThreshold = 10;
 

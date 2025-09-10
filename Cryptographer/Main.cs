@@ -15,7 +15,7 @@ class Program
             argDict.TryAdd(split[0], split[1]);
         }
 
-        Constants.Set(argDict);
+        Config.Set(argDict);
 
         string? input = "";
         if (!argDict.TryGetValue("input", out input))
