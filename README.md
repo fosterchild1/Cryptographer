@@ -1,6 +1,6 @@
 <img src="https://github.com/fosterchild1/Cryptographer/blob/master/resources/icon.ico" width="64" height="64"> <img src="https://github.com/fosterchild1/Cryptographer/blob/master/resources/text.png" width="381" height="61"> 
 
-A program that deciphers encoded strings, even if they have multiple layers of encryption.
+A program that deciphers encoded strings, even if they have multiple layers of encryption. It currently supports <b>22</b> ciphers:
 <br/>
 
 | Supported ciphers | Supported ciphers | Supported ciphers |
@@ -11,7 +11,8 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | Baconian | ASCII | Base32 |
 | Trilateral | Caesar | Base62 |
 | ROT-47 | Keyboard Substitution | Base64 |
-| uuencoding | A1Z26 | Base85 |
+| ASCII Shift | A1Z26 | Base85 |
+| uuencoding | |
 
 # Console Arguments
 Running the app through the terminal offers better customization than double clicking the .exe.
