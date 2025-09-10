@@ -35,7 +35,7 @@ namespace Cryptographer.DecryptionMethods
             string withoutNum = Regex.Replace(input, "[0-9]", string.Empty);
 
             if (withoutNum == string.Empty) return 0.3;
-            return withoutNum.Trim(withoutNum[1]) == string.Empty ? 0.3 : 1;
+            return withoutNum.Trim(withoutNum[0]) == string.Empty ? 0.3 : 1;
         }
 
         public string Name { get { return "A1Z26"; } }
