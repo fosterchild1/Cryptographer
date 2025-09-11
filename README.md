@@ -14,7 +14,7 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | ASCII Shift | A1Z26 | Base85 |
 | uuencoding | Brainfuck |
 
-# Console Arguments
+# CLI Arguments
 The console offers some extra arguments that the config.ini file doesn't have. Any argument written in the console will override the one in config.ini. These are:
 <br/>
 
