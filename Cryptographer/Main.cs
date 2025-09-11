@@ -5,8 +5,6 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.OutputEncoding = System.Text.Encoding.UTF8;
-
         // CONFIG
         Dictionary<string, string> argDict = new();
         foreach (string s in args)
@@ -19,9 +17,7 @@ class Program
         Config.Set(argDict); // override config with cli arguments
 
         // SEARCHER
-        string? input = "";
-        if (!argDict.TryGetValue("input", out input))
-            input = ProjUtils.GetInput();
+        string input = ProjUtils.GetInput(argDict);
 
         Console.WriteLine("Working...");
 

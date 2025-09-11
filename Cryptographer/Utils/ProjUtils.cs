@@ -30,41 +30,26 @@ class ProjUtils
         return read.ToString();
     }
 
-    public static string GetInput()
+    public static string GetInput(Dictionary<string, string> args)
     {
-        Console.WriteLine("Please input the text you want to decrypt:");
-        string? input = ReadLine();
+        if (args.TryGetValue("input", out string? input))
+        {
+            if (!input.EndsWith(".txt"))
+                return input;
+
+            return File.ReadAllText($"{AppContext.BaseDirectory}/{input}");
+        }
+
+        Console.WriteLine("Input the text you want to decrypt:");
+        input = ReadLine();
 
         if (string.IsNullOrEmpty(input))
         {
             Console.WriteLine("Input can't be empty. Please try again.");
-            return GetInput();
+            return GetInput(args);
         }
 
         return input;
-    }
-
-    [Obsolete("not needed anymore")]
-    public static byte GetDepth()
-    {
-        Console.WriteLine("Please input the maximum depth of the search:");
-
-        //is something?
-        string? inputLine = ReadLine();
-        if (string.IsNullOrEmpty(inputLine))
-        {
-            Console.WriteLine("Depth can't be empty. Please try again.");
-            return GetDepth();
-        }
-
-        // is integer?
-        bool isInt = int.TryParse(inputLine, out int input);
-        if (!isInt)
-        {
-            Console.WriteLine("Input isn't an integer. Please try again.");
-            return GetDepth();
-        }
-        return (byte)Math.Max(input, 1);
     }
 
     private static ConcurrentQueue<string> askQueue = new();
