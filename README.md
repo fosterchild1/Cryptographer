@@ -24,3 +24,8 @@ The console offers some extra arguments that the config.ini file doesn't have. A
 | cfg= | string | config.ini | selects the config file used. <b>the file should be in the same folder as the .exe</b> |
 <br/>
 Plus the ones in config.ini. (eg. <code>Cryptographer.exe input=encrypted.txt maxdepth=1</code>)
+
+# Build instructions
+### Build prerequisites: .NET SDK 9.0
+1. Get the code: <code>git clone https://github.com/fosterchild1/Cryptographer.git</code> <b>&&</b> <code>cd Cryptographer</code>
+2. Build: <code>dotnet build Cryptographer.sln -c Release</code>
