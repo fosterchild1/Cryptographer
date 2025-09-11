@@ -20,7 +20,7 @@ The console offers some extra arguments that the config.ini file doesn't have. A
 
 | Argument | Data type | Default value | What it does |
 | ---  | --- | --- | --- |
-| input= | string | "" | self-explanatory, doesn't need to be wrapped in quotes |
+| input= | string | | self-explanatory, doesn't need to be wrapped in quotes. <b>can also be a .txt file placed in the same folder as the .exe</b> |
 | cfg= | string | config.ini | selects the config file used. <b>the file should be in the same folder as the .exe</b> |
 <br/>
 Plus the ones in config.ini. (eg. <code>Cryptographer.exe input=aGVsbG8= maxdepth=1</code>)
