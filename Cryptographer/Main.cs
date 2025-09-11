@@ -15,17 +15,14 @@ class Program
             argDict.TryAdd(split[0], split[1]);
         }
 
-        if (args.Length > 0)
-            Config.Set(argDict);
-        else
-            Config.SetFromFile("config.ini");
+        Config.SetFromFile(argDict.TryGetValue("cfg", out string? path) ? path : "config.ini");
+        Config.Set(argDict); // override config with cli arguments
 
         // SEARCHER
         string? input = "";
         if (!argDict.TryGetValue("input", out input))
             input = ProjUtils.GetInput();
 
-        Console.Clear();
         Console.WriteLine("Working...");
 
         Searcher searcher = new();
