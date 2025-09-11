@@ -28,17 +28,6 @@ class Program
         Searcher searcher = new();
         searcher.Search(input ?? "");
 
-        if (Searcher.success) {
-            Console.ReadKey();
-            Console.ForegroundColor = ConsoleColor.Gray;
-            return; 
-        }
-
-        // :(
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("sorry, i wasn't able to find a meaningful decryption =(");
-
-        Console.ReadKey();
-        Console.ForegroundColor = ConsoleColor.Gray;
+        ProjUtils.HandleSearchResult(searcher.success);
     }
 }

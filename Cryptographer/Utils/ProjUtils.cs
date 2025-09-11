@@ -131,4 +131,21 @@ class ProjUtils
 
         return withoutWhitespaces.ToString();
     }
+
+    public static void HandleSearchResult(bool success)
+    {
+        if (success)
+        {
+            Console.ReadKey();
+            Console.ForegroundColor = ConsoleColor.Gray;
+            return;
+        }
+
+        // :(
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("sorry, i wasn't able to find a meaningful decryption =(");
+
+        Console.ReadKey();
+        Console.ForegroundColor = ConsoleColor.Gray;
+    }
 }

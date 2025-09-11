@@ -27,7 +27,7 @@ namespace Cryptographer
         // to not redo them
         private ConcurrentDictionary<string, byte> seenInputs = new();
 
-        public static bool success = false;
+        public bool success = false;
 
         public SearchQueue<DecryptionBranch, double> queue = new(Config.threadCount);
 
