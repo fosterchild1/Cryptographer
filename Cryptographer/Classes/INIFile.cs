@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Text;
 
-// From https://stackoverflow.com/questions/217902/reading-writing-an-ini-file
+// CREDITS: https://stackoverflow.com/a/14906422
 namespace Cryptographer
 {
     class IniFile   // revision 11

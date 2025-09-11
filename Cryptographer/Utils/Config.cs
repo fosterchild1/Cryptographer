@@ -8,6 +8,8 @@
 
         public static byte threadCount = (byte)Environment.ProcessorCount;
 
+        public static bool useTrigrams = false;
+
         private static void TryParse<T>(Dictionary<string, string> args, string key, ref T arg)
         {
             if (!args.TryGetValue(key, out var str)) return;
@@ -29,11 +31,12 @@
             TryParse(args, "plaintext", ref scorePrintThreshold);
             TryParse(args, "maxdepth", ref maxDepth);
             TryParse(args, "threads", ref threadCount);
+            TryParse(args, "useTrigrams", ref useTrigrams);
 
             if (threadCount == 0) threadCount = (byte)Environment.ProcessorCount;
         }
 
-        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads" };
+        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "useTrigrams" };
         public static void SetFromFile(string path)
         {
             IniFile file = new(path);

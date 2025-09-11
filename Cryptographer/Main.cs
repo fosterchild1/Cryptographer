@@ -20,7 +20,8 @@ class Program
         else
             Config.SetFromFile("config.ini");
 
-            string? input = "";
+        // SEARCHER
+        string? input = "";
         if (!argDict.TryGetValue("input", out input))
             input = ProjUtils.GetInput();
 

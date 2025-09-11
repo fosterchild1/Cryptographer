@@ -58,12 +58,32 @@ namespace Cryptographer.Utils
 
         }
 
+        private static float CalculateScoreForType(string input, int step, Dictionary<string, float> dict)
+        {
+            if (dict == null) return 0;
+
+            int length = input.Length;
+            float score = 0;
+
+            for (int i = 0; i <= length; i++)
+            {
+                string substr = input.AsSpan(i, Math.Min(step, length - i)).ToString();
+
+                float val = dict.GetValueOrDefault(substr);
+                if (val == 0f)
+                {
+                    score -= length; // penalize by str length
+                    continue;
+                }
+
+                score += val * length / 3.5f;
+            }
+
+            return score;
+        }
+
         public static float Score(string input, List<KeyValuePair<char, int>> analysis)
         {
-            // to stop compiler from being an annoyance
-            if (quadgrams == null || trigrams == null)
-                return 0;
-
             // if it has less than 3 unique characters (and also check if there even is an analysis)
             if (analysis.Count > 0 && analysis.Count <= 3)
                 return 0;
@@ -73,23 +93,10 @@ namespace Cryptographer.Utils
                 return float.MaxValue;
 
             string modifiedInput = ProjUtils.RemoveWhitespaces(input).ToUpper();
-            int length = modifiedInput.Length;
 
-            float quadScore = 0.0f;
-            for (int i = 0; i <= length; i++)
-            {
-                string substr = modifiedInput.AsSpan(i, Math.Min(4, length - i)).ToString();
+            bool tri = Config.useTrigrams;
 
-                float val = quadgrams.GetValueOrDefault(substr);
-                if (val == 0f) {
-                    quadScore -= length; // penalize by str length
-                    continue; 
-                }
-
-                quadScore += val * length / 3.5f;
-            }
-
-            return quadScore;
+            return CalculateScoreForType(modifiedInput, (tri ? 3 : 4), (tri ? trigrams! : quadgrams!));
         }
     }
 }
