@@ -15,12 +15,11 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | uuencoding | Brainfuck |
 
 # Console Arguments
-Running the app through the terminal offers better customization than double clicking the .exe.
+The console offers some extra arguments that the config.ini file doesn't have. Any argument written in the console will override the one in config.ini. These are:
 <br/>
 
 | Argument | Data type | Default value | What it does |
 | ---  | --- | --- | --- |
-| input= | string | "" | self-explanatory, does not need to be wrapped in quotes |
-| maxdepth= | int | 24 | sets the max depth |
-| plaintext= | float | 10 | minimum score needed for an output to be considered plaintext |
-| threads= | byte | Processor count |  amount of cpu cores to be used by the program |
+| input= | string | "" | self-explanatory, doesn't need to be wrapped in quotes |
+<br/>
+Plus the ones in config.ini. (eg. <code>Cryptographer.exe input=aGVsbG8= maxdepth=1</code>)
