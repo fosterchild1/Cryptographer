@@ -25,7 +25,7 @@ The console offers some extra arguments that the config.ini file doesn't have. A
 <br/>
 Plus the ones in config.ini. (eg. <code>Cryptographer.exe input=encrypted.txt maxdepth=1</code>)
 
-# Build instructions
+# Build instructions (Windows, macOS & Linux)
 ### Build prerequisites: .NET SDK 9.0
 1. Get the code: <code>git clone https://github.com/fosterchild1/Cryptographer.git</code> <b>&&</b> <code>cd Cryptographer</code>
 2. Build: <code>dotnet build Cryptographer.sln -c Release</code>
