@@ -24,7 +24,7 @@
             arg = converted;
         }
 
-        public static void Set(Dictionary<string, string> args)
+        public static void TrySet(Dictionary<string, string> args)
         {
             if (args.Count == 0) return;
 
@@ -51,7 +51,24 @@
                 args[name] = value;
             }
 
-            Set(args);
+            TrySet(args);
+        }
+
+        public static Dictionary<string, string> CLIargs = new();
+        public static void SetFromCLI(string[] args)
+        {
+            Dictionary<string, string> argDict = new();
+            foreach (string s in args)
+            {
+                string[] split = s.Split("=");
+                argDict.TryAdd(split[0], split[1]);
+            }
+            CLIargs = argDict;
+
+            if (argDict.TryGetValue("cfg", out string? path)) // custom config file
+                SetFromFile(path);
+
+            TrySet(argDict); // override config with cli arguments
         }
     }
 }

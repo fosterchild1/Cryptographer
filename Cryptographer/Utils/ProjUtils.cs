@@ -20,11 +20,14 @@ class ProjUtils
         {
             key = Console.ReadKey(true);
 
+            char keyChar = key.KeyChar;
+            if (keyChar == 0) continue; // dont stdout stuff like the windows key
+
             if (key.Key == ConsoleKey.Enter)
                 break;
 
-            read.Append(key.KeyChar);
-            stdout.Write(key.KeyChar);
+            read.Append(keyChar);
+            stdout.Write(keyChar);
         }
 
         return read.ToString();
@@ -34,6 +37,7 @@ class ProjUtils
     {
         if (args.TryGetValue("input", out string? input))
         {
+            Console.WriteLine();
             if (!input.EndsWith(".txt"))
                 return input;
 
@@ -49,6 +53,7 @@ class ProjUtils
             return GetInput(args);
         }
 
+        Console.WriteLine();
         return input;
     }
 
@@ -65,14 +70,13 @@ class ProjUtils
 
         while (askQueue.TryDequeue(out string? output))
         {
-            Console.WriteLine($"Possible plaintext: {output} (Y/N)?");
+            Console.WriteLine($"Possible plaintext: {output} (\x1b[92my\x1b[39m/\x1b[91mn\x1b[39m)?"); // ugly way to print green y and red n
             ConsoleKeyInfo key = Console.ReadKey(true);
 
-            if (key.Key == ConsoleKey.Y)
-            {
-                Interlocked.Exchange(ref asking, 0);
-                return true;
-            }
+            if (key.Key != ConsoleKey.Y) continue;
+
+            Interlocked.Exchange(ref asking, 0);
+            return true;
         }
 
         Interlocked.Exchange(ref asking, 0);

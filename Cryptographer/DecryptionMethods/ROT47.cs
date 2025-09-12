@@ -36,6 +36,6 @@ namespace Cryptographer.DecryptionMethods
             return 0.8 * Math.Pow(0.9, currentCount);
         }
 
-        public string Name { get { return "ROT47"; } }
+        public string Name { get { return "ROT-47"; } }
     }
 }

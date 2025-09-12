@@ -23,7 +23,7 @@ namespace Cryptographer
         };
 
         // OTHER
-        private HashSet<string> disallowedTwice = new() { "Reverse", "Atbash", "Keyboard Substitution", "Caesar" };
+        private HashSet<string> disallowedTwice = new() { "ROT-47", "Reverse", "Atbash", "Keyboard Substitution", "Caesar", "ASCII Shift" };
         // to not redo them
         private ConcurrentDictionary<string, byte> seenInputs = new();
 
@@ -113,6 +113,8 @@ namespace Cryptographer
 
         public void Search(string input)
         {
+            if (!CheckOutput(input, "")) return;
+
             // use a priority queue alongside a CalculateProbability function
             // probabilities > 0.9 don't get checked
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
