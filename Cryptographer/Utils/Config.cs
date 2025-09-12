@@ -10,6 +10,8 @@
 
         public static bool useTrigrams = false;
 
+        public static bool showStackTrace = false;
+
         private static void TryParse<T>(Dictionary<string, string> args, string key, ref T arg)
         {
             if (!args.TryGetValue(key, out var str)) return;
@@ -32,11 +34,12 @@
             TryParse(args, "maxdepth", ref maxDepth);
             TryParse(args, "threads", ref threadCount);
             TryParse(args, "trigrams", ref useTrigrams);
+            TryParse(args, "showstacktrace", ref showStackTrace);
 
             if (threadCount == 0) threadCount = (byte)Environment.ProcessorCount;
         }
 
-        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "trigrams" };
+        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "trigrams", "showstacktrace" };
         public static void SetFromFile(string path)
         {
             IniFile file = new(path);

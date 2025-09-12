@@ -1,4 +1,5 @@
-﻿using System.Collections.Concurrent;
+﻿using Cryptographer.Utils;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Text;
 
@@ -59,7 +60,7 @@ class ProjUtils
 
     private static ConcurrentQueue<string> askQueue = new();
     private static int asking = 0;
-    public static bool AskOutput(string str)
+    public static bool AskOutput(string str, DecryptionBranch branch)
     {
         askQueue.Enqueue(str);
 
@@ -75,6 +76,23 @@ class ProjUtils
 
             if (key.Key != ConsoleKey.Y) continue;
 
+            // then its plaintext
+            if (Config.showStackTrace)
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("Methods used:");
+                Console.WriteLine($" -{branch.Method.Name}");
+
+                DecryptionNode node = branch.Parent;
+                while (node.Parent != null && node.Parent.Method != "")
+                {
+                    Console.WriteLine($" -{node.Parent.Method}");
+                    node = node.Parent;
+                }
+                Console.WriteLine();
+            }
+
+            Console.ForegroundColor = ConsoleColor.Green;
             Interlocked.Exchange(ref asking, 0);
             return true;
         }

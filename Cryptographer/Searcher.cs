@@ -91,9 +91,9 @@ namespace Cryptographer
                     bool isStopped = !timer.IsRunning; // avoid starting if its stopped
 
                     timer.Stop();
-                    bool plaintext = ProjUtils.AskOutput(output);
-                    if (plaintext) {
-                        Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    bool plaintext = ProjUtils.AskOutput(output, branch);
+                    if (plaintext) 
+                    {
                         Console.WriteLine($"Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
                         success = true; 
                         break; 
@@ -119,7 +119,7 @@ namespace Cryptographer
             // probabilities > 0.9 don't get checked
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
             ExpandNode(root, FrequencyAnalysis.AnalyzeFrequency(input), 0);
-            int workers = Config.threadCount;
+            int workers = 1;
 
             int active = 0;
             Task[] tasks = new Task[workers];
