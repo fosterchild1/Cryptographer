@@ -36,7 +36,7 @@ class ProjUtils
 
     public static string GetInput(Dictionary<string, string> args)
     {
-        if (args.TryGetValue("input", out string? input))
+        if (args.TryGetValue("inp", out string? input))
         {
             Console.WriteLine();
             if (!input.EndsWith(".txt"))

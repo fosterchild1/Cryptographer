@@ -39,7 +39,7 @@
             if (threadCount == 0) threadCount = (byte)Environment.ProcessorCount;
         }
 
-        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "trigrams", "showstacktrace" };
+        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "trigrams", "stacktrace" };
         public static void SetFromFile(string path)
         {
             IniFile file = new(path);
