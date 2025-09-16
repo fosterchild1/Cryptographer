@@ -136,7 +136,7 @@ namespace Cryptographer
             // probabilities > 0.9 don't get checked
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
             ExpandNode(root, new(input), 0);
-            int workers = 1;
+            int workers = Config.threadCount;
 
             int active = 0;
             Task[] tasks = new Task[workers];
