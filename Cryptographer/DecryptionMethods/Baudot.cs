@@ -12,7 +12,7 @@ namespace Cryptographer.DecryptionMethods
         private readonly string SWITCH_TO_FIGURES = "11011";
         private readonly string SWITCH_TO_LETTERS = "111111";
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             StringBuilder output = new();
 
@@ -32,8 +32,9 @@ namespace Cryptographer.DecryptionMethods
             return new() { output.ToString() };
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
             // baudot only has 0s, 1s and a space
             // not seen that much
             return (analysis.Count > 3 ? 1 : 0.4); // 0.4 relative to baconian, morse, binary etc

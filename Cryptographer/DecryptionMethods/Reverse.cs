@@ -4,7 +4,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public class Reverse : IDecryptionMethod
     {
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {           
             char[] letters = input.ToCharArray();
             Array.Reverse(letters);
@@ -13,7 +13,7 @@ namespace Cryptographer.DecryptionMethods
             return new List<string>() { output };
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
             return 0.5;
         }

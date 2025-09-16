@@ -34,7 +34,7 @@
             TryParse(args, "maxdepth", ref maxDepth);
             TryParse(args, "threads", ref threadCount);
             TryParse(args, "trigrams", ref useTrigrams);
-            TryParse(args, "showstacktrace", ref showStackTrace);
+            TryParse(args, "stacktrace", ref showStackTrace);
 
             if (threadCount == 0) threadCount = (byte)Environment.ProcessorCount;
         }

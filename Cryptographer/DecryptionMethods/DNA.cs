@@ -7,7 +7,7 @@ namespace Cryptographer.DecryptionMethods
     public class DNA : IDecryptionMethod
     {
         private Dictionary<string, string> DNADictionary = MethodDictionaries.DNA;
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             input = input.Replace(" ", "");
 
@@ -28,8 +28,9 @@ namespace Cryptographer.DecryptionMethods
             return new() { output.ToString() };
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
             if (analysis.Count >= 4 || analysis.Count <= 2) return 1;
 
             return 0.3;

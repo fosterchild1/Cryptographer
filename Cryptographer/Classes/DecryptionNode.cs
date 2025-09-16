@@ -1,4 +1,4 @@
-class DecryptionNode(string Text = "", byte Depth = 0, string Method = "", DecryptionNode? Parent = null)
+public class DecryptionNode(string Text = "", byte Depth = 0, string Method = "", DecryptionNode? Parent = null)
 {
     public string Text = Text;
     public byte Depth = Depth;

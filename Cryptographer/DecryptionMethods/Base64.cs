@@ -5,7 +5,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public class Base64 : IDecryptionMethod
     {
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             Span<byte> buffer = new byte[input.Length];
             Convert.TryFromBase64String(input, buffer, out int bytes);
@@ -14,10 +14,10 @@ namespace Cryptographer.DecryptionMethods
             return new() { output };
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
             // 64 + padding character
-            if (analysis.Count <= 2 || analysis.Count > 65) return 1;
+            if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 65) return 1;
 
             Span<byte> buffer = new byte[input.Length];
             return !Convert.TryFromBase64String(input, buffer, out int bytes2) ? 1 : 0;

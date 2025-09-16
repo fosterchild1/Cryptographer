@@ -82,9 +82,10 @@ namespace Cryptographer.Utils
             return score;
         }
 
-        public static float Score(string input, List<KeyValuePair<char, int>> analysis)
+        public static float Score(string input, StringInfo info)
         {
             // if it has less than 3 unique characters (and also check if there even is an analysis)
+            var analysis = info.frequencyAnalysis;
             if (analysis.Count > 0 && analysis.Count <= 3)
                 return 0;
 

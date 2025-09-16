@@ -25,14 +25,16 @@ namespace Cryptographer.DecryptionMethods
             return output.ToString();
         }
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
 
             return new() { DecryptMorse(input) };
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
+
             // space, dot, dash, slash OR without slash. 3-4 chars
             return ((analysis.Count <= 2 || analysis.Count >= 5) ? 1 : 0);
         }

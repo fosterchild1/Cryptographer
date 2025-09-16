@@ -38,7 +38,7 @@ namespace Cryptographer.DecryptionMethods
             return true;
         }
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             TryFromBase32String(input, out byte[]? output);
            // Console.WriteLine(Encoding.UTF8.GetString(output));
@@ -46,8 +46,9 @@ namespace Cryptographer.DecryptionMethods
         }
 
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
             // 32 + padding character
             if (analysis.Count <= 2 || analysis.Count > 32) return 1;
 

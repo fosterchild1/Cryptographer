@@ -6,7 +6,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public class ASCII : IDecryptionMethod
     {
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             StringBuilder output = new();
             foreach (string s in input.Split(" "))
@@ -20,8 +20,9 @@ namespace Cryptographer.DecryptionMethods
             return new() { output.ToString() };
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
             if (analysis.Count > 11) return 1; // it should only have 0-9 and a space.
 
             string withoutNum = Regex.Replace(input, "[0-9]", string.Empty);

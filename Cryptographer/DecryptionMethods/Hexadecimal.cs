@@ -18,7 +18,7 @@ namespace Cryptographer.DecryptionMethods
             }
         }
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             input = input.Replace("-", "");
 
@@ -34,8 +34,9 @@ namespace Cryptographer.DecryptionMethods
             return new() { output.ToString() };
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
             if (analysis.Count > 17 || analysis.Count <= 3) return 1;
 
             string reg = Regex.Replace(input, "[0-9a-f]", string.Empty);

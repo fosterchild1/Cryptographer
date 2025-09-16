@@ -30,7 +30,7 @@ namespace Cryptographer.DecryptionMethods
             return output.ToString();
         }
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             List<string> output = new();
 
@@ -48,8 +48,10 @@ namespace Cryptographer.DecryptionMethods
             return output;
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
+
             // this means its more likely to be morse, bacon or binary
             if (analysis.Count <= 3) return 1;
 

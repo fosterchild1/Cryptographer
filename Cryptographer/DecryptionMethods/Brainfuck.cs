@@ -6,7 +6,7 @@ namespace Cryptographer.DecryptionMethods
     public class Brainfuck : IDecryptionMethod
     {
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             int pointer = 0;
             byte[] tape = new byte[256]; // doubt that youre gonna have 256 pointers
@@ -61,8 +61,9 @@ namespace Cryptographer.DecryptionMethods
         }
 
         private HashSet<char> bfChars = new() { '>', '<', '+', '-', '.', '[', ']' };
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
             if (analysis.Count <= 2 || analysis.Count > bfChars.Count) return 1;
 
             foreach (char c in input)

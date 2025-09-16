@@ -4,6 +4,14 @@ using Cryptographer.Utils;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 
+enum searchStatus
+{
+    NOT_STARTED = 0,
+    SEARCHING = 1,
+    SUCCESS = 2,
+    FAILED = 3,
+}
+
 namespace Cryptographer
 {
     internal class Searcher
@@ -27,13 +35,13 @@ namespace Cryptographer
         // to not redo them
         private ConcurrentDictionary<string, byte> seenInputs = new();
 
-        public bool success = false;
+        public searchStatus status = searchStatus.NOT_STARTED;
 
         public SearchQueue<DecryptionBranch, double> queue = new(Config.threadCount);
 
         public Stopwatch timer = new();
 
-        private bool CheckOutput(string output, string input)
+        private bool CheckOutput(string output, string input, StringInfo info)
         {
             // aka useless string
             if (ProjUtils.RemoveWhitespaces(output).Length <= 3)
@@ -47,10 +55,18 @@ namespace Cryptographer
             if (input == output)
                 return false;
 
+            // a single character
+            if (info.uniqueCharacters < 2)
+                return false;
+
+            // anything thats under SPACE
+            if (info.minChar < 32)
+                return false;
+
             return true;
         }
 
-        private void ExpandNode(DecryptionNode node, List<KeyValuePair<char, int>> analysis, int workerIndex, bool fallback = false)
+        private void ExpandNode(DecryptionNode node, StringInfo info, int workerIndex, bool fallback = false)
         {
             string input = node.Text;
             string lastMethod = node.Method;
@@ -62,7 +78,7 @@ namespace Cryptographer
                 string methodName = method.Name;
                 if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
 
-                double probability = method.CalculateProbability(input, analysis);
+                double probability = method.CalculateProbability(input, info);
                 if (probability > 0.9) continue;
 
                 queue.Enqueue(new(node, probability, method), probability, workerIndex);
@@ -76,17 +92,17 @@ namespace Cryptographer
             byte depth = branchParent.Depth;
             string parentText = branchParent.Text;
 
-            List<KeyValuePair<char, int>> analysis = FrequencyAnalysis.AnalyzeFrequency(parentText);
-            List<string> outputs = branch.Method.Decrypt(parentText, analysis);
+            StringInfo info = new(parentText);
+            List<string> outputs = branch.Method.Decrypt(parentText, info);
 
             foreach (string output in outputs)
             {
-                if (!CheckOutput(output, parentText)) continue;
+                if (!CheckOutput(output, parentText, info)) continue;
                 seenInputs.TryAdd(output, 0);
 
                 // TEMP
-                List<KeyValuePair<char, int>> newAnalysis = FrequencyAnalysis.AnalyzeFrequency(output);
-                if (StringScorer.Score(output, newAnalysis) > Config.scorePrintThreshold)
+                StringInfo newInfo = new(output);
+                if (StringScorer.Score(output, newInfo) > Config.scorePrintThreshold)
                 {
                     bool isStopped = !timer.IsRunning; // avoid starting if its stopped
 
@@ -95,7 +111,7 @@ namespace Cryptographer
                     if (plaintext) 
                     {
                         Console.WriteLine($"Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
-                        success = true; 
+                        status = searchStatus.SUCCESS; 
                         break; 
                     }
 
@@ -103,22 +119,23 @@ namespace Cryptographer
 
                 }
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
-                ExpandNode(node, newAnalysis, workerIndex);
+                ExpandNode(node, newInfo, workerIndex);
             }
 
             bool peeked = queue.TryPeek(out DecryptionBranch _, out double priority, workerIndex);
             if (peeked && priority <= 0.7) return;
-            ExpandNode(branchParent, analysis, workerIndex, true); // run fallbacks
+            ExpandNode(branchParent, info, workerIndex, true); // run fallbacks
         }
 
         public void Search(string input)
         {
-            if (!CheckOutput(input, "")) return;
+            if (!CheckOutput(input, "", new(input))) return;
+            status = searchStatus.SEARCHING;
 
             // use a priority queue alongside a CalculateProbability function
             // probabilities > 0.9 don't get checked
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
-            ExpandNode(root, FrequencyAnalysis.AnalyzeFrequency(input), 0);
+            ExpandNode(root, new(input), 0);
             int workers = 1;
 
             int active = 0;
@@ -135,9 +152,9 @@ namespace Cryptographer
                     while (true)
                     {
                         // get next batch
-                        if (!queue.TryDequeue(out DecryptionBranch branch, out double _, workerIndex) || success)
+                        if (!queue.TryDequeue(out DecryptionBranch branch, out double _, workerIndex) || status != searchStatus.SEARCHING)
                         {
-                            if ((queue.IsEmpty() && Volatile.Read(ref active) == 0) || success) break;
+                            if ((queue.IsEmpty() && Volatile.Read(ref active) == 0) || status != searchStatus.SEARCHING) break;
                             Thread.SpinWait(64);
                             continue;
                         }
@@ -173,6 +190,8 @@ namespace Cryptographer
                 }
                 throw;
             }
+
+            status = searchStatus.FAILED;
         }
     }
 }

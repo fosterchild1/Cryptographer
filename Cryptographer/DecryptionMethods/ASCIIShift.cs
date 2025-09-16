@@ -6,7 +6,7 @@ namespace Cryptographer.DecryptionMethods
     public class ASCIIShift : IDecryptionMethod
     {
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             List<string> outputs = new();
 
@@ -25,7 +25,7 @@ namespace Cryptographer.DecryptionMethods
             return outputs;
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
             return 0.5;
         }

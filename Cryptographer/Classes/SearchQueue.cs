@@ -29,31 +29,6 @@ public class SearchQueue<TElement, TPriority>
             }
 
         }
-
-        [Obsolete("Slower, because since its a priority queue if it hits a priority 0 it still has to process everything left in the batch.")]
-        public bool TryDequeueBatch(out List<(TElement, TPriority)> batch)
-        {
-            lock (lockObj)
-            {
-                if (queue.Count == 0)
-                {
-                    batch = default!;
-                    return false;
-                }
-
-                int batchSize = Math.Min((int)MathF.Ceiling(queue.Count / 2f), 32);
-
-                batch = new();
-
-                while (batch.Count < batchSize && queue.Count > 0)
-                {
-                    if (!queue.TryDequeue(out TElement? item, out TPriority? priority)) break;
-                    batch.Add((item, priority));
-                }
-
-                return true;
-            }
-        }
     }
 
     private List<LocalQueue> queues = new();
@@ -108,58 +83,6 @@ public class SearchQueue<TElement, TPriority>
         priority = default!;
         return false;
     }
-
-    /// <summary>
-    ///  Removes half of the minimal elements from one <see cref="LocalQueue"/>,
-    ///  and copies it and their priority to the <paramref name="batch"/> parameter,
-    /// </summary>
-    /// <param name="batch">List of tuples</param>
-    /// <returns>
-    ///  <see langword="true"/> if the elements are successfully removed;
-    ///  <see langword="false"/> if the <see cref="SearchQueue{TElement, TPriority}"/> is empty or it fails to remove.
-    /// </returns>
-    [Obsolete("Slower, because since its a priority queue if it hits a priority 0 it still has to process everything left in the batch.")]
-    public bool TryDequeueBatch(out List<(TElement, TPriority)> batch, int index)
-    {
-        // try on self first
-        if (queues[index].TryDequeueBatch(out batch)) return true;
-
-        // try stealing from the biggest
-        LocalQueue? bestQueue = null;
-        int maxCount = 0;
-
-        for (int i = 0; i < workers_; i++)
-        {
-            if (i == index) continue;
-
-            LocalQueue q = queues[i];
-            lock (q.lockObj)
-            {
-                int count = q.queue.Count;
-                if (count <= maxCount) continue;
-
-                maxCount = count;
-                bestQueue = q;
-            }
-        }
-
-        // none had items
-        if (bestQueue == null || maxCount == 0)
-        {
-            batch = default!;
-            return false;
-        }
-
-        // batch failed
-        if (bestQueue.TryDequeueBatch(out batch))
-        {
-            return batch.Count > 0;
-        }
-
-        batch = default!;
-        return false;
-    }
-
     public bool TryPeek(out TElement element, out TPriority priority, int index)
     {
         lock (queues[index].lockObj)

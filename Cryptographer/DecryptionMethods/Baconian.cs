@@ -32,8 +32,9 @@ namespace Cryptographer.DecryptionMethods
             return output.ToString();
         }
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
 
             // they can be either ah or bah
             string c1 = analysis[0].Key.ToString();
@@ -50,8 +51,9 @@ namespace Cryptographer.DecryptionMethods
             return output;
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
             return (analysis.Count != 2 ? 1 : 0.1); // met less than binary/morse
         }
 

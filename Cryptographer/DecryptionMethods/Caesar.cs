@@ -5,7 +5,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public class Caesar : IDecryptionMethod
     {
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             List<string> output = new();
             for (int i = 0; i <= 25; i++) // 26 = no transformation
@@ -29,7 +29,7 @@ namespace Cryptographer.DecryptionMethods
             return output;
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
             return 0.2;
         }

@@ -12,11 +12,26 @@ class Program
         // SEARCHER
         string input = ProjUtils.GetInput(Config.CLIargs);
 
-        Console.WriteLine("Working...");
-
         Searcher searcher = new();
+
+        List<char> things = new() { '|', '/', '-', '\\', '|', '/', '-', '\\' };
+        Thread thr = new(() =>
+        {
+            int thing = 1;
+            while (searcher.status == searchStatus.SEARCHING)
+            {
+                Thread.Sleep(250);
+                if (ProjUtils.asking > 0) continue;
+
+                CLIUtils.ClearLine();
+                Console.Write($"{things[thing]} Working");
+                thing = (thing + 1) % (things.Count);
+            }
+        });
+        thr.Start();
+
         searcher.Search(input ?? "");
 
-        ProjUtils.HandleSearchResult(searcher.success);
+        ProjUtils.HandleSearchResult(searcher.status);
     }
 }

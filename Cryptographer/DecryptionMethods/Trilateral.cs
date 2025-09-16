@@ -25,7 +25,7 @@ namespace Cryptographer.DecryptionMethods
             return output.ToString();
         }
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             return new() {
                 DecodeTrilateral(input, TrilateralNormal),
@@ -33,8 +33,10 @@ namespace Cryptographer.DecryptionMethods
             };
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
+
             if (analysis.Count != 3 || input.Length % 3 != 0) return 1; // it should only have A, B, C
 
             return 0.5; // haven't seen it much really

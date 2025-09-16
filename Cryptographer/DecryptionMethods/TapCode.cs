@@ -35,8 +35,10 @@ namespace Cryptographer.DecryptionMethods
             return output.ToString();
         }
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
+
             // always second
             string space = analysis[1].Key.ToString();
 
@@ -45,8 +47,10 @@ namespace Cryptographer.DecryptionMethods
             };
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
+
             // no spaces just dots = analysis count 1
             return (analysis.Count != 2 ? 1 : 0.2); // you meet this less frequently than stuff like binary, morse, baconian.
         }

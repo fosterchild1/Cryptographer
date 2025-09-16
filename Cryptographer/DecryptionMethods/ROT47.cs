@@ -5,7 +5,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public class ROT47 : IDecryptionMethod
     {
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             StringBuilder output = new();
             foreach (char c in input)
@@ -26,13 +26,14 @@ namespace Cryptographer.DecryptionMethods
         private HashSet<char> importantChars = new() {'!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '<', '=',
             '>', '?', '@', '[', '\\', ']', '^', '_', '`', '{', '|', '}', '~'};
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
+
             // alphabet of 94 chars
             if (analysis.Count <= 2 || analysis.Count > 94) return 1;
 
-            double currentCount = FrequencyAnalysis.Exists(analysis, importantChars).Count;
-
+            double currentCount = info.Exists(importantChars).Count;
             return 0.8 * Math.Pow(0.9, currentCount);
         }
 

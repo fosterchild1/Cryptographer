@@ -5,7 +5,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public class uuencoding : IDecryptionMethod
     {
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             List<byte> result = new();
 
@@ -39,16 +39,18 @@ namespace Cryptographer.DecryptionMethods
         }
 
         private HashSet<char> importantChars = new() {' ', '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', 
-            '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_'};  
-        
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+            '-', '.', '/', ':', ';', '<', '=', '>', '?', '@', '[', '\\', ']', '^', '_'};
+
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
+
             // legit the exact same as rot 47 but with 64 chars
 
             // alphabet of 64 chars
             if (analysis.Count <= 2 || analysis.Count > 64) return 1;
 
-            double currentCount = FrequencyAnalysis.Exists(analysis, importantChars).Count;
+            double currentCount = info.Exists(importantChars).Count;
             return 0.8 * Math.Pow(0.9, currentCount);
         }
 

@@ -25,14 +25,15 @@ namespace Cryptographer.DecryptionMethods
             return true;
         }
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             TryFromBase62String(input, out byte[]? output);
             return new() { output != null ? Encoding.UTF8.GetString(output) : "" };
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
+            var analysis = info.frequencyAnalysis;
             if (analysis.Count <= 2 || analysis.Count > 62) return 1;
 
             return TryFromBase62String(input, out byte[]? _) ? 0 : 1;

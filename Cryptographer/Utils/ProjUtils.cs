@@ -8,35 +8,9 @@ class ProjUtils
 {
     public static bool loggingEnabled = true;
 
-    // to bypass the limit
-    private static string ReadLine()
-    {
-        StringBuilder read = new();
-        StreamWriter stdout = new(Console.OpenStandardOutput());
-        stdout.AutoFlush = true;
-
-        ConsoleKeyInfo key;
-
-        while (true)
-        {
-            key = Console.ReadKey(true);
-
-            char keyChar = key.KeyChar;
-            if (keyChar == 0) continue; // dont stdout stuff like the windows key
-
-            if (key.Key == ConsoleKey.Enter)
-                break;
-
-            read.Append(keyChar);
-            stdout.Write(keyChar);
-        }
-
-        return read.ToString();
-    }
-
     public static string GetInput(Dictionary<string, string> args)
     {
-        if (args.TryGetValue("inp", out string? input))
+        if (args.TryGetValue("in", out string? input))
         {
             Console.WriteLine();
             if (!input.EndsWith(".txt"))
@@ -46,7 +20,7 @@ class ProjUtils
         }
 
         Console.WriteLine("Input the text you want to decrypt:");
-        input = ReadLine();
+        input = CLIUtils.ReadLine();
 
         if (string.IsNullOrEmpty(input))
         {
@@ -59,7 +33,7 @@ class ProjUtils
     }
 
     private static ConcurrentQueue<string> askQueue = new();
-    private static int asking = 0;
+    public static int asking = 0;
     public static bool AskOutput(string str, DecryptionBranch branch)
     {
         askQueue.Enqueue(str);
@@ -68,32 +42,44 @@ class ProjUtils
         if (Interlocked.CompareExchange(ref asking, 1, 0) != 0)
             return false;
 
-
+        CLIUtils.ClearLine();
         while (askQueue.TryDequeue(out string? output))
         {
-            Console.WriteLine($"Possible plaintext: {output} (\x1b[92my\x1b[39m/\x1b[91mn\x1b[39m)?"); // ugly way to print green y and red n
+            Console.Write($"Possible plaintext: {output} (\x1b[92my\x1b[39m/\x1b[91mn\x1b[39m)?"); // ugly way to print green y and red n
             ConsoleKeyInfo key = Console.ReadKey(true);
 
-            if (key.Key != ConsoleKey.Y) continue;
+            if (key.Key != ConsoleKey.Y)
+            {
+                CLIUtils.ClearLine();
+                continue;
+            };
 
             // then its plaintext
             if (Config.showStackTrace)
             {
+                // show cipher used to get to the plaintext by backtracking up the tree
                 Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("Methods used:");
-                Console.WriteLine($" -{branch.Method.Name}");
+
+                Stack<string> methods = new();
+                methods.Push(branch.Method.Name);
 
                 DecryptionNode node = branch.Parent;
                 while (node.Parent != null && node.Parent.Method != "")
                 {
-                    Console.WriteLine($" -{node.Parent.Method}");
+                    methods.Push(node.Parent.Method);
                     node = node.Parent;
                 }
-                Console.WriteLine();
+
+                //  then reverse and then print (to get ordered)
+                methods.Reverse();
+
+                Console.WriteLine("\nMethods Used:");
+                foreach (string method in methods)
+                    Console.WriteLine($" -{method}");
             }
 
+            Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Green;
-            Interlocked.Exchange(ref asking, 0);
             return true;
         }
 
@@ -139,9 +125,9 @@ class ProjUtils
         return withoutWhitespaces.ToString();
     }
 
-    public static void HandleSearchResult(bool success)
+    public static void HandleSearchResult(searchStatus status)
     {
-        if (success)
+        if (status == searchStatus.SUCCESS)
         {
             Console.ReadKey();
             Console.ForegroundColor = ConsoleColor.Gray;

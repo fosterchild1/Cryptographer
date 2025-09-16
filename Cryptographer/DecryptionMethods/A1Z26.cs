@@ -7,7 +7,7 @@ namespace Cryptographer.DecryptionMethods
     public class A1Z26 : IDecryptionMethod
     {
 
-        public List<string> Decrypt(string input, List<KeyValuePair<char, int>> analysis)
+        public List<string> Decrypt(string input, StringInfo info)
         {
             StringBuilder output = new();
             
@@ -24,9 +24,10 @@ namespace Cryptographer.DecryptionMethods
             return new() { output.ToString() };
         }
 
-        public double CalculateProbability(string input, List<KeyValuePair<char, int>> analysis)
+        public double CalculateProbability(string input, StringInfo info)
         {
             // 0-9 and a seperator
+            var analysis = info.frequencyAnalysis;
             if (analysis.Count <= 2 || analysis.Count >= 11) return 1;
 
             // check if it has numbers and then on the numberless string check if it has a seperator
