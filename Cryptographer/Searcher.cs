@@ -186,7 +186,8 @@ namespace Cryptographer
             {
                 foreach (Exception ex in ae.InnerExceptions)
                 {
-                    Console.WriteLine("Task failed: " + ex);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"Task failed: {ex.StackTrace!.Split("""--- End of stack""")[0]}");
                 }
                 throw;
             }
