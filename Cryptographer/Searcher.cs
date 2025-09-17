@@ -192,7 +192,7 @@ namespace Cryptographer
                 throw;
             }
 
-            status = searchStatus.FAILED;
+            if (status == searchStatus.SEARCHING) status = searchStatus.FAILED; 
         }
     }
 }

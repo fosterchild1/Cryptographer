@@ -1,4 +1,5 @@
-﻿using Cryptographer.Utils;
+﻿using Cryptographer;
+using Cryptographer.Utils;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Text;
@@ -123,6 +124,25 @@ class ProjUtils
         }
 
         return withoutWhitespaces.ToString();
+    }
+
+    public static void DisplayWorkText(Searcher searcher)
+    {
+        List<char> things = new() { '|', '/', '-', '\\', '|', '/', '-', '\\' };
+        Thread thr = new(() =>
+        {
+            int thing = 1;
+            while ((int)searcher.status < 2) // < 2 means not started or searching
+            {
+                Thread.Sleep(250);
+                if (ProjUtils.asking > 0) continue;
+
+                CLIUtils.ClearLine();
+                Console.Write($"{things[thing]} Working");
+                thing = (thing + 1) % (things.Count);
+            }
+        });
+        thr.Start();
     }
 
     public static void HandleSearchResult(searchStatus status)

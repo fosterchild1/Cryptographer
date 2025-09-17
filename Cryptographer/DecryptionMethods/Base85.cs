@@ -11,8 +11,6 @@ namespace Cryptographer.DecryptionMethods
         {
             output = null;
 
-            byte[] bytes = Encoding.ASCII.GetBytes(input);
-
             List<byte> result = new();
 
             int count = 0;

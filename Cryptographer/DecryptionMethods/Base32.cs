@@ -12,7 +12,6 @@ namespace Cryptographer.DecryptionMethods
             output = null;
 
             input = input.TrimEnd('=').ToUpper();
-            byte[] bytes = Encoding.ASCII.GetBytes(input);
 
             List<byte> result = new();
 
@@ -24,7 +23,7 @@ namespace Cryptographer.DecryptionMethods
                 if (!Base32Map.TryGetValue(c, out int val)) return false;
 
                 // make space for new 5-bit value and add it onto buffer
-                buffer = (buffer << 5) | val;
+                buffer = (buffer << 5) + val;
                 bitsLeft += 5;
 
                 if (bitsLeft >= 8)
