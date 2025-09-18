@@ -59,7 +59,7 @@ namespace Cryptographer
             if (info.uniqueCharacters < 2)
                 return false;
 
-            // anything thats under SPACE
+            // anything that's under SPACE
             if (info.minChar < 32)
                 return false;
 
@@ -112,7 +112,7 @@ namespace Cryptographer
                     {
                         Console.WriteLine($"Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
                         status = searchStatus.SUCCESS; 
-                        break; 
+                        return; 
                     }
 
                     if (!isStopped) timer.Start();

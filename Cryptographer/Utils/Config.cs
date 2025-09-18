@@ -6,7 +6,7 @@
         public static float scorePrintThreshold = 10;
 
         /// <summary> Max time the search can go on for (in seconds), 0 = Default </summary>
-        public static int searchTimeout = 1;
+        public static int searchTimeout = int.MaxValue;
 
         /// <summary> The max depth of the search, 0 = Default </summary>
         public static byte maxDepth = 24;
