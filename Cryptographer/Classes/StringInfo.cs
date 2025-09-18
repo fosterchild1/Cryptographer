@@ -10,7 +10,6 @@ public class StringInfo
 
     public StringInfo(string str)
     {
-        // i dont want to loop over chars twice to not make it o(n * k) even tho its the same thing as o(n)
         Dictionary<char, int> analysis = new();
         foreach (char c in str)
         {

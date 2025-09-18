@@ -52,6 +52,8 @@ namespace Cryptographer.DecryptionMethods
                             break;
                         }
 
+                        if (loops.Count == 0) return new(); // invalid bf string
+
                         loops.Pop();
                         break;
                 }

@@ -129,20 +129,22 @@ class ProjUtils
     public static void DisplayWorkText(Searcher searcher)
     {
         List<char> things = new() { '|', '/', '-', '\\', '|', '/', '-', '\\' };
-        Thread thr = new(() =>
+        new Thread(() =>
         {
             int thing = 1;
-            while ((int)searcher.status < 2) // < 2 means not started or searching
+            while ((int)searcher.status < 2)
             {
                 Thread.Sleep(250);
-                if (ProjUtils.asking > 0) continue;
+                if (ProjUtils.asking > 0 || (int)searcher.status > 2) continue;  // < 2 means not started or searching
 
                 CLIUtils.ClearLine();
                 Console.Write($"{things[thing]} Working");
                 thing = (thing + 1) % (things.Count);
             }
-        });
-        thr.Start();
+
+            Console.Write('\n');
+            CLIUtils.ClearLine();
+        }).Start();
     }
 
     public static void HandleSearchResult(searchStatus status)

@@ -129,7 +129,7 @@ namespace Cryptographer
 
         public void Search(string input)
         {
-            if (!CheckOutput(input, "", new(input))) return;
+            if (!CheckOutput(input, "", new(input))) { status = searchStatus.FAILED; return; }
             status = searchStatus.SEARCHING;
 
             // use a priority queue alongside a CalculateProbability function
@@ -151,15 +151,18 @@ namespace Cryptographer
                     int workerIndex = index; // needed....... sadly
                     while (true)
                     {
-                        // get next batch
-                        if (!queue.TryDequeue(out DecryptionBranch branch, out double _, workerIndex) || status != searchStatus.SEARCHING)
+                        // get next branch and decide if should break
+                        if (!queue.TryDequeue(out DecryptionBranch branch, out double _, workerIndex))
                         {
-                            if ((queue.IsEmpty() && Volatile.Read(ref active) == 0) || status != searchStatus.SEARCHING) break;
+                            if ((queue.IsEmpty() && Volatile.Read(ref active) == 0)) break;
                             Thread.SpinWait(64);
                             continue;
                         }
 
-                        // expand batch
+                        if (status != searchStatus.SEARCHING || timer.ElapsedMilliseconds / 1000 >= Config.searchTimeout)
+                            break;
+
+                        // expand branch
                         Interlocked.Increment(ref active);
                         try
                         {

@@ -9,6 +9,8 @@ namespace Cryptographer.DecryptionMethods
         private Dictionary<char, int> Base64Map = MethodDictionaries.Base64Map;
         private bool CustomBase64(string input, out byte[]? output)
         {
+            // Convert.TryFromBase64String is weird and sometimes doesn't consider base64 without padding as base64
+
             output = default!;
 
             input = input.TrimEnd('=');
