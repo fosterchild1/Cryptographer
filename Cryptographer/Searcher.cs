@@ -161,7 +161,7 @@ namespace Cryptographer
 
                         if (status != searchStatus.SEARCHING || timer.ElapsedMilliseconds / 1000 >= Config.searchTimeout)
                             break;
-
+                        //ProjUtils.StopTimer("yo");
                         // expand branch
                         Interlocked.Increment(ref active);
                         try

@@ -110,7 +110,7 @@ class ProjUtils
         timer.Stop();
         timers.Remove(name);
 
-        Console.WriteLine($"{name}: {timer.Elapsed.Nanoseconds}");
+        Console.WriteLine($"{name}: {timer.ElapsedMilliseconds}ms");
     }
     public static string RemoveWhitespaces(string input)
     {

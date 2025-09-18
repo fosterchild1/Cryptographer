@@ -1,9 +1,10 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
+using System.Text.RegularExpressions;
 
 namespace Cryptographer.Utils
 {
-    internal class StringScorer
+    public static class Ngrams
     {
         private static JsonSerializerOptions options = new()
         {
@@ -11,20 +12,44 @@ namespace Cryptographer.Utils
         };
 
         private static string json = File.ReadAllText($"{AppContext.BaseDirectory}/resources/trigrams.json");
-        private static string qjson = File.ReadAllText($"{AppContext.BaseDirectory}resources/quadgrams.json");
+        public static string qjson = File.ReadAllText($"{AppContext.BaseDirectory}/resources/quadgrams.json");
 
-        private static Dictionary<string, float>? trigrams = JsonSerializer.Deserialize<Dictionary<string, float>>(json, options);
-        private static Dictionary<string, float>? quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson, options);
+        public static Dictionary<string, float>? trigrams;
 
+        public static Dictionary<string, float>? quadgrams;
+
+        public static void Wake()
+        {
+            trigrams = JsonSerializer.Deserialize<Dictionary<string, float>>(json, options);
+            quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson, options);
+        } // init
+    }
+
+    internal class StringScorer
+    {
         // link stuff
         private static  List<string> prefixes = new() { "https://", "http://" };
         private static HashSet<string> subdomains = new() { "www.", "api.", "dev.", "docs.", "store.", "en.", "fr.", "wiki.", "ro." };
         private static HashSet<string> topdomains = new() { ".com", ".net", ".org", ".tv", ".fr", ".en", ".ro", ".edu", ".gov", ".pro", ".lol", ".io", ".co" };
         private static HashSet<string> extensions = new() { ".htm", ".html", ".php", ".css", ".js", ".json" };
 
+        // CTF
+        private static HashSet<string> CTFprefixes = new() { "flag", "ctf", "httb", "thm", "cftlearn", "picoctf", "dctf"};
+        private static bool IsCTF(string input)
+        {
+            input = input.ToLower();
+            string[] split = Regex.Split(input, @"[:\^\-\{]"); // split at ^ and and { and - and :
+
+            if (split[0] != null && CTFprefixes.Contains(split[0]))
+                return true;
+
+            return false;
+        }
 
         private static bool IsLink(string input)
         {
+            input = input.ToLower();
+
             int score = 0;
 
             // prefixes (https://)
@@ -89,15 +114,18 @@ namespace Cryptographer.Utils
             if (analysis.Count > 0 && analysis.Count <= 3)
                 return 0;
 
-            // is link?
-            if (IsLink(input))
+            if (IsLink(input) || IsCTF(input))
+            {
                 return float.MaxValue;
+            }
 
             string modifiedInput = ProjUtils.RemoveWhitespaces(input).ToUpper();
 
             bool tri = Config.useTrigrams;
 
-            return CalculateScoreForType(modifiedInput, (tri ? 3 : 4), (tri ? trigrams! : quadgrams!));
+            return CalculateScoreForType(modifiedInput, (tri ? 3 : 4), (tri ? Ngrams.trigrams! : Ngrams.quadgrams!));
         }
+
+        public static void wake() { }
     }
 }

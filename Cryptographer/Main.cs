@@ -9,6 +9,8 @@ class Program
         Config.SetFromFile("config.ini");
         Config.SetFromCLI(args);
 
+        Ngrams.Wake();
+
         // SEARCHER
         string input = ProjUtils.GetInput(Config.CLIargs);
 
