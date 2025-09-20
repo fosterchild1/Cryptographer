@@ -27,7 +27,7 @@ namespace Cryptographer
 
         private List<IDecryptionMethod> fallbackMethods = new()
         {
-            new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift()
+            new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift(), new Scytale()
         };
 
         // OTHER
@@ -59,7 +59,7 @@ namespace Cryptographer
             if (info.uniqueCharacters < 2)
                 return false;
 
-            // anything that's under SPACE
+            // anything that's under SPACE, created mostly by running base methods on non-base encrypted inputs
             if (info.minChar < 32)
                 return false;
 
@@ -94,14 +94,13 @@ namespace Cryptographer
 
             StringInfo info = new(parentText);
             List<string> outputs = branch.Method.Decrypt(parentText, info);
-
             foreach (string output in outputs)
             {
-                if (!CheckOutput(output, parentText, info)) continue;
+                StringInfo newInfo = new(output);
+                if (!CheckOutput(output, parentText, newInfo)) continue;
                 seenInputs.TryAdd(output, 0);
 
                 // TEMP
-                StringInfo newInfo = new(output);
                 if (StringScorer.Score(output, newInfo) > Config.scorePrintThreshold)
                 {
                     bool isStopped = !timer.IsRunning; // avoid starting if its stopped
@@ -190,7 +189,7 @@ namespace Cryptographer
                 foreach (Exception ex in ae.InnerExceptions)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Task failed: {ex.StackTrace!.Split("""--- End of stack""")[0]}");
+                    Console.WriteLine($"Task failed: {ex.Message}\n{ex.StackTrace!.Split("""--- End of stack""")[0]}");
                 }
                 throw;
             }

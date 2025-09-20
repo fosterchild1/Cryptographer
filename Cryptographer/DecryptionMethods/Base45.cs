@@ -38,7 +38,7 @@ namespace Cryptographer.DecryptionMethods
                 if (i == length - 3) break;
 
                 i += 3;
-                if (i > length) // add zeros
+                if (i > length - 3) // add zeros
                 {
                     input += new string('0', 3 - (length % 3));
                     length = input.Length;
