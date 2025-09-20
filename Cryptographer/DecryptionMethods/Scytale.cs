@@ -14,13 +14,13 @@ namespace Cryptographer.DecryptionMethods
             int end = length - 1;
             int maxLetters = (int)MathF.Ceiling(length / 2);
 
+            // solution that doesnt require a 2d matrix
             // the amount you move each time is equal to FLOOR(input len / letters)
             // but when you warp back to the start you move 1 extra
 
-            for (int i = 2; i < maxLetters; i++)
+            for (int move = 2; move < maxLetters; move++)
             {
                 StringBuilder output = new();
-                int move = (int)MathF.Floor(length / i);
                 int pos = 0;
 
                 while (output.Length < length)

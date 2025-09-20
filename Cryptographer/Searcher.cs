@@ -99,7 +99,6 @@ namespace Cryptographer
                 StringInfo newInfo = new(output);
                 if (!CheckOutput(output, parentText, newInfo)) continue;
                 seenInputs.TryAdd(output, 0);
-                Console.WriteLine(branch.Method.Name);
 
                 // TEMP
                 if (StringScorer.Score(output, newInfo) > Config.scorePrintThreshold)
@@ -124,7 +123,6 @@ namespace Cryptographer
 
             bool peeked = queue.TryPeek(out DecryptionBranch _, out double priority, workerIndex);
             if (peeked && priority <= 0.7) return;
-            Console.WriteLine("fall");
             ExpandNode(branchParent, info, workerIndex, true); // run fallbacks
         }
 

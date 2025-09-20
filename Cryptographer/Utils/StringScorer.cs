@@ -100,7 +100,7 @@ namespace Cryptographer.Utils
                     continue;
                 }
 
-                score += val * length / 3.5f;
+                score += val * length / 4f;
             }
 
             return score;
@@ -120,7 +120,7 @@ namespace Cryptographer.Utils
 
             string modifiedInput = ProjUtils.RemoveWhitespaces(input).ToUpper();
 
-            bool tri = Config.useTrigrams;
+            bool tri = Config.useTrigrams || modifiedInput.Length <= 6;
 
             return CalculateScoreForType(modifiedInput, (tri ? 3 : 4), (tri ? Ngrams.trigrams! : Ngrams.quadgrams!));
         }

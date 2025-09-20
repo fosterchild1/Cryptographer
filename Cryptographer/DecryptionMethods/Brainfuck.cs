@@ -9,7 +9,7 @@ namespace Cryptographer.DecryptionMethods
         public List<string> Decrypt(string input, StringInfo info)
         {
             int pointer = 0;
-            byte[] tape = new byte[256]; // doubt that youre gonna have 256 pointers
+            byte[] tape = new byte[1024];
             Stack<int> loops = new();
 
             StringBuilder output = new();
