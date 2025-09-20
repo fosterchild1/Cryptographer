@@ -9,10 +9,10 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | DNA | Octal | Morse |
 | Atbash | Hexadecimal | Tap Code |
 | Baconian | ASCII | Base32 |
-| Trilateral | Caesar | Base62 |
-| ROT-47 | Keyboard Substitution | Base64 |
-| ASCII Shift | A1Z26 | Base85 |
-| uuencoding | Brainfuck |
+| Trilateral | Caesar | Base58 |
+| ROT-47 | Keyboard Substitution | Base62 |
+| ASCII Shift | A1Z26 | Base64 |
+| uuencoding | Brainfuck | Base85 |
 
 # CLI Arguments
 The console offers some extra arguments that the config.ini file doesn't have. Any argument written in the console will override the one in config.ini. These are:
