@@ -61,22 +61,18 @@ class ProjUtils
                 // show cipher used to get to the plaintext by backtracking up the tree
                 Console.ForegroundColor = ConsoleColor.Blue;
 
-                Stack<string> methods = new();
-                methods.Push(branch.Method.Name);
+                List<string> methods = new() { branch.Method.Name };
 
                 DecryptionNode node = branch.Parent;
                 while (node.Parent != null && node.Parent.Method != "")
                 {
-                    methods.Push(node.Parent.Method);
+                    methods.Add(node.Parent.Method);
                     node = node.Parent;
                 }
 
-                //  then reverse and then print (to get ordered)
-                methods.Reverse();
-
                 Console.WriteLine("\nMethods Used:");
-                foreach (string method in methods)
-                    Console.WriteLine($" -{method}");
+                for (int i=methods.Count - 1; i>=0; i--)
+                    Console.WriteLine($" -{methods[i]}");
             }
 
             Console.WriteLine();

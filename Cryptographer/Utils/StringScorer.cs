@@ -24,7 +24,6 @@ namespace Cryptographer.Utils
             quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson, options);
         } // init
     }
-
     internal class StringScorer
     {
         // link stuff
@@ -90,7 +89,7 @@ namespace Cryptographer.Utils
             int length = input.Length;
             float score = 0;
 
-            for (int i = 0; i <= length; i++)
+            for (int i = 0; i < length; i++)
             {
                 string substr = input.AsSpan(i, Math.Min(step, length - i)).ToString();
 
@@ -125,7 +124,5 @@ namespace Cryptographer.Utils
 
             return CalculateScoreForType(modifiedInput, (tri ? 3 : 4), (tri ? Ngrams.trigrams! : Ngrams.quadgrams!));
         }
-
-        public static void wake() { }
     }
 }

@@ -1,7 +1,7 @@
 /// <summary>
 /// Provides info about a string such as frequency analysis in O(n) time.
 /// </summary>
-public class StringInfo
+public class StringInfo // theres a C# class also called StringInfo but honestly i have no idea what else to name this
 {
     public List<KeyValuePair<char, int>> frequencyAnalysis;
     public int uniqueCharacters;
