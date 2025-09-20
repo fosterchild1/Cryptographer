@@ -5,14 +5,15 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 
 | Supported ciphers | Supported ciphers | Supported ciphers |
 | ---  | --- | --- |
-| Reverse | Binary | Baudot |
-| DNA | Octal | Morse |
-| Atbash | Hexadecimal | Tap Code |
-| Baconian | ASCII | Base32 |
-| Trilateral | Caesar | Base58 |
-| ROT-47 | Keyboard Substitution | Base62 |
-| ASCII Shift | A1Z26 | Base64 |
-| uuencoding | Brainfuck | Base85 |
+| ASCII | Base64 | Keyboard Substitution
+| ASCII Shift | Base85 | Morse
+| Atbash | Baudot | Octal
+| A1Z26 | Binary | Reverse
+| Baconian | Brainfuck | ROT-47
+| Base32 | Caesar | Tap Code
+| Base45 | DNA | Trilateral
+| Base58 | Hexadecimal | uuencoding
+| Base62 |
 
 # CLI Arguments
 The console offers some extra arguments that the config.ini file doesn't have. Any argument written in the console will override the one in config.ini. These are:
