@@ -62,11 +62,11 @@ class ProjUtils
                 Console.ForegroundColor = ConsoleColor.Blue;
 
                 List<string> methods = new() { branch.Method.Name };
-
                 DecryptionNode node = branch.Parent;
-                while (node.Parent != null && node.Parent.Method != "")
+
+                while (node != null && node.Method != "")
                 {
-                    methods.Add(node.Parent.Method);
+                    methods.Add(node.Method);
                     node = node.Parent;
                 }
 
