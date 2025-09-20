@@ -22,7 +22,7 @@ namespace Cryptographer
             new Base64(), new Morse(), new Baconian(), new Binary(), new TapCode(), 
             new DNA(), new Hexadecimal(), new Base32(), new Base85(), new Base62(), 
             new Octal(), new Baudot(), new Trilateral(), new ROT47(), new uuencoding(),
-            new A1Z26(), new ASCII(), new Brainfuck(), new Base58(),
+            new A1Z26(), new ASCII(), new Brainfuck(), new Base58(), new Base45()
         };
 
         private List<IDecryptionMethod> fallbackMethods = new()
@@ -155,13 +155,13 @@ namespace Cryptographer
                         if (!queue.TryDequeue(out DecryptionBranch branch, out double _, workerIndex))
                         {
                             if ((queue.IsEmpty() && Volatile.Read(ref active) == 0)) break;
-                            Thread.SpinWait(64);
+                            Thread.Sleep(64);
                             continue;
                         }
 
                         if (status != searchStatus.SEARCHING || timer.ElapsedMilliseconds / 1000 >= Config.searchTimeout)
                             break;
-                        //ProjUtils.StopTimer("yo");
+
                         // expand branch
                         Interlocked.Increment(ref active);
                         try
