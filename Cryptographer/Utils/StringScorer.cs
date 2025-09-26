@@ -89,17 +89,20 @@ namespace Cryptographer.Utils
             int length = input.Length;
             float score = 0;
 
+            HashSet<string> seen = new();
+
             for (int i = 0; i < length; i++)
             {
                 string substr = input.AsSpan(i, Math.Min(step, length - i)).ToString();
 
                 float val = dict.GetValueOrDefault(substr);
-                if (val == 0f)
+                if (val == 0f || seen.Contains(substr))
                 {
                     score -= length; // penalize by str length
                     continue;
                 }
 
+                seen.Add(substr);
                 score += val * length / 4f; // fine tuned value that stops most non-plaintext strings
             }
 

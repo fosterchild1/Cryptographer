@@ -126,6 +126,12 @@ namespace Cryptographer
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
                 ExpandNode(node, newInfo, workerIndex);
             }
+
+            // fallbacks the second, the reason we do it here too is because checkOutput could fail 100% of the time
+            bool peeked = queue.TryPeek(out DecryptionBranch? _, out double priority, workerIndex);
+
+            if (peeked && priority <= 0.7) return;
+            ExpandNode(branchParent, info, workerIndex, true);
         }
 
         public void Search(string input)
@@ -138,7 +144,7 @@ namespace Cryptographer
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
             ExpandNode(root, new(input), 0);
 
-            int workers = 1;
+            int workers = Config.threadCount;
 
             int active = 0;
             Task[] tasks = new Task[workers];
