@@ -34,7 +34,8 @@ namespace Cryptographer.DecryptionMethods
             if (analysis.Count <= 2 || analysis.Count > 94) return 1;
 
             double currentCount = info.Exists(importantChars).Count;
-            return 0.8 * Math.Pow(0.9, currentCount);
+
+            return Math.Pow(0.9, currentCount);
         }
 
         public string Name { get { return "ROT-47"; } }

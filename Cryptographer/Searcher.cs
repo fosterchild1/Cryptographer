@@ -84,6 +84,11 @@ namespace Cryptographer
                 queue.Enqueue(new(node, probability, method), probability, workerIndex);
             }
 
+            // fallbacks
+            bool peeked = queue.TryPeek(out DecryptionBranch? _, out double priority, workerIndex);
+
+            if (peeked && priority <= 0.7) return;
+            ExpandNode(node, info, workerIndex, true);
         }
 
         private void ExpandBranch(DecryptionBranch branch, int workerIndex)
@@ -94,13 +99,14 @@ namespace Cryptographer
 
             StringInfo info = new(parentText);
             List<string> outputs = branch.Method.Decrypt(parentText, info);
+
             foreach (string output in outputs)
             {
                 StringInfo newInfo = new(output);
                 if (!CheckOutput(output, parentText, newInfo)) continue;
                 seenInputs.TryAdd(output, 0);
-
-                // TEMP
+                
+                // TEMP ---- future me here: this was clearly not temporary
                 if (StringScorer.Score(output, newInfo) > Config.scorePrintThreshold)
                 {
                     bool isStopped = !timer.IsRunning; // avoid starting if its stopped
@@ -120,10 +126,6 @@ namespace Cryptographer
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
                 ExpandNode(node, newInfo, workerIndex);
             }
-
-            bool peeked = queue.TryPeek(out DecryptionBranch _, out double priority, workerIndex);
-            if (peeked && priority <= 0.7) return;
-            ExpandNode(branchParent, info, workerIndex, true); // run fallbacks
         }
 
         public void Search(string input)
@@ -135,7 +137,8 @@ namespace Cryptographer
             // probabilities > 0.9 don't get checked
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
             ExpandNode(root, new(input), 0);
-            int workers = Config.threadCount;
+
+            int workers = 1;
 
             int active = 0;
             Task[] tasks = new Task[workers];

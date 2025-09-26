@@ -28,9 +28,9 @@ namespace Cryptographer.Utils
     {
         // link stuff
         private static  List<string> prefixes = new() { "https://", "http://" };
-        private static HashSet<string> subdomains = new() { "www.", "api.", "dev.", "docs.", "store.", "en.", "fr.", "wiki.", "ro." };
-        private static HashSet<string> topdomains = new() { ".com", ".net", ".org", ".tv", ".fr", ".en", ".ro", ".edu", ".gov", ".pro", ".lol", ".io", ".co" };
-        private static HashSet<string> extensions = new() { ".htm", ".html", ".php", ".css", ".js", ".json" };
+        private static HashSet<string> subdomains = new() { "ww.", "api", "dev", "docs", "store", "en", "fr", "wiki", "ro" };
+        private static HashSet<string> topdomains = new() { "com", "net", "org", "tv", "fr", "en", "ro", "edu", "gov", "pro", "lol", "io", "co" };
+        private static HashSet<string> extensions = new() { "htm", "html", "php", "css", "js", "json", "txt" };
 
         // CTF
         private static HashSet<string> CTFprefixes = new() { "flag", "ctf", "httb", "thm", "cftlearn", "picoctf", "dctf"};
@@ -100,7 +100,7 @@ namespace Cryptographer.Utils
                     continue;
                 }
 
-                score += val * length / 4f;
+                score += val * length / 4f; // fine tuned value that stops most non-plaintext strings
             }
 
             return score;
