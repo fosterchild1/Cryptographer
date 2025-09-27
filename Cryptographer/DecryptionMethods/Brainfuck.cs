@@ -21,6 +21,9 @@ namespace Cryptographer.DecryptionMethods
                 if (i >= input.Length)
                     break;
 
+                if (pointer >= 1023)
+                    return new();
+
                 char c = input[i];
 
                 // this might be some of the shittest code in this project
@@ -46,13 +49,14 @@ namespace Cryptographer.DecryptionMethods
                         break;
 
                     case ']':
+
+                        if (loops.Count == 0) return new(); // invalid bf string
+
                         if (tape[pointer] != 0)
                         {
                             i = loops.Peek();
                             break;
                         }
-
-                        if (loops.Count == 0) return new(); // invalid bf string
 
                         loops.Pop();
                         break;
