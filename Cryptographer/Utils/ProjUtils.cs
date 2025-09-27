@@ -46,7 +46,12 @@ class ProjUtils
         CLIUtils.ClearLine();
         while (askQueue.TryDequeue(out string? output))
         {
-            Console.Write($"Possible plaintext: {output} (\x1b[92my\x1b[39m/\x1b[91mn\x1b[39m)?"); // ugly way to print green y and red n
+            // THE ABSOLUTE MOST HORRENDOUS WAY TO PRINT A GREEN Y AND RED N. i know that we can do it in 1 .Write statement,
+            // but not all consoles support that
+            Console.Write($"Possible plaintext: {output} ("); Console.ForegroundColor = ConsoleColor.Green; Console.Write("y"); 
+            Console.ForegroundColor = ConsoleColor.Green; Console.Write("/"); Console.ForegroundColor = ConsoleColor.Red; Console.Write("n");
+            Console.ForegroundColor = ConsoleColor.Gray; Console.Write(")?");
+
             ConsoleKeyInfo key = Console.ReadKey(true);
 
             if (key.Key != ConsoleKey.Y)
