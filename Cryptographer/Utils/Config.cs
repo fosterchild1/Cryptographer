@@ -76,7 +76,7 @@
             {
                 string[] split = s.TrimStart('-').Split("=");
 
-                if (split[0] == "help")
+                if (split[0] == "help" || true)
                     ProjUtils.DisplayHelpText();
 
                 argDict.TryAdd(split[0], split[1]);
