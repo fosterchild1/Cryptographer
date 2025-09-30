@@ -71,6 +71,8 @@ namespace Cryptographer
             string input = node.Text;
             string lastMethod = node.Method;
 
+            bool failedAll = true;
+
             List<IDecryptionMethod> chosen = (fallback ? fallbackMethods : methods);
 
             foreach (IDecryptionMethod method in chosen)
@@ -81,13 +83,13 @@ namespace Cryptographer
                 double probability = method.CalculateProbability(input, info);
                 if (probability > 0.9) continue;
 
+                failedAll = false;
                 queue.Enqueue(new(node, probability, method), probability, workerIndex);
             }
 
             // fallbacks
-            bool peeked = queue.TryPeek(out DecryptionBranch? _, out double priority, workerIndex);
-
-            if (peeked && priority <= 0.7) return;
+            if (!failedAll) return;
+            Console.WriteLine("fallback");
             ExpandNode(node, info, workerIndex, true);
         }
 
@@ -99,13 +101,15 @@ namespace Cryptographer
 
             StringInfo info = new(parentText);
             List<string> outputs = branch.Method.Decrypt(parentText, info);
-
+            bool printed = false;
             foreach (string output in outputs)
             {
                 StringInfo newInfo = new(output);
                 if (!CheckOutput(output, parentText, newInfo)) continue;
                 seenInputs.TryAdd(output, 0);
-                
+
+                if (!printed) {Console.WriteLine($"{branch} {depth}"); printed = true;
+            }
                 // TEMP ---- future me here: this was clearly not temporary
                 if (StringScorer.Score(output, newInfo) > Config.scorePrintThreshold)
                 {
@@ -124,14 +128,9 @@ namespace Cryptographer
 
                 }
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
+                Console.WriteLine("expand");
                 ExpandNode(node, newInfo, workerIndex);
             }
-
-            // fallbacks the second, the reason we do it here too is because checkOutput could fail 100% of the time
-            bool peeked = queue.TryPeek(out DecryptionBranch? _, out double priority, workerIndex);
-
-            if (peeked && priority <= 0.7) return;
-            ExpandNode(branchParent, info, workerIndex, true);
         }
 
         public void Search(string input)

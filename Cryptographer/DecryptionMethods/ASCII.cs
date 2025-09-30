@@ -11,6 +11,9 @@ namespace Cryptographer.DecryptionMethods
             StringBuilder output = new();
             foreach (string s in input.Split(" "))
             {
+                // handle double/triple/quadruple/... spaces between nums
+                if (string.IsNullOrWhiteSpace(s)) continue;
+
                 if (!int.TryParse(s, out int integer)) return new();
                 if (integer <= 0 || integer > 127) return new();
 
@@ -26,7 +29,7 @@ namespace Cryptographer.DecryptionMethods
             if (analysis.Count > 11) return 1; // it should only have 0-9 and a space.
 
             string withoutNum = Regex.Replace(input, "[0-9]", string.Empty);
-            return string.IsNullOrWhiteSpace(withoutNum) ? 0.3 : 1;
+            return string.IsNullOrWhiteSpace(withoutNum) ? 0.1 : 1;
         }
 
         public string Name { get { return "ASCII"; } }

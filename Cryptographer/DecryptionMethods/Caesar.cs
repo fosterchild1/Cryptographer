@@ -1,5 +1,6 @@
 ﻿using Cryptographer.Classes;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Cryptographer.DecryptionMethods
 {
@@ -25,12 +26,16 @@ namespace Cryptographer.DecryptionMethods
 
                 output.Add(transformed.ToString());
             }
-
             return output;
         }
 
         public double CalculateProbability(string input, StringInfo info)
         {
+            // check if its just numbers
+            string withoutNum = Regex.Replace(input, "[0-9]", string.Empty);
+            if (string.IsNullOrWhiteSpace(withoutNum))
+                return 1;
+
             return 0.2;
         }
 
