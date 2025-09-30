@@ -164,4 +164,23 @@ class ProjUtils
         Console.ReadKey();
         Console.ForegroundColor = ConsoleColor.Gray;
     }
+
+    public static void DisplayHelpText()
+    {
+        Console.WriteLine("Cryptographer\n" +
+            "Source: https://github.com/fosterchild1/Cryptographer\n\n" +
+            "Example usage: cryptographer in=aHR0cHM6Ly9naXRodWIuY29tL2Zvc3RlcmNoaWxkMS8 maxdepth=2\n\n" +
+            "Configuration:\n" +
+            "Config Name | Default | What it does\n" +
+            "h  help               Displays the help text.\n" +
+            "plaintext=   float    Minimum score needed for an output to be considered plaintext, 0 = Default.\n" +
+            "maxdepth=    byte     The max depth of the search, 0 = Default.\n" +
+            "threads=     byte     Amount of cpu cores to be used by the program, 0 = all of them. 1 thread is almost always enough.\n" +
+            "trigrams=    boolean  Use trigrams instead of quadgrams when determining plaintext.\n" +
+            "stacktrace=  boolean  Shows the ciphers used to get to the plaintext.\n" +
+            "timeout=     int      Max time the search can go on for (in seconds), 0 = Default\n"
+        );
+
+        Environment.Exit(0);
+    }
 }

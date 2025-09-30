@@ -74,7 +74,11 @@
             Dictionary<string, string> argDict = new();
             foreach (string s in args)
             {
-                string[] split = s.Split("=");
+                string[] split = s.TrimStart('-').Split("=");
+
+                if (split[0] == "help")
+                    ProjUtils.DisplayHelpText();
+
                 argDict.TryAdd(split[0], split[1]);
             }
             CLIargs = argDict;
