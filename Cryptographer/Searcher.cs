@@ -89,7 +89,6 @@ namespace Cryptographer
 
             // fallbacks
             if (!failedAll) return;
-            Console.WriteLine("fallback");
             ExpandNode(node, info, workerIndex, true);
         }
 
@@ -101,15 +100,13 @@ namespace Cryptographer
 
             StringInfo info = new(parentText);
             List<string> outputs = branch.Method.Decrypt(parentText, info);
-            bool printed = false;
+            //bool printed = false;
             foreach (string output in outputs)
             {
                 StringInfo newInfo = new(output);
                 if (!CheckOutput(output, parentText, newInfo)) continue;
                 seenInputs.TryAdd(output, 0);
 
-                if (!printed) {Console.WriteLine($"{branch} {depth}"); printed = true;
-            }
                 // TEMP ---- future me here: this was clearly not temporary
                 if (StringScorer.Score(output, newInfo) > Config.scorePrintThreshold)
                 {
@@ -128,7 +125,7 @@ namespace Cryptographer
 
                 }
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
-                Console.WriteLine("expand");
+
                 ExpandNode(node, newInfo, workerIndex);
             }
         }

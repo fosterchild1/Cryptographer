@@ -7,8 +7,6 @@ using System.Text;
 class ProjUtils
     // for general utils
 {
-    public static bool loggingEnabled = true;
-
     public static string GetInput(Dictionary<string, string> args)
     {
         if (args.TryGetValue("in", out string? input))
@@ -94,7 +92,6 @@ class ProjUtils
     [Obsolete("only for debugging")]
     public static void StartTimer(string name)
     {
-        if (!loggingEnabled) { return; }
         if (timers.ContainsKey(name)) { return; }
 
         timers.Add(name, Stopwatch.StartNew());
@@ -103,8 +100,6 @@ class ProjUtils
 
     public static void StopTimer(string name)
     {
-        if (!loggingEnabled) return;
-
         Stopwatch? timer;
         if (!timers.TryGetValue(name, out timer)) return;
 

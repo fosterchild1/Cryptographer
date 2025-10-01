@@ -13,6 +13,7 @@
 		<PublishTrimmed>True</PublishTrimmed>
 		<PlatformTarget>AnyCPU</PlatformTarget>
 		<SignAssembly>False</SignAssembly>
+		<PublishReadyToRun>true</PublishReadyToRun>
 		<SelfContained>true</SelfContained>
 	</PropertyGroup>
 

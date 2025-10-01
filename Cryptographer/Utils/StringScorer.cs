@@ -1,9 +1,9 @@
 ﻿using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
-using System.Text.RegularExpressions;
 
 namespace Cryptographer.Utils
 {
+    #region Ngrams
     public static class Ngrams
     {
         private static JsonSerializerOptions options = new()
@@ -24,22 +24,30 @@ namespace Cryptographer.Utils
             quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson, options);
         } // init
     }
+    #endregion
+
     internal class StringScorer
     {
         // link stuff
-        private static  List<string> prefixes = new() { "https://", "http://" };
+        private static List<string> prefixes = new() { "https://", "http://" };
         private static HashSet<string> subdomains = new() { "ww.", "api", "dev", "docs", "store", "en", "fr", "wiki", "ro" };
         private static HashSet<string> topdomains = new() { "com", "net", "org", "tv", "fr", "en", "ro", "edu", "gov", "pro", "lol", "io", "co" };
         private static HashSet<string> extensions = new() { "htm", "html", "php", "css", "js", "json", "txt" };
 
         // CTF
-        private static HashSet<string> CTFprefixes = new() { "flag", "ctf", "httb", "thm", "cftlearn", "picoctf", "dctf"};
+        private static HashSet<string> CTFprefixes = new() { "flag", "ctf", "httb", "thm", "cftlearn", "picoctf", "dctf" };
+        private static char[] CTFSymbols = { ':', '^', '-', '{' };
+
         private static bool IsCTF(string input)
         {
             input = input.ToLower();
-            string[] split = Regex.Split(input, @"[:\^\-\{]"); // split at ^ and and { and - and :
 
-            if (split[0] != null && CTFprefixes.Contains(split[0]))
+            int index = input.IndexOfAny(CTFSymbols);
+            if (index == -1)
+                return false;
+
+            string split = input.AsSpan(0, index).ToString();
+            if (split != null && CTFprefixes.Contains(split))
                 return true;
 
             return false;
