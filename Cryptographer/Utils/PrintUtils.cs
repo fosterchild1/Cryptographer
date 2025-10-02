@@ -4,9 +4,13 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Text;
 
-class ProjUtils
-    // for general utils
+class PrintUtils
 {
+    private static void sc(string col) 
+    {
+        Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), col);
+    }
+
     public static string GetInput(Dictionary<string, string> args)
     {
         if (args.TryGetValue("in", out string? input))
@@ -46,9 +50,8 @@ class ProjUtils
         {
             // THE ABSOLUTE MOST HORRENDOUS WAY TO PRINT A GREEN Y AND RED N. i know that we can do it in 1 .Write statement,
             // but not all consoles support that
-            Console.Write($"Possible plaintext: {output} ("); Console.ForegroundColor = ConsoleColor.Green; Console.Write("y"); 
-            Console.ForegroundColor = ConsoleColor.Green; Console.Write("/"); Console.ForegroundColor = ConsoleColor.Red; Console.Write("n");
-            Console.ForegroundColor = ConsoleColor.Gray; Console.Write(")?");
+            Console.Write($"Possible plaintext: {output} ("); sc("Green"); Console.Write("y"); 
+            sc("Gray"); Console.Write("/"); sc("Red"); Console.Write("n"); sc("Gray"); Console.Write(")?");
 
             ConsoleKeyInfo key = Console.ReadKey(true);
 
@@ -131,7 +134,7 @@ class ProjUtils
             while ((int)searcher.status < 2)
             {
                 Thread.Sleep(250);
-                if (ProjUtils.asking > 0 || (int)searcher.status > 2) continue;  // < 2 means not started or searching
+                if (PrintUtils.asking > 0 || (int)searcher.status > 2) continue;  // < 2 means not started or searching
 
                 CLIUtils.ClearLine();
                 Console.Write($"{things[thing]} Working");
@@ -177,5 +180,19 @@ class ProjUtils
         );
 
         Environment.Exit(0);
+    }
+
+    public static void PrintDbgDecryption(DecryptionBranch branch, int workerIndex)
+    {
+        string text = branch.Parent.Text;
+        string truncated = text.Length >= 60 ? $"{text.AsSpan(0, 60).ToString()}.. [truncated]" : text;
+        // sorry. i dont know of a way to do ansii codes that work on all consoles
+        sc("Yellow"); 
+
+        Console.Write("APPLIED: "); sc("DarkYellow"); Console.Write(branch.Method.Name); sc("Yellow"); Console.Write(" | ON: ");
+        sc("DarkYellow"); Console.Write($"{'"'}{truncated}{'"'}"); sc("Yellow"); Console.Write(" | AT DEPTH: "); sc("DarkYellow");
+        Console.Write($"{branch.Parent.Depth}\n");
+
+        sc("Gray");
     }
 }

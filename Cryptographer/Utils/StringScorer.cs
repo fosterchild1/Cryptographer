@@ -129,7 +129,7 @@ namespace Cryptographer.Utils
                 return float.MaxValue;
             }
 
-            string modifiedInput = ProjUtils.RemoveWhitespaces(input).ToUpper();
+            string modifiedInput = PrintUtils.RemoveWhitespaces(input).ToUpper();
 
             bool tri = Config.useTrigrams || modifiedInput.Length <= 6;
 

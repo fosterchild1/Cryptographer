@@ -44,7 +44,7 @@ namespace Cryptographer
         private bool CheckOutput(string output, string input, StringInfo info)
         {
             // aka useless string
-            if (ProjUtils.RemoveWhitespaces(output).Length <= 3)
+            if (PrintUtils.RemoveWhitespaces(output).Length <= 3)
                 return false;
 
             // TO NOT LOG IN CONSOLE
@@ -100,12 +100,16 @@ namespace Cryptographer
 
             StringInfo info = new(parentText);
             List<string> outputs = branch.Method.Decrypt(parentText, info);
-            //bool printed = false;
+
             foreach (string output in outputs)
             {
                 StringInfo newInfo = new(output);
                 if (!CheckOutput(output, parentText, newInfo)) continue;
                 seenInputs.TryAdd(output, 0);
+
+
+                if (Config.debug)
+                    PrintUtils.PrintDbgDecryption(branch, workerIndex);
 
                 // TEMP ---- future me here: this was clearly not temporary
                 if (StringScorer.Score(output, newInfo) > Config.scorePrintThreshold)
@@ -113,7 +117,7 @@ namespace Cryptographer
                     bool isStopped = !timer.IsRunning; // avoid starting if its stopped
 
                     timer.Stop();
-                    bool plaintext = ProjUtils.AskOutput(output, branch);
+                    bool plaintext = PrintUtils.AskOutput(output, branch);
                     if (plaintext) 
                     {
                         Console.WriteLine($"Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");

@@ -20,6 +20,9 @@
         /// <summary> Shows the ciphers used to get to the plaintext </summary>
         public static bool showStackTrace = false;
 
+        /// <summary> Shows decryptions happening in real time </summary>
+        public static bool debug = false;
+
         private static void TryParse<T>(Dictionary<string, string> args, string key, ref T arg)
         {
             if (!args.TryGetValue(key, out var str)) return;
@@ -48,9 +51,10 @@
             TryParse(args, "trigrams", ref useTrigrams);
             TryParse(args, "stacktrace", ref showStackTrace);
             TryParse(args, "timeout", ref searchTimeout);
+            TryParse(args, "dbg", ref debug);
         }
 
-        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "trigrams", "stacktrace", "timeout" };
+        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "trigrams", "stacktrace", "timeout", "dbg" };
         public static void SetFromFile(string path)
         {
             IniFile file = new(path);
@@ -77,7 +81,7 @@
                 string[] split = s.TrimStart('-').Split("=");
 
                 if (split[0] == "help")
-                    ProjUtils.DisplayHelpText();
+                    PrintUtils.DisplayHelpText();
 
                 argDict.TryAdd(split[0], split[1]);
             }

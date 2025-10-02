@@ -12,13 +12,13 @@ class Program
         Ngrams.Wake();
 
         // SEARCHER
-        string input = ProjUtils.GetInput(Config.CLIargs);
+        string input = PrintUtils.GetInput(Config.CLIargs);
 
         Searcher searcher = new();
-        ProjUtils.DisplayWorkText(searcher);
+        PrintUtils.DisplayWorkText(searcher);
 
         searcher.Search(input ?? "");
 
-        ProjUtils.HandleSearchResult(searcher.status);
+        PrintUtils.HandleSearchResult(searcher.status);
     }
 }
