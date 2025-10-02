@@ -36,7 +36,7 @@ namespace Cryptographer.DecryptionMethods
             if (string.IsNullOrWhiteSpace(withoutNum))
                 return 1;
 
-            return 0.2;
+            return 0.4;
         }
 
         public string Name { get { return "Caesar"; } }

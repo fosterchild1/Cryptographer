@@ -70,6 +70,26 @@ namespace Cryptographer
             return true;
         }
 
+        private void CheckPlaintext(string text, StringInfo info, DecryptionBranch branch)
+        {
+            if (StringScorer.Score(text, info) > Config.scorePrintThreshold)
+            {
+                bool isStopped = !timer.IsRunning; // avoid starting if its stopped
+
+                timer.Stop();
+                bool plaintext = PrintUtils.AskOutput(text, branch);
+                if (plaintext)
+                {
+                    Console.WriteLine($"Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
+                    status = searchStatus.SUCCESS;
+                    return;
+                }
+
+                if (!isStopped) timer.Start();
+
+            }
+        }
+
         private void ExpandNode(DecryptionNode node, StringInfo info, int workerIndex, bool fallback = false)
         {
             string input = node.Text;
@@ -114,29 +134,16 @@ namespace Cryptographer
                 StringInfo newInfo = new(output);
                 if (!CheckOutput(output, parentText, newInfo)) continue;
                 seenInputs.TryAdd(output, 0);
+
                 if (Config.debug && !printedDebug)
                 {
                     printedDebug = true;
                     PrintUtils.PrintDbgDecryption(branch, workerIndex);
                 }
 
-                // TEMP ---- future me here: this was clearly not temporary
-                if (StringScorer.Score(output, newInfo) > Config.scorePrintThreshold)
-                {
-                    bool isStopped = !timer.IsRunning; // avoid starting if its stopped
+                // score it
+                CheckPlaintext(output, newInfo, branch);
 
-                    timer.Stop();
-                    bool plaintext = PrintUtils.AskOutput(output, branch);
-                    if (plaintext) 
-                    {
-                        Console.WriteLine($"Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
-                        status = searchStatus.SUCCESS; 
-                        return; 
-                    }
-
-                    if (!isStopped) timer.Start();
-
-                }
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
 
                 ExpandNode(node, newInfo, workerIndex);
