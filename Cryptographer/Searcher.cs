@@ -83,7 +83,9 @@ namespace Cryptographer
                 double probability = method.CalculateProbability(input, info);
                 if (probability > 0.9) continue;
 
-                failedAll = false;
+                if (probability < 0.7)
+                    failedAll = false;
+
                 queue.Enqueue(new(node, probability, method), probability, workerIndex);
             }
 
@@ -101,15 +103,18 @@ namespace Cryptographer
             StringInfo info = new(parentText);
             List<string> outputs = branch.Method.Decrypt(parentText, info);
 
+            bool printedDebug = false;
+
             foreach (string output in outputs)
             {
                 StringInfo newInfo = new(output);
                 if (!CheckOutput(output, parentText, newInfo)) continue;
                 seenInputs.TryAdd(output, 0);
-
-
-                if (Config.debug)
+                if (Config.debug && !printedDebug)
+                {
+                    printedDebug = true;
                     PrintUtils.PrintDbgDecryption(branch, workerIndex);
+                }
 
                 // TEMP ---- future me here: this was clearly not temporary
                 if (StringScorer.Score(output, newInfo) > Config.scorePrintThreshold)

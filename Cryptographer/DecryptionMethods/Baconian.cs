@@ -54,7 +54,7 @@ namespace Cryptographer.DecryptionMethods
         public double CalculateProbability(string input, StringInfo info)
         {
             var analysis = info.frequencyAnalysis;
-            if (analysis.Count < 3) return 1;
+            if (analysis.Count != 3) return 1;
 
             return 0.1; // met less than binary/morse
         }

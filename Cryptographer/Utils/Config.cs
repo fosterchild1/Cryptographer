@@ -18,10 +18,10 @@
         public static bool useTrigrams = false;
 
         /// <summary> Shows the ciphers used to get to the plaintext </summary>
-        public static bool showStackTrace = false;
+        public static bool showStackTrace = true;
 
         /// <summary> Shows decryptions happening in real time </summary>
-        public static bool debug = false;
+        public static bool debug = true;
 
         private static void TryParse<T>(Dictionary<string, string> args, string key, ref T arg)
         {
