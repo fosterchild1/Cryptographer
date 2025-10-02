@@ -63,6 +63,10 @@ namespace Cryptographer
             if (info.minChar < 32)
                 return false;
 
+            // currently doesnt support base65536 or base2048 or those typa stuff
+            if (info.maxChar > 127)
+                return false;
+
             return true;
         }
 

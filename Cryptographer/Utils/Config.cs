@@ -21,7 +21,7 @@
         public static bool showStackTrace = true;
 
         /// <summary> Shows decryptions happening in real time </summary>
-        public static bool debug = true;
+        public static bool debug = false;
 
         private static void TryParse<T>(Dictionary<string, string> args, string key, ref T arg)
         {
