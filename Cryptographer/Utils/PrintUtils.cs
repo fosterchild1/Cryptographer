@@ -2,17 +2,22 @@
 using Cryptographer.Utils;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using System.Text;
 
 class PrintUtils
 {
-    private static void sc(string col) 
-    {
-        Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), col);
-    }
+    private static string C_RED = "\x1b[91m";
+    private static string C_GREEN = "\x1b[92m";
+    private static string C_DARKYELLOW = "\x1b[33m";
+    private static string C_YELLOW = "\x1b[93m";
+    private static string C_BLUE = "\x1b[94m";
+    private static string C_GRAY = "\x1b[97m";
 
     public static string GetInput(Dictionary<string, string> args)
     {
+        EnableColors();
+
         if (args.TryGetValue("in", out string? input))
         {
             Console.WriteLine();
@@ -48,10 +53,7 @@ class PrintUtils
         CLIUtils.ClearLine();
         while (askQueue.TryDequeue(out string? output))
         {
-            // THE ABSOLUTE MOST HORRENDOUS WAY TO PRINT A GREEN Y AND RED N. i know that we can do it in 1 .Write statement,
-            // but not all consoles support that
-            Console.Write($"Possible plaintext: {output} ("); sc("Green"); Console.Write("y"); 
-            sc("Gray"); Console.Write("/"); sc("Red"); Console.Write("n"); sc("Gray"); Console.Write(")?");
+            Console.Write($"Possible plaintext: {output} ({C_GREEN}y{C_GRAY}/{C_RED}n{C_GRAY})?");
 
             ConsoleKeyInfo key = Console.ReadKey(true);
 
@@ -186,13 +188,28 @@ class PrintUtils
     {
         string text = branch.Parent.Text;
         string truncated = text.Length >= 60 ? $"{text.AsSpan(0, 60).ToString()}.. [truncated]" : text;
-        // sorry. i dont know of a way to do ansii codes that work on all consoles
-        sc("Yellow"); 
 
-        Console.Write("APPLIED: "); sc("DarkYellow"); Console.Write(branch.Method.Name); sc("Yellow"); Console.Write(" | ON: ");
-        sc("DarkYellow"); Console.Write($"{'"'}{truncated}{'"'}"); sc("Yellow"); Console.Write(" | AT DEPTH: "); sc("DarkYellow");
-        Console.Write($"{branch.Parent.Depth}\n");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine($"APPLIED: {C_DARKYELLOW}{branch.Method.Name} {C_YELLOW}| ON: {C_DARKYELLOW}{'"'}{truncated}{'"'} {C_YELLOW}| AT DEPTH: {C_DARKYELLOW}" +
+            $"{branch.Parent.Depth}");
+        Console.ForegroundColor = ConsoleColor.Gray;
+    }
 
-        sc("Gray");
+    // ENABLE COLORS
+    [DllImport("kernel32.dll", SetLastError = true)]
+    static extern IntPtr GetStdHandle(int nStdHandle);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    static extern bool GetConsoleMode(IntPtr hConsoleHandle, out int lpMode);
+
+    [DllImport("kernel32.dll", SetLastError = true)]
+    static extern bool SetConsoleMode(IntPtr hConsoleHandle, int dwMode);
+
+    public static void EnableColors()
+    {
+        nint handle = GetStdHandle(-11);
+        if (!GetConsoleMode(handle, out int mode)) return;
+
+        SetConsoleMode(handle, mode | 0x0004);
     }
 }

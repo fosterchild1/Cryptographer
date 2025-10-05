@@ -72,22 +72,19 @@ namespace Cryptographer
 
         private void CheckPlaintext(string text, StringInfo info, DecryptionBranch branch)
         {
-            if (StringScorer.Score(text, info) > Config.scorePrintThreshold)
+            if (!(StringScorer.Score(text, info) > Config.scorePrintThreshold)) return;
+            bool isStopped = !timer.IsRunning; // avoid starting if its stopped
+
+            timer.Stop();
+            bool plaintext = PrintUtils.AskOutput(text, branch);
+            if (plaintext)
             {
-                bool isStopped = !timer.IsRunning; // avoid starting if its stopped
-
-                timer.Stop();
-                bool plaintext = PrintUtils.AskOutput(text, branch);
-                if (plaintext)
-                {
-                    Console.WriteLine($"Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
-                    status = searchStatus.SUCCESS;
-                    return;
-                }
-
-                if (!isStopped) timer.Start();
-
+                Console.WriteLine($"Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
+                status = searchStatus.SUCCESS;
+                return;
             }
+
+            if (!isStopped) timer.Start();
         }
 
         private void ExpandNode(DecryptionNode node, StringInfo info, int workerIndex, bool fallback = false)

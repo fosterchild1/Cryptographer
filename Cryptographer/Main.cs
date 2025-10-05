@@ -1,11 +1,14 @@
 ﻿using Cryptographer;
 using Cryptographer.Utils;
+using System.Text;
 
 class Program
 {
     static void Main(string[] args)
     {
         // CONFIG
+        Console.OutputEncoding = Encoding.UTF8;
+
         Config.SetFromFile("config.ini");
         Config.SetFromCLI(args);
 
@@ -17,8 +20,7 @@ class Program
         Searcher searcher = new();
         PrintUtils.DisplayWorkText(searcher);
 
-        searcher.Search(input ?? "");
-
+        searcher.Search(input);
         PrintUtils.HandleSearchResult(searcher.status);
     }
 }
