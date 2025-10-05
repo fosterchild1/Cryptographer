@@ -28,7 +28,7 @@ class PrintUtils
         }
 
         Console.WriteLine("Input the text you want to decrypt:");
-        input = CLIUtils.ReadLine();
+        input = Console.ReadLine();
 
         if (string.IsNullOrEmpty(input))
         {
