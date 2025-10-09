@@ -7,13 +7,23 @@ using System.Text;
 
 class PrintUtils
 {
+    // CLI UTILS
     private static string C_RED = "\x1b[91m";
     private static string C_GREEN = "\x1b[92m";
     private static string C_DARKYELLOW = "\x1b[33m";
     private static string C_YELLOW = "\x1b[93m";
     private static string C_BLUE = "\x1b[94m";
     private static string C_GRAY = "\x1b[97m";
+    private static void ClearLine()
+    {
+        int top = Console.CursorTop;
 
+        Console.SetCursorPosition(0, top);
+        Console.Write(new string(' ', Console.WindowWidth));
+        Console.SetCursorPosition(0, top);
+    }
+
+    // PRINTUTILS
     public static string GetInput(Dictionary<string, string> args)
     {
         EnableColors();
@@ -50,7 +60,7 @@ class PrintUtils
         if (Interlocked.CompareExchange(ref asking, 1, 0) != 0)
             return false;
 
-        CLIUtils.ClearLine();
+        ClearLine();
         while (askQueue.TryDequeue(out string? output))
         {
             Console.Write($"Possible plaintext: {output} ({C_GREEN}y{C_GRAY}/{C_RED}n{C_GRAY})?");
@@ -59,7 +69,7 @@ class PrintUtils
 
             if (key.Key != ConsoleKey.Y)
             {
-                CLIUtils.ClearLine();
+                ClearLine();
                 continue;
             };
 
@@ -136,15 +146,14 @@ class PrintUtils
             while ((int)searcher.status < 2)
             {
                 Thread.Sleep(250);
-                if (PrintUtils.asking > 0 || (int)searcher.status > 2) continue;  // < 2 means not started or searching
+                if (PrintUtils.asking > 0 || (int)searcher.status > 2) break;  // < 2 means not started or searching
 
-                CLIUtils.ClearLine();
+                ClearLine();
                 Console.Write($"{things[thing]} Working");
                 thing = (thing + 1) % (things.Count);
             }
 
-            Console.Write('\n');
-            CLIUtils.ClearLine();
+            ClearLine();
         }).Start();
     }
 

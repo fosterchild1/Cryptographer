@@ -125,6 +125,7 @@ namespace Cryptographer
             List<string> outputs = branch.Method.Decrypt(parentText, info);
 
             bool printedDebug = false;
+            bool failedAll = true;
 
             foreach (string output in outputs)
             {
@@ -143,8 +144,12 @@ namespace Cryptographer
 
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
 
+                failedAll = true;
                 ExpandNode(node, newInfo, workerIndex);
             }
+
+            if (!failedAll) return;
+            ExpandNode(branchParent, info, workerIndex, true);
         }
 
         public void Search(string input)
