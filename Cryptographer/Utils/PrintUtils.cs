@@ -75,7 +75,7 @@ class PrintUtils
                 while (node != null && node.Method != "")
                 {
                     methods.Add(node.Method);
-                    node = node.Parent;
+                    node = node.Parent!;
                 }
 
                 Console.WriteLine("\nMethods Used:");
