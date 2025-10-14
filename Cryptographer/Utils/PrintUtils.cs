@@ -152,13 +152,13 @@ class PrintUtils
                 Console.Write($"{things[thing]} Working");
                 thing = (thing + 1) % (things.Count);
             }
-
-            ClearLine();
         }).Start();
     }
 
     public static void HandleSearchResult(searchStatus status)
     {
+        ClearLine();
+
         if (status == searchStatus.SUCCESS)
         {
             Console.ReadKey();
