@@ -146,7 +146,7 @@ class PrintUtils
             while ((int)searcher.status < 2)
             {
                 Thread.Sleep(250);
-                if (PrintUtils.asking > 0 || (int)searcher.status > 2) break;  // < 2 means not started or searching
+                if (asking > 0 || (int)searcher.status > 2) break;  // < 2 means not started or searching
 
                 ClearLine();
                 Console.Write($"{things[thing]} Working");
