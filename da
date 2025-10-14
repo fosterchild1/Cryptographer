@@ -1,0 +1,538 @@
+[33mcommit 9a13935e1069dbefa4c9f2286a9816b36b25240b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Oct 9 18:01:37 2025 +0300
+
+    fix failure not printing weirdly
+
+[33mcommit d3a315b4d065e9df29456807e2196217fa988984[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Oct 9 18:00:49 2025 +0300
+
+    fix fallbacks first
+
+[33mcommit 348b4ca3fd0b7d25f5e1f93fce8340ada4898a83[m
+Merge: a3f89d0 2088d46
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Oct 9 17:52:03 2025 +0300
+
+     err
+
+[33mcommit a3f89d009237055bedee47b306837db0b6046a07[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Oct 8 19:17:38 2025 +0300
+
+    r
+
+[33mcommit 2088d46caa108dbb7e15b84c3707b78f691c7c63[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Wed Oct 8 19:15:38 2025 +0300
+
+    d
+
+[33mcommit 948640b9e707b3514e0cd3bd4f3d8c66ba044365[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sun Oct 5 18:14:56 2025 +0300
+
+    remove cliutils.printline, as it was slower
+
+[33mcommit 676a2adb365bc4eb1c8d64b73db42add743f0a15[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sun Oct 5 18:05:55 2025 +0300
+
+    refactor color stuff
+
+[33mcommit 27437bfeb8e2ab93b1081a8f6a44872e0717b06f[m[33m ([m[1;33mtag: [m[1;33mv2.3.1[m[33m)[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Oct 2 18:12:47 2025 +0300
+
+    refactor
+
+[33mcommit b9712c4cf2cce42a9a330440597212d5506b6c4c[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Oct 2 18:09:17 2025 +0300
+
+    more pruning
+
+[33mcommit 33ec9233873cee6086b966daa79d2f14c5f112af[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Oct 2 18:07:05 2025 +0300
+
+    fix baconian probability
+
+[33mcommit 002c0a3774482781b3484a9d77f56f790f5eebd6[m[33m ([m[1;33mtag: [m[1;33mv2.3.0[m[33m)[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Oct 2 16:56:50 2025 +0300
+
+    add dbg and rename
+
+[33mcommit 1e95e41a3966e6268d23317e712299d40ec0b39a[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Oct 1 15:44:33 2025 +0300
+
+    make timer more accurate and fix bacon
+
+[33mcommit c989a1650f49f83e59c8676ab2401285c02f8062[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 30 20:35:44 2025 +0300
+
+    big searcher improvement
+
+[33mcommit 0b514a3bf26c3e7efdfcbdcf85fa6fbd04404fac[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 30 19:22:29 2025 +0300
+
+    better format for help text
+
+[33mcommit 073f19862c6bf4d6b61621f9cd2dde9542c1b4d7[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 30 19:19:45 2025 +0300
+
+    add help text
+
+[33mcommit 86dcb8a6805092e217258278813b0348493f3c9b[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sat Sep 27 13:09:17 2025 +0300
+
+    fix coloring
+
+[33mcommit 9c62b32fe6bad63f0ebd6fc30d4eb438efe7b6b7[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sat Sep 27 13:04:20 2025 +0300
+
+    fix bf
+
+[33mcommit dbf4233abb1da110549d3da7f279a52d86f05cb9[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Fri Sep 26 20:51:30 2025 +0300
+
+    better string scoring
+
+[33mcommit decb2f35f8a3209fbe9c30ae80e022a90e08279a[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Fri Sep 26 20:39:44 2025 +0300
+
+    fix fallbacks generally oh and change timeout to 5 sec
+
+[33mcommit 685242cf6dc7c5b0b38f476ad30dc6bcff5d3af2[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sat Sep 20 21:31:59 2025 +0300
+
+    better string scoring
+
+[33mcommit 03b8eed079af4a01e3ea017672b94757d7693f84[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Sat Sep 20 18:57:13 2025 +0300
+
+    Update README.md
+
+[33mcommit b6c2309282cbb79c43bc1ea4ab4a5ab16070f08c[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Sat Sep 20 18:56:28 2025 +0300
+
+    Update README.md
+
+[33mcommit 9408e710d3624b34c3b87b3a6b53b65ecbff0e0a[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sat Sep 20 18:55:14 2025 +0300
+
+    fix stack trace
+
+[33mcommit adbcdbabb8e7fff8a4acb6d6bc1996c78a5eda42[m
+Merge: 4bb196c e2b51fe
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sat Sep 20 18:41:55 2025 +0300
+
+    Merge branch 'master' of https://github.com/fosterchild1/Cryptographer
+
+[33mcommit 4bb196c37faafe3f7c0b1977810ed58b29525522[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sat Sep 20 18:41:50 2025 +0300
+
+    add scytale and bugfix and stuff
+
+[33mcommit e2b51fe51b4a2609b8c5ec0210e7fe4ed2fc8275[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Sat Sep 20 10:44:59 2025 +0300
+
+    Update README.md
+
+[33mcommit aa7d6ebf9a70634ab9348d6ff281258677bc19d4[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Sat Sep 20 10:44:31 2025 +0300
+
+    Update README.md
+
+[33mcommit e4a8ead748f0a25fa9fbd64d3e0ff5ca6ccb878a[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sat Sep 20 10:40:18 2025 +0300
+
+    add base45
+
+[33mcommit e99f40013aa902a1fa7ec2616252930452f000db[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Sat Sep 20 09:52:23 2025 +0300
+
+    Update README.md
+
+[33mcommit afce3b740952f8469b9d441055eb61c31c380840[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sat Sep 20 09:51:48 2025 +0300
+
+    add base58
+
+[33mcommit 1ab08a18ab1893b77c7f3323584bb4fdc9318b51[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Sep 18 18:15:33 2025 +0300
+
+    CTF detection and faster search start
+
+[33mcommit b3cdda7c9141fab0c6a94d40a2035ec582ead700[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Sep 18 17:34:49 2025 +0300
+
+    fix timeout
+
+[33mcommit 1b67dd63b98ed301e6bd13e45e38f02d20a47413[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Sep 18 17:28:12 2025 +0300
+
+    add timeout config and fix bf bug
+
+[33mcommit f7804e9e967f2467d045176791a8e7539983b9da[m[33m ([m[1;33mtag: [m[1;33mv2.2.0[m[33m)[m
+Merge: aa09783 546fdd6
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Sep 17 19:05:09 2025 +0300
+
+    Merge branch 'master' of https://github.com/fosterchild1/Cryptographer
+
+[33mcommit aa097833b7f09f5e07f63b39ec82713120d94ad0[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Sep 17 19:05:03 2025 +0300
+
+    fix b64
+
+[33mcommit 546fdd667622646516f0b1b2e796c0253eb08976[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Tue Sep 16 20:35:32 2025 +0300
+
+    Update README.md
+
+[33mcommit 16e12ea2884c1b1aaf21b79b673fa66f309863d6[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 16 20:34:47 2025 +0300
+
+    better errors
+
+[33mcommit 1cb3f0f3121aff77ae128d4f5bdd2b2045d04643[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 16 19:57:17 2025 +0300
+
+    switch back to ts
+
+[33mcommit 25bf74c21a0d03fbb8be919266d9effffc201072[m
+Merge: 0bc13c5 bdbda08
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 16 19:54:21 2025 +0300
+
+    Merge branch 'master' of https://github.com/fosterchild1/Cryptographer
+
+[33mcommit 0bc13c5d8805a7f4563725344d9fc8edae287e9c[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 16 19:54:13 2025 +0300
+
+    StringInfo for performance + better pruning + better cli printing + more
+
+[33mcommit bdbda08fabf7ce6636a2cf442894e0f2ffbd0b3d[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Sun Sep 14 19:15:27 2025 +0300
+
+    Update README.md
+
+[33mcommit afa51e043216e4e3acca3589812bca74daf1e0bf[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sun Sep 14 19:14:54 2025 +0300
+
+    shorten names
+
+[33mcommit be909c2bb31719c17270f361eafc1d1c945d7864[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Fri Sep 12 10:29:46 2025 +0300
+
+    add showstacktrace
+
+[33mcommit 28901cac6baac0f014fc4cf98fc970157546b198[m
+Merge: be252b8 61dd0fe
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Fri Sep 12 10:02:35 2025 +0300
+
+    Merge branch 'master' of https://github.com/fosterchild1/Cryptographer
+
+[33mcommit be252b82f059440b3b57a3f25935faaa59e8c40e[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Fri Sep 12 10:01:43 2025 +0300
+
+    stuff
+
+[33mcommit 61dd0fe0f0bf2e1742d3756c627b2d1e150579d8[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Thu Sep 11 17:37:47 2025 +0300
+
+    Update README.md
+
+[33mcommit 5013c88b7c51701de723983ba236f6fe8d426507[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Thu Sep 11 17:35:36 2025 +0300
+
+    Update README.md
+
+[33mcommit 6ac5b19bb365359996bfebceaa6216f8af936810[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Thu Sep 11 17:22:57 2025 +0300
+
+    Update README.md
+
+[33mcommit 04c10cf2d20a332b143c8c0e576e24aeff4158f4[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Thu Sep 11 17:17:43 2025 +0300
+
+    Update README.md
+
+[33mcommit df77896f549597f488e2d0b2be7ba4a58e54d459[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Sep 11 17:16:32 2025 +0300
+
+    allow inputs to be a file
+
+[33mcommit c97e78b8d9033d104757edc50c21e6e378613e04[m
+Merge: 62f77b8 85df0ea
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Sep 11 17:06:44 2025 +0300
+
+    Merge branch 'master' of https://github.com/fosterchild1/Cryptographer
+
+[33mcommit 62f77b8cc5d7987a0a3227f4b1e97c17347cec38[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Sep 11 17:06:39 2025 +0300
+
+    refactor a lil
+
+[33mcommit 85df0ea67b74db60f2246fa48f21d7ae8b7d098d[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Thu Sep 11 17:04:02 2025 +0300
+
+    Update README.md
+
+[33mcommit 152ad6d9f377bc389403f203eb8a93f6d2b3b9b4[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Sep 11 17:02:46 2025 +0300
+
+    add cfg= and rename trigrams
+
+[33mcommit 58c113c547f70ad0560defde48ab6a5bda4f22bf[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Thu Sep 11 10:15:09 2025 +0300
+
+    Update README.md
+
+[33mcommit 6bb19d37f8eb968cf4a15e927bdae1cf77302e5a[m
+Merge: bd87260 fdab8ba
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Sep 11 10:13:59 2025 +0300
+
+    Merge branch 'master' of https://github.com/fosterchild1/Cryptographer
+
+[33mcommit bd87260f9635d2b5fa21847df2d8fe2abd2d6ea0[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Thu Sep 11 10:13:54 2025 +0300
+
+    useTrigrams and better documentation
+
+[33mcommit fdab8ba5109435dcedbd24fc6cfeef4e65680d1e[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Wed Sep 10 13:21:08 2025 +0300
+
+    Update README.md
+
+[33mcommit d0b8fb7e3df59b641611e570ebd280adf3efbffd[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Wed Sep 10 13:19:49 2025 +0300
+
+    Update README.md
+
+[33mcommit fc0ea4f2e5bd82dd84c95703004fcdc5d0d0a6da[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Wed Sep 10 13:18:53 2025 +0300
+
+    Update README.md
+
+[33mcommit 8631617990905c6555c26ff1ae05fd16adc1906c[m[33m ([m[1;33mtag: [m[1;33mv2.1.0[m[33m)[m
+Merge: c2f1e80 7d31d6c
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Sep 10 12:45:04 2025 +0300
+
+    Merge branch 'master' of https://github.com/fosterchild1/Cryptographer
+
+[33mcommit c2f1e80ca4b261518fe466a8ea0726ecf61a22ac[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Sep 10 12:44:59 2025 +0300
+
+    .ini config file
+
+[33mcommit 7d31d6cbbee19f3d26f9352092d8c36f6f0d145e[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Wed Sep 10 12:09:03 2025 +0300
+
+    Update README.md
+
+[33mcommit 3d075da8bafdd0e23f2f123df6a48e5e5299a9ce[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Wed Sep 10 12:08:33 2025 +0300
+
+    Update README.md
+
+[33mcommit 7631a42918e71dc03368c9a52ff923e72cbd07a6[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Sep 10 12:08:10 2025 +0300
+
+    add brainfuck
+
+[33mcommit 32e22fa72e7e41890e16e5a54e0eca2b477d686b[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Sep 10 10:40:22 2025 +0300
+
+    actually fix
+
+[33mcommit 0702f40b6dcadba4e9f99aaebc00e9511528df13[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Wed Sep 10 10:35:08 2025 +0300
+
+    Update README.md
+
+[33mcommit bd3e543033614ad00873cd4716fbdaf7b1ddf246[m
+Merge: 2c14103 dbbea21
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Sep 10 10:33:57 2025 +0300
+
+    Merge branch 'master' of https://github.com/fosterchild1/Cryptographer
+
+[33mcommit 2c14103afd19471da4348dccaa7c1fcf55023994[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Sep 10 10:33:51 2025 +0300
+
+    add ascii shift and fix a1z26 bug
+
+[33mcommit dbbea21e14003ce4396f76f86195d88845767fcd[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Wed Sep 10 10:23:27 2025 +0300
+
+    Update README.md
+
+[33mcommit 6255018a6e8e17a3ed024a59025a1067448bed42[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Sep 10 10:18:36 2025 +0300
+
+    link detection
+
+[33mcommit b2064b67fee69ba01541f581fdbd1bae690f6f86[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Sep 10 09:44:09 2025 +0300
+
+    dont remain green after success
+
+[33mcommit d1ccc3aca9c091f9f2b35f4ec83bc0aea66106e6[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Wed Sep 10 09:42:53 2025 +0300
+
+    be able to run in path
+
+[33mcommit 959f787a20020408dc77d2535b098f477998f317[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 9 14:33:57 2025 +0300
+
+    fix
+
+[33mcommit 4e909f2efc132019e4dc66445ab30acd8c364d27[m
+Merge: 2c432a9 e46b809
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 9 14:26:58 2025 +0300
+
+    Merge branch 'master' of https://github.com/fosterchild1/Cryptographer
+
+[33mcommit 2c432a99addbaf1ea703aa7144c4a6d23e8ab8ed[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 9 14:26:52 2025 +0300
+
+    .net 9
+
+[33mcommit e46b80947d3ccfb9b135c48f8a523788bf755b67[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Tue Sep 9 14:04:03 2025 +0300
+
+    Update README.md
+
+[33mcommit 107053bf912b4a1966f8e984eb9b5dfc171efbc3[m[33m ([m[1;33mtag: [m[1;33mv2.0.0[m[33m)[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 9 12:27:40 2025 +0300
+
+    readable
+
+[33mcommit ee54934255077b49ead15edaffda9152ed505dd9[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Tue Sep 9 10:13:55 2025 +0300
+
+    Update README.md
+
+[33mcommit aae37ede5947d24e4ebca48f4928356d9bbb3f25[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 9 10:13:00 2025 +0300
+
+    add base62
+
+[33mcommit 14d6ffb5d287fc93bfb881372198b659c670b818[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Tue Sep 9 09:48:01 2025 +0300
+
+    Update README.md
+
+[33mcommit 68fff60527bfabc2e7da7378aa47b0e9ee7b4652[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Tue Sep 9 09:47:34 2025 +0300
+
+    add a1z26 and bug fix
+
+[33mcommit f087cc6bb08ffffb4c13b11ba12dc08e9c92be66[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Mon Sep 8 12:44:09 2025 +0300
+
+    Update README.md
+
+[33mcommit d40a2f7284444073683d6dc4576d223e1050a59e[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Mon Sep 8 12:41:06 2025 +0300
+
+    add uuencode
+
+[33mcommit 182a512ffc63538b7c09030cc4c31af5f752a138[m
+Merge: a1b5e7b bfe14f4
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sun Sep 7 17:04:56 2025 +0300
+
+    Merge branch 'master' of https://github.com/fosterchild1/Cryptographer
+
+[33mcommit a1b5e7b0bee50c2903a44ed5c25e08359550780d[m
+Author: fosterchild1 <crannberriesa@gmail.com>
+Date:   Sun Sep 7 17:04:50 2025 +0300
+
+    timer
+
+[33mcommit bfe14f4a35cbca3f26edb94172f31a37244da6c9[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Sun Sep 7 16:51:14 2025 +0300
+
+    Update README.md
+
+[33mcommit 7e3697ec3d32cca1d625fe5656cae968895a0657[m
+Author: fosterchild <110239648+fosterchild1@users.noreply.github.com>
+Date:   Sun Sep 7 16:32:03 2025 +0300
+
+    Update CONTRIBUTING.md

@@ -13,7 +13,7 @@ class PrintUtils
     private static string C_DARKYELLOW = "\x1b[33m";
     private static string C_YELLOW = "\x1b[93m";
     private static string C_BLUE = "\x1b[94m";
-    private static string C_GRAY = "\x1b[97m";
+    private static string C_GRAY = "\x1b[37m";
     private static void ClearLine()
     {
         int top = Console.CursorTop;
