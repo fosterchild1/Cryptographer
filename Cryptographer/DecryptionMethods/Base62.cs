@@ -25,7 +25,7 @@ namespace Cryptographer.DecryptionMethods
             return true;
         }
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             TryFromBase62String(input, out byte[]? output);
             return new() { output != null ? Encoding.UTF8.GetString(output) : "" };

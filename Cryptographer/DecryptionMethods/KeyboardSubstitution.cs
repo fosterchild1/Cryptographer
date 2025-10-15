@@ -30,7 +30,7 @@ namespace Cryptographer.DecryptionMethods
             return output.ToString();
         }
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             List<string> output = new();
 

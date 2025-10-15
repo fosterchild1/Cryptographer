@@ -6,7 +6,7 @@ namespace Cryptographer.DecryptionMethods
     public class Brainfuck : IDecryptionMethod
     {
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             int pointer = 0;
             byte[] tape = new byte[1024];

@@ -33,7 +33,7 @@ namespace Cryptographer.DecryptionMethods
             return true;
         }
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             List<string> outputs = new();
             foreach (KeyValuePair<string, Dictionary<char, int>> kvp in base58Maps)

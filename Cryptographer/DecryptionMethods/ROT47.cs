@@ -5,7 +5,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public class ROT47 : IDecryptionMethod
     {
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             StringBuilder output = new();
             foreach (char c in input)

@@ -49,7 +49,7 @@ namespace Cryptographer.DecryptionMethods
             return true;
         }
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             TryFromBase45String(input, out byte[]? output);
 

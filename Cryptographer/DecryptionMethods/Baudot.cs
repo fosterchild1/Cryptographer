@@ -12,7 +12,7 @@ namespace Cryptographer.DecryptionMethods
         private readonly string SWITCH_TO_FIGURES = "11011";
         private readonly string SWITCH_TO_LETTERS = "111111";
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             StringBuilder output = new();
 

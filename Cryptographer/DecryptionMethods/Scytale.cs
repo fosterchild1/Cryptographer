@@ -5,7 +5,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public class Scytale : IDecryptionMethod
     {
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             // simple to bruteforce: all you need is one number 1 through CEIL(input len / 2)
             List<string> outputs = new();

@@ -18,7 +18,7 @@ namespace Cryptographer.DecryptionMethods
             }
         }
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             input = input.Replace("-", "");
 

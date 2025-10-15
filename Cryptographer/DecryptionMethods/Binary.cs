@@ -31,7 +31,7 @@ namespace Cryptographer.DecryptionMethods
 
             return sb.ToString();
         }
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             return new() { DecryptBinary(input) };
         }

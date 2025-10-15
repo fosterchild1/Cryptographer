@@ -7,7 +7,7 @@ namespace Cryptographer.DecryptionMethods
     public class A1Z26 : IDecryptionMethod
     {
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             StringBuilder output = new();
             

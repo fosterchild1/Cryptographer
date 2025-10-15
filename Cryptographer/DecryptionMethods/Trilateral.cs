@@ -27,7 +27,7 @@ namespace Cryptographer.DecryptionMethods
             return output.ToString();
         }
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             // since this has a really easy way of detecting whether it is trilateral or not,
             // we can check for character substitutions (eg. A = D, B = E, C = F) even though its expensive

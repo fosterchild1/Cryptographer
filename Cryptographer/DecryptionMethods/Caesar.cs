@@ -6,7 +6,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public class Caesar : IDecryptionMethod
     {
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             List<string> output = new();
             for (int i = 0; i <= 25; i++) // 26 = no transformation

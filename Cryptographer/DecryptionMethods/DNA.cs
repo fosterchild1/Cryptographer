@@ -7,7 +7,7 @@ namespace Cryptographer.DecryptionMethods
     public class DNA : IDecryptionMethod
     {
         private Dictionary<string, string> DNADictionary = MethodDictionaries.DNA;
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             input = input.Replace(" ", "");
 

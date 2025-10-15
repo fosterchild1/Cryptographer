@@ -37,7 +37,7 @@ namespace Cryptographer.DecryptionMethods
             return true;
         }
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             CustomBase64(input, out byte[]? bytes);
             string output = Encoding.UTF8.GetString(bytes!);

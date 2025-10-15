@@ -6,7 +6,7 @@ namespace Cryptographer.DecryptionMethods
     public class ASCIIShift : IDecryptionMethod
     {
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             List<string> outputs = new();
 

@@ -5,7 +5,7 @@ namespace Cryptographer.DecryptionMethods
 {
     public class Atbash : IDecryptionMethod
     {
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             char[] chars = input.ToCharArray();
             StringBuilder sb = new();

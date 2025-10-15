@@ -19,7 +19,7 @@ namespace Cryptographer.DecryptionMethods
             }
         }
 
-        public List<string> Decrypt(string input, StringInfo info)
+        public List<string> Decrypt(string input, StringInfo info, string _)
         {
             StringBuilder output = new();
             foreach (string s in input.Split(" "))
