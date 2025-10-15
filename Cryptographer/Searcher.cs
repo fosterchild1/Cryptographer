@@ -60,7 +60,8 @@ namespace Cryptographer
                 return false;
 
             // anything that's under SPACE, created mostly by running base methods on non-base encrypted inputs
-            if (info.minChar < 32)
+            char min = info.minChar;
+            if (min < 32 && min != 10) // exclude line feed
                 return false;
 
             // currently doesnt support base65536 or base2048 or those typa stuff

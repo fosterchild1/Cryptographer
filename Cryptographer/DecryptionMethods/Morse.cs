@@ -27,7 +27,7 @@ namespace Cryptographer.DecryptionMethods
 
         public List<string> Decrypt(string input, StringInfo info)
         {
-
+            // TODO: permutations
             return new() { DecryptMorse(input) };
         }
 

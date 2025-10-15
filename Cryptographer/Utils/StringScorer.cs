@@ -92,6 +92,11 @@ namespace Cryptographer.Utils
 
         private static float CalculateScoreForType(string input, int step, Dictionary<string, float> dict)
         {
+            // how this works: we have a window of either 4 or 3 characters and we check for those in a dictionry
+            // each string has a score, if it doesnt then it gets penalized proportional to the string length
+            // if it has a score, add its score proportional to the string length
+            // for smaller inputs, also keep track of seen strings and if we have seen those before we also penalize
+
             if (dict == null) return 0;
 
             int length = input.Length;
@@ -104,7 +109,7 @@ namespace Cryptographer.Utils
                 string substr = input.AsSpan(i, Math.Min(step, length - i)).ToString();
 
                 float val = dict.GetValueOrDefault(substr);
-                if (val == 0f || seen.Contains(substr))
+                if (val == 0f || (seen.Contains(substr) && length <= 40))
                 {
                     score -= length; // penalize by str length
                     continue;
