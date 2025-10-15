@@ -60,5 +60,6 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Baconian"; } }
+		public bool RequiresKey { get { return false; } }
     }
 }

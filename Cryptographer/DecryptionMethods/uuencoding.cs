@@ -55,5 +55,6 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "uuencoding"; } }
+		public bool RequiresKey { get { return false; } }
     }
 }

@@ -50,6 +50,21 @@ class PrintUtils
         return input;
     }
 
+    public static string GetKey(Dictionary<string, string> args)
+    {
+        if (Config.NoKey)
+            return "";
+
+        if (args.TryGetValue("key", out string? key))
+            return key;
+
+        Console.WriteLine("Input the suspected key (if you don't have any, leave blank):");
+        key = Console.ReadLine();
+
+        Console.WriteLine();
+        return key;
+    }
+
     private static ConcurrentQueue<string> askQueue = new();
     public static int asking = 0;
     public static bool AskOutput(string str, DecryptionBranch branch)

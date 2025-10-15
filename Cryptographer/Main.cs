@@ -16,6 +16,7 @@ class Program
 
         // SEARCHER
         string input = PrintUtils.GetInput(Config.CLIargs);
+        string key = PrintUtils.GetKey(Config.CLIargs);
 
         Searcher searcher = new();
         PrintUtils.DisplayWorkText(searcher);

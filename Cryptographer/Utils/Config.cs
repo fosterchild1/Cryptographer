@@ -23,6 +23,9 @@
         /// <summary> Shows decryptions happening in real time </summary>
         public static bool debug = false;
 
+        /// <summary> Doesn't ask for a key on startup </summary>
+        public static bool NoKey = false;
+
         private static void TryParse<T>(Dictionary<string, string> args, string key, ref T arg)
         {
             if (!args.TryGetValue(key, out var str)) return;
@@ -52,9 +55,10 @@
             TryParse(args, "stacktrace", ref showStackTrace);
             TryParse(args, "timeout", ref searchTimeout);
             TryParse(args, "dbg", ref debug);
+            TryParse(args, "nokey", ref NoKey);
         }
 
-        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "trigrams", "stacktrace", "timeout", "dbg" };
+        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "trigrams", "stacktrace", "timeout", "dbg", "nokey" };
         public static void SetFromFile(string path)
         {
             IniFile file = new(path);

@@ -56,5 +56,6 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Tap Code"; } }
+		public bool RequiresKey { get { return false; } }
     }
 }

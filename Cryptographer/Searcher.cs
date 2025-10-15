@@ -1,4 +1,4 @@
-﻿using Cryptographer.Classes;
+﻿                                    using Cryptographer.Classes;
 using Cryptographer.DecryptionMethods;
 using Cryptographer.Utils;
 using System.Collections.Concurrent;

@@ -43,5 +43,6 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Atbash"; } }
+		public bool RequiresKey { get { return false; } }
     }
 }

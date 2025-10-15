@@ -51,4 +51,8 @@
 		</None>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="DecryptionMethods\Keyed\" />
+	</ItemGroup>
+
 </Project>

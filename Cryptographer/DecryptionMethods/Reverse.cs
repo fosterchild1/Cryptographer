@@ -19,5 +19,6 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Reverse"; } }
+		public bool RequiresKey { get { return false; } }
     }
 }

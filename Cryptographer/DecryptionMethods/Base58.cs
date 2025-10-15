@@ -75,5 +75,6 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Base58"; } }
+		public bool RequiresKey { get { return false; } }
     }
 }

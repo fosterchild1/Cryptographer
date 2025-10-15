@@ -17,5 +17,6 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "None"; } }
+		public bool RequiresKey { get { return false; } }
     }
 }

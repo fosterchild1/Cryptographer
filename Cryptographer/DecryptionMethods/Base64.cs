@@ -53,5 +53,6 @@ namespace Cryptographer.DecryptionMethods
             return !CustomBase64(input, out byte[]? bytes) ? 1 : 0;
         }
         public string Name { get { return "Base64"; } }
+		public bool RequiresKey { get { return false; } }
     }
 }

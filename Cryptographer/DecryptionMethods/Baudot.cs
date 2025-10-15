@@ -41,5 +41,6 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Baudot"; } }
+		public bool RequiresKey { get { return false; } }
     }
 }

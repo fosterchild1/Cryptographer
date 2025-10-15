@@ -44,5 +44,6 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Octal"; } }
+		public bool RequiresKey { get { return false; } }
     }
 }
