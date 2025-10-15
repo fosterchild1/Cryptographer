@@ -30,18 +30,24 @@ namespace Cryptographer
             new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift(), new Scytale()
         };
 
-        // OTHER
+        // PRUNING
         private HashSet<string> disallowedTwice = new() { "ROT-47", "Reverse", "Atbash", "Keyboard Substitution", "Caesar", "ASCII Shift" };
-        // to not redo them
+
         private ConcurrentDictionary<string, byte> seenInputs = new();
 
+        // WHATEVER
         public searchStatus status = searchStatus.NOT_STARTED;
 
         public SearchQueue<DecryptionBranch, double> queue = new(Config.threadCount);
 
         public Stopwatch timer = new();
 
-        private bool CheckOutput(string output, string input, StringInfo info)
+        // ACTUAL SEARCH
+        public string key = "";
+
+        public string input = "";
+
+        private bool CheckOutput(string output, string last, StringInfo info)
         {
             // aka useless string
             if (PrintUtils.RemoveWhitespaces(output).Length <= 3)
@@ -52,7 +58,7 @@ namespace Cryptographer
                 return false;
 
             // hasnt changed
-            if (input == output)
+            if (last == output)
                 return false;
 
             // a single character
@@ -90,7 +96,7 @@ namespace Cryptographer
 
         private void ExpandNode(DecryptionNode node, StringInfo info, int workerIndex, bool fallback = false)
         {
-            string input = node.Text;
+            string nodeText = node.Text;
             string lastMethod = node.Method;
 
             bool failedAll = true;
@@ -102,7 +108,9 @@ namespace Cryptographer
                 string methodName = method.Name;
                 if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
 
-                double probability = method.CalculateProbability(input, info);
+                if (method.RequiresKey && (Config.NoKey || key != "")) continue;
+
+                double probability = method.CalculateProbability(nodeText, info);
                 if (probability > 0.9) continue;
 
                 if (probability < 0.7)
@@ -153,7 +161,7 @@ namespace Cryptographer
             ExpandNode(branchParent, info, workerIndex, true);
         }
 
-        public void Search(string input)
+        public void Search()
         {
             if (!CheckOutput(input, "", new(input))) { status = searchStatus.FAILED; return; }
             status = searchStatus.SEARCHING;
@@ -223,6 +231,12 @@ namespace Cryptographer
             }
 
             if (status == searchStatus.SEARCHING) status = searchStatus.FAILED; 
+        }
+
+        public Searcher(string inputIn, string keyIn)
+        {
+            input = inputIn;
+            key = keyIn;
         }
     }
 }

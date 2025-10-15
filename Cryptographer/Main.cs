@@ -18,10 +18,10 @@ class Program
         string input = PrintUtils.GetInput(Config.CLIargs);
         string key = PrintUtils.GetKey(Config.CLIargs);
 
-        Searcher searcher = new();
+        Searcher searcher = new(input, key);
         PrintUtils.DisplayWorkText(searcher);
 
-        searcher.Search(input);
+        searcher.Search();
         PrintUtils.HandleSearchResult(searcher.status);
     }
 }
