@@ -41,5 +41,6 @@ namespace Cryptographer.DecryptionMethods
 
         public string Name { get { return "Base62"; } }
 		public bool RequiresKey { get { return false; } }
+		public bool IsFallback { get { return false; } }
     }
 }

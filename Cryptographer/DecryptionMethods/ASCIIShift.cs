@@ -32,5 +32,6 @@ namespace Cryptographer.DecryptionMethods
 
         public string Name { get { return "ASCII Shift"; } }
 		public bool RequiresKey { get { return false; } }
+		public bool IsFallback { get { return false; } }
     }
 }

@@ -82,5 +82,6 @@ namespace Cryptographer.DecryptionMethods
 
         public string Name { get { return "Brainfuck"; } }
 		public bool RequiresKey { get { return false; } }
+		public bool IsFallback { get { return false; } }
     }
 }

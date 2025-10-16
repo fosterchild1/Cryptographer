@@ -22,11 +22,7 @@ namespace Cryptographer
             new Base64(), new Morse(), new Baconian(), new Binary(), new TapCode(), 
             new DNA(), new Hexadecimal(), new Base32(), new Base85(), new Base62(), 
             new Octal(), new Baudot(), new Trilateral(), new ROT47(), new uuencoding(),
-            new A1Z26(), new ASCII(), new Brainfuck(), new Base58(), new Base45()
-        };
-
-        private List<IDecryptionMethod> fallbackMethods = new()
-        {
+            new A1Z26(), new ASCII(), new Brainfuck(), new Base58(), new Base45(),
             new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift(), new Scytale(), new Vigenere()
         };
 
@@ -101,14 +97,14 @@ namespace Cryptographer
 
             bool failedAll = true;
 
-            List<IDecryptionMethod> chosen = (fallback ? fallbackMethods : methods);
-
-            foreach (IDecryptionMethod method in chosen)
+            foreach (IDecryptionMethod method in methods)
             {
                 string methodName = method.Name;
                 if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
 
                 if (method.RequiresKey && (Config.NoKey || key == "")) continue;
+
+                if (method.IsFallback ^ fallback != false) continue;
 
                 double probability = method.CalculateProbability(nodeText, info);
                 if (probability > 0.9) continue;
@@ -120,7 +116,7 @@ namespace Cryptographer
             }
 
             // fallbacks
-            if (!failedAll) return;
+            if (!failedAll || fallback) return;
             ExpandNode(node, info, workerIndex, true);
         }
 
@@ -157,7 +153,7 @@ namespace Cryptographer
                 ExpandNode(node, newInfo, workerIndex);
             }
 
-            if (!failedAll) return;
+            if (!failedAll || branch.Method.IsFallback) return;
             ExpandNode(branchParent, info, workerIndex, true);
         }
 

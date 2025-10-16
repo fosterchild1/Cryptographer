@@ -6,5 +6,7 @@ namespace Cryptographer.Classes
         List<string> Decrypt(string input, StringInfo info, string key = "");
         string Name { get; }
         bool RequiresKey { get; }
+
+        bool IsFallback { get; }
     }
 }

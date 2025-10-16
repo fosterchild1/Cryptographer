@@ -47,5 +47,7 @@ namespace Cryptographer.DecryptionMethods
 
         public string Name { get { return "Vigenère"; } }
 		public bool RequiresKey { get { return true; } }
+        
+        public bool IsFallback { get { return true; } }
     }
 }
