@@ -1,6 +1,6 @@
 <img src="https://github.com/fosterchild1/Cryptographer/blob/master/resources/icon.ico" width="64" height="64"> <img src="https://github.com/fosterchild1/Cryptographer/blob/master/resources/text.png" width="381" height="61"> 
 
-A program that deciphers encoded strings, even if they have multiple layers of encryption. It currently supports <b>26</b> ciphers:
+A program that deciphers encoded strings, even if they have multiple layers of encryption. It currently supports <b>27</b> ciphers:
 <br/>
 
 | Supported ciphers | Supported ciphers | Supported ciphers |
@@ -13,7 +13,7 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | Base32 | Caesar | Tap Code
 | Base45 | DNA | Trilateral
 | Base58 | Hexadecimal | uuencoding
-| Base62 | Keyboard Substitution
+| Base62 | Keyboard Substitution | Vigenère
 
 # CLI Arguments
 The console offers some extra arguments that the config.ini file doesn't have. Any argument written in the console will override the one in config.ini. These are:
