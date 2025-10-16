@@ -23,7 +23,8 @@ namespace Cryptographer
             new DNA(), new Hexadecimal(), new Base32(), new Base85(), new Base62(), 
             new Octal(), new Baudot(), new Trilateral(), new ROT47(), new uuencoding(),
             new A1Z26(), new ASCII(), new Brainfuck(), new Base58(), new Base45(),
-            new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift(), new Scytale(), new Vigenere()
+            new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift(),
+            new Scytale(), new Vigenere()
         };
 
         // PRUNING
@@ -97,7 +98,7 @@ namespace Cryptographer
 
             bool failedAll = true;
             fallback = Config.BruteAll || fallback;
-            Console.WriteLine(fallback);
+
             foreach (IDecryptionMethod method in methods)
             {
                 string methodName = method.Name;

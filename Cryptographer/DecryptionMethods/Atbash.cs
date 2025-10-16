@@ -44,6 +44,6 @@ namespace Cryptographer.DecryptionMethods
 
         public string Name { get { return "Atbash"; } }
 		public bool RequiresKey { get { return false; } }
-		public bool IsFallback { get { return false; } }
+		public bool IsFallback { get { return true; } }
     }
 }

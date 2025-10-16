@@ -17,10 +17,9 @@ namespace Cryptographer.DecryptionMethods
             for (int i = 0; i <= length - 3; i += 3)
             {
                 string dna = input.Substring(i, Math.Min(3, length - i));
-                string? find;
 
-                DNADictionary.TryGetValue(dna, out find);
-                if (string.IsNullOrEmpty(find)) { continue; }
+                DNADictionary.TryGetValue(dna, out string? find);
+                if (string.IsNullOrEmpty(find)) continue;
 
                 output.Append(find);
             }
