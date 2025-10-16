@@ -62,7 +62,7 @@ class PrintUtils
         key = Console.ReadLine();
 
         Console.WriteLine();
-        return key;
+        return key ?? "";
     }
 
     private static ConcurrentQueue<string> askQueue = new();
@@ -161,12 +161,15 @@ class PrintUtils
             while ((int)searcher.status < 2)
             {
                 Thread.Sleep(250);
-                if (asking > 0 || (int)searcher.status > 2) break;  // < 2 means not started or searching
+
+                if ((int)searcher.status > 2) break;  // < 2 means not started or searching
+                if (asking > 0) continue;
 
                 ClearLine();
                 Console.Write($"{things[thing]} Working");
                 thing = (thing + 1) % (things.Count);
             }
+
         }).Start();
     }
 
@@ -202,7 +205,8 @@ class PrintUtils
             "threads=      byte      Amount of cpu cores to be used by the program, 0 = all of them. 1 thread is almost always enough.\n" +
             "trigrams=     boolean   Use trigrams instead of quadgrams when determining plaintext.\n" +
             "stacktrace=   boolean   Shows the ciphers used to get to the plaintext.\n" +
-            "timeout=      int       Max time the search can go on for (in seconds), 0 = Default\n"
+            "timeout=      int       Max time the search can go on for (in seconds), 0 = Default.\n" +
+            "nokey=        boolean   Doesn't ask for a key on startup.\n"
         );
 
         Environment.Exit(0);

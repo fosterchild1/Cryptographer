@@ -27,7 +27,7 @@ namespace Cryptographer
 
         private List<IDecryptionMethod> fallbackMethods = new()
         {
-            new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift(), new Scytale()
+            new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift(), new Scytale(), new Vigenere()
         };
 
         // PRUNING
@@ -108,7 +108,7 @@ namespace Cryptographer
                 string methodName = method.Name;
                 if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
 
-                if (method.RequiresKey && (Config.NoKey || key != "")) continue;
+                if (method.RequiresKey && (Config.NoKey || key == "")) continue;
 
                 double probability = method.CalculateProbability(nodeText, info);
                 if (probability > 0.9) continue;
@@ -131,7 +131,7 @@ namespace Cryptographer
             string parentText = branchParent.Text;
 
             StringInfo info = new(parentText);
-            List<string> outputs = branch.Method.Decrypt(parentText, info);
+            List<string> outputs = branch.Method.Decrypt(parentText, info, key);
 
             bool printedDebug = false;
             bool failedAll = true;
@@ -235,6 +235,7 @@ namespace Cryptographer
 
         public Searcher(string inputIn, string keyIn)
         {
+
             input = inputIn;
             key = keyIn;
         }
