@@ -206,7 +206,8 @@ class PrintUtils
             "trigrams=     boolean   Use trigrams instead of quadgrams when determining plaintext.\n" +
             "stacktrace=   boolean   Shows the ciphers used to get to the plaintext.\n" +
             "timeout=      int       Max time the search can go on for (in seconds), 0 = Default.\n" +
-            "nokey=        boolean   Doesn't ask for a key on startup.\n"
+            "nokey=        boolean   Doesn't ask for a key on startup.\n" +
+            "bruteall=     boolean   Uses less pruning. will slow down the program immensely but may lead to more success.\n"
         );
 
         Environment.Exit(0);

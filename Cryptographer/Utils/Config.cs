@@ -26,6 +26,9 @@
         /// <summary> Doesn't ask for a key on startup </summary>
         public static bool NoKey = false;
 
+        /// <summary> Uses less pruning. will slow down the program immensely but may lead to more success </summary>
+        public static bool BruteAll = false;
+
         private static void TryParse<T>(Dictionary<string, string> args, string key, ref T arg)
         {
             if (!args.TryGetValue(key, out var str)) return;
@@ -56,9 +59,10 @@
             TryParse(args, "timeout", ref searchTimeout);
             TryParse(args, "dbg", ref debug);
             TryParse(args, "nokey", ref NoKey);
+            TryParse(args, "bruteall", ref BruteAll);
         }
 
-        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "trigrams", "stacktrace", "timeout", "dbg", "nokey" };
+        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "trigrams", "stacktrace", "timeout", "dbg", "nokey", "bruteall" };
         public static void SetFromFile(string path)
         {
             IniFile file = new(path);

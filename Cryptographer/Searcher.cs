@@ -96,15 +96,18 @@ namespace Cryptographer
             string lastMethod = node.Method;
 
             bool failedAll = true;
-
+            fallback = Config.BruteAll || fallback;
+            Console.WriteLine(fallback);
             foreach (IDecryptionMethod method in methods)
             {
                 string methodName = method.Name;
                 if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
-
+                
+                // if method requires key but no key
                 if (method.RequiresKey && (Config.NoKey || key == "")) continue;
 
-                if (method.IsFallback ^ fallback != false) continue;
+                // if method is fallback but not fallback OR method doesnt require fallback and is fallback
+                if (method.IsFallback ^ fallback != false && !Config.BruteAll) continue;
 
                 double probability = method.CalculateProbability(nodeText, info);
                 if (probability > 0.9) continue;
