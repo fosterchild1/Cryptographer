@@ -31,7 +31,7 @@ namespace Cryptographer
         };
 
         // PRUNING
-        private HashSet<string> disallowedTwice = new() { "ROT-47", "Reverse", "Atbash", "Keyboard Substitution", "Caesar", "ASCII Shift" };
+        private HashSet<string> disallowedTwice = new() { "ROT-47", "Reverse", "Atbash", "Keyboard Substitution", "Caesar", "ASCII Shift", "Vigenère" };
 
         private ConcurrentDictionary<string, byte> seenInputs = new();
 
@@ -153,7 +153,7 @@ namespace Cryptographer
 
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
 
-                failedAll = true;
+                failedAll = false;
                 ExpandNode(node, newInfo, workerIndex);
             }
 

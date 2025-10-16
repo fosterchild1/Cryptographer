@@ -42,7 +42,7 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            return 0.1;
+            return 0.3;
         }
 
         public string Name { get { return "Vigenère"; } }
