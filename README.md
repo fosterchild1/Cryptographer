@@ -1,6 +1,6 @@
 <img src="https://github.com/fosterchild1/Cryptographer/blob/master/resources/icon.ico" width="64" height="64"> <img src="https://github.com/fosterchild1/Cryptographer/blob/master/resources/text.png" width="381" height="61"> 
 
-A program that deciphers encoded strings, even if they have multiple layers of encryption. It currently supports <b>27</b> ciphers:
+A program that deciphers encoded strings, even if they have multiple layers of encryption. It currently supports <b>28</b> ciphers:
 <br/>
 
 | Supported ciphers | Supported ciphers | Supported ciphers |
