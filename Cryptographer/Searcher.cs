@@ -24,7 +24,7 @@ namespace Cryptographer
             new Octal(), new Baudot(), new Trilateral(), new ROT47(), new uuencoding(),
             new A1Z26(), new ASCII(), new Brainfuck(), new Base58(), new Base45(),
             new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift(),
-            new Scytale(), new Vigenere()
+            new Scytale(), new Vigenere(), new Beaufort()
         };
 
         // PRUNING
