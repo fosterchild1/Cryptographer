@@ -97,7 +97,6 @@ namespace Cryptographer
             string lastMethod = node.Method;
 
             bool failedAll = true;
-            fallback = Config.BruteAll || fallback;
 
             foreach (IDecryptionMethod method in methods)
             {
@@ -108,7 +107,7 @@ namespace Cryptographer
                 if (method.RequiresKey && (Config.NoKey || key == "")) continue;
 
                 // if method is fallback but not fallback OR method doesnt require fallback and is fallback
-                if (method.IsFallback ^ fallback != false && !Config.BruteAll) continue;
+                if (method.IsFallback ^ fallback != false) continue;
 
                 double probability = method.CalculateProbability(nodeText, info);
                 if (probability > 0.9) continue;
