@@ -37,13 +37,13 @@ namespace Cryptographer.DecryptionMethods
                 keyIdx--; // not a-z or A-Z
                 output.Append(c);
             }
-            Console.WriteLine(output.ToString());
+
             return new() { output.ToString() };
         }
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            return 0.3;
+            return 0.35;
         }
 
         public string Name { get { return "Beaufort"; } }

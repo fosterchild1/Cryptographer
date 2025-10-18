@@ -24,11 +24,11 @@ namespace Cryptographer
             new Octal(), new Baudot(), new Trilateral(), new ROT47(), new uuencoding(),
             new A1Z26(), new ASCII(), new Brainfuck(), new Base58(), new Base45(),
             new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift(),
-            new Scytale(), new Vigenere(), new Beaufort()
+            new Scytale(), new Vigenere(), new Beaufort(), new Polybius()
         };
 
         // PRUNING
-        private HashSet<string> disallowedTwice = new() { "ROT-47", "Reverse", "Atbash", "Keyboard Substitution", "Caesar", "ASCII Shift", "Vigenère" };
+        private HashSet<string> disallowedTwice = new() { "ROT-47", "Reverse", "Atbash", "Keyboard Substitution", "Caesar", "ASCII Shift", "Vigenère", "Beaufort" };
 
         private ConcurrentDictionary<string, byte> seenInputs = new();
 
