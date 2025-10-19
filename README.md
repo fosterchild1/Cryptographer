@@ -12,7 +12,7 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 | Baconian | Brainfuck | ROT-47 |
 | Base32 | Caesar | Scytale |
 | Base45 | DNA | Tap Code |
-| Base58 | Hexadecimal | Trilatral |
+| Base58 | Hexadecimal | Trilateral |
 | Base62 | Keyboard Substitution | uuencoding |
 | Base64 | Morse | Vigenère |
 
