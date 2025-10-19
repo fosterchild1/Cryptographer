@@ -1,20 +1,20 @@
 <img src="https://github.com/fosterchild1/Cryptographer/blob/master/resources/icon.ico" width="64" height="64"> <img src="https://github.com/fosterchild1/Cryptographer/blob/master/resources/text.png" width="381" height="61"> 
 
-A program that deciphers encoded strings, even if they have multiple layers of encryption. It currently supports <b>29</b> ciphers:
+A program that deciphers encoded strings, even if they have multiple layers of encryption. It currently supports <b>30</b> ciphers:
 <br/>
 
 | Supported ciphers | Supported ciphers | Supported ciphers |
 | ---  | --- | --- |
 | ASCII | Base85 | Octal |
-| ASCII Shift | Baudot | Polybius |
-| Atbash | Binary | Reverse |
-| A1Z26 | Beaufort | ROT-47 |
-| Baconian | Brainfuck | Scytale |
-| Base32 | Caesar | Tap Code |
-| Base45 | DNA | Trilateral |
-| Base58 | Hexadecimal | uuencoding |
-| Base62 | Keyboard Substitution | Vigenère |
-| Base64 | Morse | |
+| ASCII Shift | Baudot | Playfair |
+| Atbash | Binary | Polybius |
+| A1Z26 | Beaufort | Reverse |
+| Baconian | Brainfuck | ROT-47 |
+| Base32 | Caesar | Scytale |
+| Base45 | DNA | Tap Code |
+| Base58 | Hexadecimal | Trilatral |
+| Base62 | Keyboard Substitution | uuencoding |
+| Base64 | Morse | Vigenère |
 
 # CLI Arguments
 The console offers some extra arguments that the config.ini file doesn't have. Any argument written in the console will override the one in config.ini. These are:
