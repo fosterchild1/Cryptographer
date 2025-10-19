@@ -16,13 +16,9 @@ namespace Cryptographer.DecryptionMethods
 
             // check string at each second space
             StringBuilder output = new();
-            bool check = true;
 
-            for (int i = 0; i < split.Length; i++)
+            for (int i = 1; i < split.Length; i+=2)
             {
-                check = !check;
-                if (!check) continue;
-
                 int curLength = split[i].Length;
                 int prevLength = split[i - 1].Length;
 

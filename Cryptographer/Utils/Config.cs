@@ -25,6 +25,7 @@
 
         /// <summary> Doesn't ask for a key on startup </summary>
         public static bool NoKey = false;
+
         private static void TryParse<T>(Dictionary<string, string> args, string key, ref T arg)
         {
             if (!args.TryGetValue(key, out var str)) return;
