@@ -34,7 +34,6 @@ namespace Cryptographer.DecryptionMethods
             if (analysis.Count <= 2 || analysis.Count > 94) return 1;
 
             double currentCount = info.Exists(importantChars).Count;
-
             return Math.Pow(0.9, currentCount);
         }
 

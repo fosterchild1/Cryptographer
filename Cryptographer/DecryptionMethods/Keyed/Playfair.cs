@@ -18,6 +18,7 @@ namespace Cryptographer.DecryptionMethods
 
                 int n1 = key.IndexOf(c1);
                 int n2 = key.IndexOf(c2);
+                if (n1 == -1 || n2 == -1) return new();
 
                 // mega ugly alert
                 int row1 = (int)MathF.Floor(n1 / 5);

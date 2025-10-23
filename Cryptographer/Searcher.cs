@@ -96,7 +96,6 @@ namespace Cryptographer
         {
             string nodeText = node.Text;
             string lastMethod = node.Method;
-
             bool failedAll = true;
 
             foreach (IDecryptionMethod method in methods)
@@ -105,7 +104,7 @@ namespace Cryptographer
                 if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
                 
                 // if method requires key but no key
-                if (method.RequiresKey && (Config.NoKey || key == "")) continue;
+                if (method.RequiresKey && (!Config.UseKey || key == "")) continue;
 
                 // if method is fallback but not fallback OR method doesnt require fallback and is fallback
                 if (method.IsFallback ^ fallback != false) continue;
@@ -133,7 +132,7 @@ namespace Cryptographer
             StringInfo info = new(parentText);
             List<string> outputs = branch.Method.Decrypt(parentText, info, key);
 
-            bool printedDebug = false;
+            bool printed = false;
             bool failedAll = true;
 
             foreach (string output in outputs)
@@ -142,10 +141,10 @@ namespace Cryptographer
                 if (!CheckOutput(output, parentText, newInfo)) continue;
                 seenInputs.TryAdd(output, 0);
 
-                if (Config.debug && !printedDebug)
+                if (Config.debug && !printed)
                 {
-                    printedDebug = true;
                     PrintUtils.PrintDbgDecryption(branch, workerIndex);
+                    printed = true;
                 }
 
                 // score it

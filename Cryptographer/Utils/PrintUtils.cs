@@ -52,7 +52,7 @@ class PrintUtils
 
     public static string GetKey(Dictionary<string, string> args)
     {
-        if (Config.NoKey)
+        if (!Config.UseKey)
             return "";
 
         if (args.TryGetValue("key", out string? key))
