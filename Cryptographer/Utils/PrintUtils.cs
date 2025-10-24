@@ -23,6 +23,17 @@ class PrintUtils
         Console.SetCursorPosition(0, top);
     }
 
+    /// <summary>Console.ReadKey() except it doesn't detect stuff like the Win key</summary>
+    private static void ReadUntilValidKey()
+    {
+        while (true)
+        {
+            ConsoleKeyInfo k = Console.ReadKey();
+            if (k.KeyChar != 0)
+                break;
+        }
+    }
+
     // PRINTUTILS
     public static string GetInput(Dictionary<string, string> args)
     {
@@ -179,7 +190,7 @@ class PrintUtils
 
         if (status == searchStatus.SUCCESS)
         {
-            Console.ReadKey();
+            ReadUntilValidKey();
             Console.ForegroundColor = ConsoleColor.Gray;
             return;
         }
@@ -188,7 +199,7 @@ class PrintUtils
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("sorry, i wasn't able to find a meaningful decryption =(");
 
-        Console.ReadKey();
+        ReadUntilValidKey();
         Console.ForegroundColor = ConsoleColor.Gray;
     }
 
