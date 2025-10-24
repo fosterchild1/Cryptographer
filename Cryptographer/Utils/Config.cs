@@ -23,7 +23,7 @@
         /// <summary> Shows decryptions happening in real time </summary>
         public static bool debug = false;
 
-        /// <summary> Enables keyed ciphers </summary>
+        /// <summary> Enables keyed ciphers such as Vigenère </summary>
         public static bool UseKey = false;
 
         private static void TryParse<T>(Dictionary<string, string> args, string key, ref T arg)
