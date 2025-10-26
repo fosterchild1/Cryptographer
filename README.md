@@ -28,7 +28,7 @@ The console offers some extra arguments that the config.ini file doesn't have. A
 | key= | string | "" | the key that will be used. doesn't need to be wrapped in quotes |
 | cfg= | string | config.ini | selects the config file used. <b>the file should be in the same folder as the .exe</b> |
 <br/>
-Plus the ones in config.ini. (eg. <code>Cryptographer.exe in=encrypted.txt maxdepth=1</code>)
+Plus the ones in config.ini. (eg. <code>Cryptographer.exe --in=encrypted.txt --maxdepth=1</code>)
 
 # Build instructions (Windows, macOS & Linux)
 ### Build prerequisites: .NET SDK 9.0
