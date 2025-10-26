@@ -68,6 +68,9 @@ class PrintUtils
             return key;
         }
 
+        if (!Config.UseKey)
+            return "";
+
         Console.WriteLine("Input the suspected key (if you don't have any, leave blank):");
         key = Console.ReadLine();
 
