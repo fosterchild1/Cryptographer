@@ -22,7 +22,8 @@ The console offers some extra arguments that the config.ini file doesn't have. A
 
 | Argument | Data type | Default value | What it does |
 | ---  | --- | --- | --- |
-| in= | string | | the ciphertext. doesn't need to be wrapped in quotes. <b>can also be a .txt file placed in the same folder as the .exe</b> |
+| in= | string | "" | the ciphertext. doesn't need to be wrapped in quotes. <b>can also be a .txt file placed in the same folder as the .exe</b> |
+| key= | string | "" | the key that will be used. doesn't need to be wrapped in quotes |
 | cfg= | string | config.ini | selects the config file used. <b>the file should be in the same folder as the .exe</b> |
 <br/>
 Plus the ones in config.ini. (eg. <code>Cryptographer.exe in=encrypted.txt maxdepth=1</code>)
