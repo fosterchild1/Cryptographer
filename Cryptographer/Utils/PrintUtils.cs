@@ -62,11 +62,11 @@ class PrintUtils
 
     public static string GetKey(Dictionary<string, string> args)
     {
-        if (!Config.UseKey)
-            return "";
-
         if (args.TryGetValue("key", out string? key))
+        {
+            Config.UseKey = true;
             return key;
+        }
 
         Console.WriteLine("Input the suspected key (if you don't have any, leave blank):");
         key = Console.ReadLine();
