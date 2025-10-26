@@ -12,9 +12,9 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
-1. Go to '...'
-2. Input '....'
-3. See error
+1. Input '...'
+2. Use the key '...'
+3. Doesn't decrypt obvious encryption with ...
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
