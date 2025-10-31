@@ -1,4 +1,5 @@
 ﻿using Cryptographer.Classes;
+using Cryptographer.Utils;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -6,8 +7,11 @@ namespace Cryptographer.DecryptionMethods
 {
     public class Polybius : IDecryptionMethod
     {
+        private readonly string DefaultPolybiusAlphabet = MethodDictionaries.DefaultPolybiusAlphabet;
         public List<string> Decrypt(string input, StringInfo info, string key)
         {
+            key = string.IsNullOrEmpty(key) ? DefaultPolybiusAlphabet : key;
+
             StringBuilder output = new();
             int length = input.Length;
 
@@ -40,7 +44,7 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Polybius"; } }
-        public KeyLevel RequiredKey { get { return KeyLevel.Keyed; } }
+        public KeyLevel RequiredKey { get { return KeyLevel.KeyedWithDefault; } }
         public bool IsFallback { get { return false; } }
     }
 }
