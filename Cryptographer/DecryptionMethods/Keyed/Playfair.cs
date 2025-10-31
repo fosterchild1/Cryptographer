@@ -60,8 +60,7 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Playfair"; } }
-		public bool RequiresKey { get { return true; } }
-        
+		public KeyLevel RequiredKey { get { return KeyLevel.Keyed; } }
         public bool IsFallback { get { return true; } }
     }
 }

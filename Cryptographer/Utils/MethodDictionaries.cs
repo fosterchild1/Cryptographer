@@ -191,5 +191,7 @@
             ["CAC"] = 'T', ["CBA"] = 'U', ["CBB"] = 'V', ["CCA"] = 'X', ["CCB"] = 'Y',
             ["CCC"] = 'Z'
         }; // the space in this one is swapped, and also P is the same as W for some reason. i chose P cause its more common
+
+        public static string DefaultTapAlphabet = "ABCDEFGHIJLMNOPQRSTUVWXYZ";
     }
 }

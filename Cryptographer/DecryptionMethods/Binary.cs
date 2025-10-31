@@ -42,7 +42,7 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Binary"; } }
-		public bool RequiresKey { get { return false; } }
+		public KeyLevel RequiredKey { get { return KeyLevel.NotKeyed; } }
 		public bool IsFallback { get { return false; } }
     }
 }

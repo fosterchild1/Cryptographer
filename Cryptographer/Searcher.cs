@@ -24,7 +24,7 @@ namespace Cryptographer
             new Octal(), new Baudot(), new Trilateral(), new ROT47(), new uuencoding(),
             new A1Z26(), new ASCII(), new Brainfuck(), new Base58(), new Base45(),
             new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift(),
-            new Scytale(), new Vigenere(), new Beaufort(), new Polybius(), new KeyedTapCode(),
+            new Scytale(), new Vigenere(), new Beaufort(), new Polybius(), new TapCode(),
             new Playfair()
         };
 
@@ -104,7 +104,7 @@ namespace Cryptographer
                 if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
                 
                 // if method requires key but no key
-                if (method.RequiresKey && (!Config.UseKey || key == "")) continue;
+                if (method.RequiredKey == KeyLevel.Keyed && (!Config.UseKey || key == "")) continue;
 
                 // if method is fallback but not fallback OR method doesnt require fallback and is fallback
                 if (method.IsFallback ^ fallback != false) continue;

@@ -43,7 +43,7 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Atbash"; } }
-		public bool RequiresKey { get { return false; } }
+		public KeyLevel RequiredKey { get { return KeyLevel.NotKeyed; } }
 		public bool IsFallback { get { return true; } }
     }
 }

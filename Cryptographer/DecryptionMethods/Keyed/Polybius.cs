@@ -41,8 +41,7 @@ namespace Cryptographer.DecryptionMethods
         }
 
         public string Name { get { return "Polybius"; } }
-		public bool RequiresKey { get { return true; } }
-        
+        public KeyLevel RequiredKey { get { return KeyLevel.Keyed; } }
         public bool IsFallback { get { return false; } }
     }
 }
