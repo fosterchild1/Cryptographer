@@ -8,7 +8,6 @@ namespace Cryptographer.DecryptionMethods
     {
         public List<string> Decrypt(string input, StringInfo info, string key)
         {
-            // Decoding is vigenere but instead of text - key its key - text.
             StringBuilder output = new();
             int length = input.Length;
 

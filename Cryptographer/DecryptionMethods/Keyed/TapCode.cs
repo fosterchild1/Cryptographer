@@ -1,14 +1,16 @@
 ﻿using Cryptographer.Classes;
+using Cryptographer.Utils;
 using System.Text;
 
 namespace Cryptographer.DecryptionMethods
 {
     public class TapCode : IDecryptionMethod
     {
-        private const string defaultAlphabet = "ABCDEFGHIJLMNOPQRSTUVWXYZ";
+        private readonly string DefaultTapAlphabet = MethodDictionaries.DefaultTapAlphabet;
+
         public List<string> Decrypt(string input, StringInfo info, string key)
         {
-            key = string.IsNullOrEmpty(key) ? defaultAlphabet : key;
+            key = string.IsNullOrEmpty(key) ? DefaultTapAlphabet : key;
             Console.Write(key);
             // Decoding is vigenere but instead of text - key its key - text.
             StringBuilder output = new();
