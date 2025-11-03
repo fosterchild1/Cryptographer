@@ -1,4 +1,5 @@
 ﻿using Cryptographer.Classes;
+using Cryptographer.Utils;
 using System.Text;
 
 namespace Cryptographer.DecryptionMethods
@@ -6,9 +7,9 @@ namespace Cryptographer.DecryptionMethods
 
     public class Binary : IDecryptionMethod
     {
-        private string DecryptBinary(string input)
+        private string DecodeBinary(string input, char zero, char one, char space)
         {
-            input = input.Replace(" ", "");
+            input = input.Replace(one, '1').Replace(zero, '0').Replace(space.ToString(), "");
             int length = input.Length;
 
             StringBuilder sb = new();
@@ -33,12 +34,27 @@ namespace Cryptographer.DecryptionMethods
         }
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
-            return new() { DecryptBinary(input) };
+            // since this has a really safe way of detecting whether it is binary or not,
+            // we can check for character substitutions even though its expensive
+            var analysis = info.frequencyAnalysis;
+
+            char c1 = analysis[0].Key;
+            char c2 = analysis[1].Key;
+            char c3 = analysis[2].Key;
+
+            List<List<char>> permutations = new(); MathUtils.GetPermutations(new() { c1, c2, c3 }, new(), permutations);
+            List<string> output = new();
+
+            foreach (List<char> perm in permutations)
+            {
+                output.Add(DecodeBinary(input, perm[0], perm[1], perm[2]));
+            }
+
+            return output;
         }
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-            return (analysis.Count > 3 ? 1 : 0);
+            return info.uniqueCharacters > 3 ? 1 : 0;
         }
 
         public string Name { get { return "Binary"; } }

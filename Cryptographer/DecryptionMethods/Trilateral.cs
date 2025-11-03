@@ -9,9 +9,9 @@ namespace Cryptographer.DecryptionMethods
         private readonly Dictionary<string, char> TrilateralSwapped = MethodDictionaries.TrilateralSwapped;
         private readonly Dictionary<string, char> TrilateralNormal = MethodDictionaries.TrilateralNormal;
 
-        private string DecodeTrilateral(string input, string a, string b, string c, Dictionary<string, char> dict)
+        private string DecodeTrilateral(string input, char a, char b, char c, Dictionary<string, char> dict)
         {
-            input = input.Replace(a, "A").Replace(b, "B").Replace(c, "C");
+            input = input.Replace(a, 'A').Replace(b, 'B').Replace(c, 'C');
 
             int length = input.Length;
             StringBuilder output = new();
@@ -34,22 +34,14 @@ namespace Cryptographer.DecryptionMethods
 
             var analysis = info.frequencyAnalysis;
 
-            string c1 = analysis[0].Key.ToString();
-            string c2 = analysis[1].Key.ToString();
-            string c3 = analysis[2].Key.ToString();
+            char c1 = analysis[0].Key;
+            char c2 = analysis[1].Key;
+            char c3 = analysis[2].Key;
 
-            List<List<string>> permutations = new() {
-                new() { c1, c2, c3 },
-                new() { c1, c3, c2 },
-                new() { c2, c1, c3 },
-                new() { c2, c3, c1 },
-                new() { c3, c1, c2 },
-                new() { c3, c2, c1 },
-            };
-
+            List<List<char>> permutations = new(); MathUtils.GetPermutations(new() { c1, c2, c3 }, new(), permutations);
             List<string> output = new();
 
-            foreach (List<string> perm in permutations)
+            foreach (List<char> perm in permutations)
             {
                 output.Add(DecodeTrilateral(input, perm[0], perm[1], perm[2], TrilateralNormal));
                 output.Add(DecodeTrilateral(input, perm[0], perm[1], perm[2], TrilateralSwapped));
