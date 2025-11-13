@@ -8,6 +8,7 @@ class Program
     {
         // CONFIG
         Console.OutputEncoding = Encoding.UTF8;
+        Console.Title = $"Cryptographer {Config.version}";
 
         Config.SetFromFile("config.ini");
         Config.SetFromCLI(args);
