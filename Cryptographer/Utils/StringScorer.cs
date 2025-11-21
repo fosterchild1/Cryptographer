@@ -1,31 +1,7 @@
-﻿using System.Text.Json;
-using System.Text.Json.Serialization.Metadata;
+﻿using System.Collections.Concurrent;
 
 namespace Cryptographer.Utils
 {
-    #region Ngrams
-    public static class Ngrams
-    {
-        private static JsonSerializerOptions options = new()
-        {
-            TypeInfoResolver = new DefaultJsonTypeInfoResolver()
-        };
-
-        private static string json = File.ReadAllText($"{AppContext.BaseDirectory}/resources/trigrams.json");
-        public static string qjson = File.ReadAllText($"{AppContext.BaseDirectory}/resources/quadgrams.json");
-
-        public static Dictionary<string, float>? trigrams;
-
-        public static Dictionary<string, float>? quadgrams;
-
-        public static void Wake()
-        {
-            trigrams = JsonSerializer.Deserialize<Dictionary<string, float>>(json, options);
-            quadgrams = JsonSerializer.Deserialize<Dictionary<string, float>>(qjson, options);
-        } // init
-    }
-    #endregion
-
     internal class StringScorer
     {
         // link stuff
@@ -37,6 +13,37 @@ namespace Cryptographer.Utils
         // CTF
         private static HashSet<string> CTFprefixes = new() { "flag", "ctf", "httb", "thm", "cftlearn", "picoctf", "dctf" };
         private static char[] CTFSymbols = { ':', '^', '-', '{' };
+
+        // SEARCHER STUFF (makes more sense to be here tbh)
+        public static bool IsValidDecryption(string output, string last, StringInfo info, ConcurrentDictionary<string, bool> seenInputs)
+        {
+            // aka useless string
+            if (PrintUtils.RemoveWhitespaces(output).Length <= 3)
+                return false;
+
+            // TO NOT LOG IN CONSOLE
+            if (seenInputs.ContainsKey(output))
+                return false;
+
+            // hasnt changed
+            if (last == output)
+                return false;
+
+            // a single character
+            if (info.uniqueCharacters < 2)
+                return false;
+
+            // anything that's under SPACE, created mostly by running base methods on non-base encrypted inputs
+            char min = info.minChar;
+            if (min < 32 && min != 10) // exclude line feed
+                return false;
+
+            // currently doesnt support base65536 or base2048 or those typa stuff
+            if (info.maxChar > 127)
+                return false;
+
+            return true;
+        }
 
         private static bool IsCTF(string input)
         {

@@ -31,7 +31,7 @@ namespace Cryptographer
         // PRUNING
         private HashSet<string> disallowedTwice = new() { "ROT-47", "Reverse", "Atbash", "Keyboard Substitution", "Caesar", "ASCII Shift", "Vigenère", "Beaufort" };
 
-        private ConcurrentDictionary<string, byte> seenInputs = new();
+        private ConcurrentDictionary<string, bool> seenInputs = new();
 
         // WHATEVER
         public searchStatus status = searchStatus.NOT_STARTED;
@@ -46,36 +46,6 @@ namespace Cryptographer
         public string input = "";
 
         public int totalDecryptions = 0;
-
-        private bool CheckOutput(string output, string last, StringInfo info)
-        {
-            // aka useless string
-            if (PrintUtils.RemoveWhitespaces(output).Length <= 3)
-                return false;
-
-            // TO NOT LOG IN CONSOLE
-            if (seenInputs.ContainsKey(output))
-                return false;
-
-            // hasnt changed
-            if (last == output)
-                return false;
-
-            // a single character
-            if (info.uniqueCharacters < 2)
-                return false;
-
-            // anything that's under SPACE, created mostly by running base methods on non-base encrypted inputs
-            char min = info.minChar;
-            if (min < 32 && min != 10) // exclude line feed
-                return false;
-
-            // currently doesnt support base65536 or base2048 or those typa stuff
-            if (info.maxChar > 127)
-                return false;
-
-            return true;
-        }
 
         private void CheckPlaintext(string text, StringInfo info, DecryptionBranch branch)
         {
@@ -140,8 +110,8 @@ namespace Cryptographer
             foreach (string output in outputs)
             {
                 StringInfo newInfo = new(output);
-                if (!CheckOutput(output, parentText, newInfo)) continue;
-                seenInputs.TryAdd(output, 0);
+                if (!StringScorer.IsValidDecryption(output, parentText, newInfo, seenInputs)) continue;
+                seenInputs.TryAdd(output, true);
                 totalDecryptions++;
 
                 if (Config.debug && !printed)
@@ -165,7 +135,8 @@ namespace Cryptographer
 
         public void Search()
         {
-            if (!CheckOutput(input, "", new(input))) { status = searchStatus.FAILED; return; }
+            // the input could just be gibberish
+            if (!StringScorer.IsValidDecryption(input, "", new(input), new())) { status = searchStatus.FAILED; return; }
             status = searchStatus.SEARCHING;
 
             // use a priority queue alongside a CalculateProbability function
