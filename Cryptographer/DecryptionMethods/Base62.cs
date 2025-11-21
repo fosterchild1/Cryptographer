@@ -33,8 +33,8 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-            if (analysis.Count <= 2 || analysis.Count > 62) return 1;
+            if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 62) return 1;
+            if (info.minChar < '0' || info.maxChar > 'z') return 1;
 
             return TryFromBase62String(input, out byte[]? _) ? 0 : 1;
         }

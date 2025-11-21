@@ -1,4 +1,4 @@
-﻿                                    using Cryptographer.Classes;
+﻿using Cryptographer.Classes;
 using Cryptographer.DecryptionMethods;
 using Cryptographer.Utils;
 using System.Collections.Concurrent;
@@ -154,7 +154,7 @@ namespace Cryptographer
             for (int i = 0; i < workers; i++)
             {
                 int index = i;
-                tasks[i] = Task.Run(() =>
+                tasks[i] = Task.Factory.StartNew(() =>
                 {
                     int workerIndex = index; // needed....... sadly
                     while (true)
@@ -185,7 +185,13 @@ namespace Cryptographer
                         }
 
                     }
-                });
+                },
+
+                CancellationToken.None,
+                TaskCreationOptions.LongRunning,
+                TaskScheduler.Default
+
+                );
             }
 
             // wait for all to finish
