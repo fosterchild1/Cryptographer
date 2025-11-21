@@ -110,11 +110,10 @@ namespace Cryptographer
             foreach (string output in outputs)
             {
                 StringInfo newInfo = new(output);
-                Console.WriteLine(output);
                 if (!StringScorer.IsValidDecryption(output, parentText, newInfo, seenInputs)) continue;
                 seenInputs.TryAdd(output, true);
                 totalDecryptions++;
-                Console.WriteLine(output);
+
                 if (Config.debug && !printed)
                 {
                     PrintUtils.PrintDbgDecryption(branch, workerIndex);

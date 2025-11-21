@@ -60,9 +60,9 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
             // 85 + padding character
-            if (analysis.Count <= 2 || analysis.Count > 86) return 1;
+            if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 86) return 1;
+            if (info.minChar < '!' || info.maxChar > 'z') return 1;
 
             return !TryFromBase85String(input, out byte[]? output) ? 1 : 0;
         }

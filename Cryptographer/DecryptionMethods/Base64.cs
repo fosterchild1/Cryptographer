@@ -49,6 +49,7 @@ namespace Cryptographer.DecryptionMethods
         {
             // 64 + padding character
             if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 65) return 1;
+            if (info.minChar < '+' || info.maxChar > 'z') return 1;
 
             return !CustomBase64(input, out byte[]? bytes) ? 1 : 0;
         }

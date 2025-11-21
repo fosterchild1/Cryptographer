@@ -53,7 +53,7 @@ namespace Cryptographer.DecryptionMethods
         {
             // 45 chars
             if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 45) return 1;
-            //if (info.minChar < '$' || info.maxChar > 'Z') return 1;
+            if (info.minChar < '$' || info.maxChar > 'Z') return 1;
 
             return !TryFromBase45String(input, out byte[]? output) ? 1 : 0;
         }

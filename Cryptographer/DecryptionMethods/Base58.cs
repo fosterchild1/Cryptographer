@@ -50,8 +50,7 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-            if (analysis.Count <= 2 || analysis.Count > 58) return 1;
+            if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 58) return 1;
             if (info.minChar < 48 || info.maxChar > 122) return 1; // between 0-1, A-Z and a-z
 
             return 0.3;
