@@ -33,11 +33,12 @@ namespace Cryptographer.Utils
             if (info.uniqueCharacters < 2)
                 return false;
 
+            Console.WriteLine("hi2");
             // anything that's under SPACE, created mostly by running base methods on non-base encrypted inputs
             char min = info.minChar;
             if (min < 32 && min != 10) // exclude line feed
                 return false;
-
+            Console.WriteLine("hi");
             // currently doesnt support base65536 or base2048 or those typa stuff
             if (info.maxChar > 127)
                 return false;
@@ -127,7 +128,7 @@ namespace Cryptographer.Utils
                 seen[substr] = substrSeenAmount;
                 score += val * length / substrSeenAmount / 4f; // fine tuned value that stops most non-plaintext strings
             }
-
+            Console.WriteLine($"{input} {score}");
             return score;
         }
 

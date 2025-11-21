@@ -19,10 +19,10 @@ namespace Cryptographer.DecryptionMethods
 
             List<byte> result = new();
 
-            int length = input.Length;
-            int i = 0;
+            // pad
+            input += new string('0', (3 - (input.Length % 3)) % 3);
 
-            while (true)
+            for (int i = 0; i < input.Length; i += 3)
             {
                 //n=c+(d×45)+(e×45^2)
                 byte c = (byte)CharToVal(input[i]);
@@ -31,18 +31,10 @@ namespace Cryptographer.DecryptionMethods
                 if (c == 255 || d == 255 || e == 255) return false; // aka failed in chartoval
 
                 int n = c + (d * 45) + (e * 45 * 45);
+                byte secondByte = (byte)((n >> 8) & 0xFF);
 
-                result.Add((byte)((n >> 8) & 0xFF));
-                result.Add((byte)((n) & 0xFF));
-
-                if (i == length - 3) break;
-
-                i += 3;
-                if (i > length - 3) // add zeros
-                {
-                    input += new string('0', 3 - (length % 3));
-                    length = input.Length;
-                }
+                if (secondByte != 0) result.Add(secondByte);
+                result.Add((byte)(n & 0xFF));
             }
 
             output = result.ToArray();
@@ -59,9 +51,9 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
             // 45 chars
-            if (analysis.Count <= 2 || analysis.Count > 45 || info.maxChar > 90) return 1; // > 90 means >Z but we only have characters 0-1 and A-Z and stuff between
+            if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 45) return 1;
+            //if (info.minChar < '$' || info.maxChar > 'Z') return 1;
 
             return !TryFromBase45String(input, out byte[]? output) ? 1 : 0;
         }
