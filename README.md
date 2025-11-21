@@ -24,14 +24,14 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 <b>Two stars</b> means that they only work when using the <b>usekey</b> config.
 </details>
 
-# Features
+# 💡 Features
 - <b>30+ supported decoders</b> for ciphers like Binary, Base64, and even Brainfuck.
 - <b>Optional support for keyed ciphers</b> such as Vigenere or Playfair, <b>with fallback variants</b> if no key is provided.
 - <b>Custom searcher</b> that almost always finds the correct path, even with ciphers that barely modify the structure of the text.
 - <b>Multi-threading capabilities</b> for maximum performance.
 - <b>Optimized down to the last speck of dust</b>—Cryptographer can usually find the plaintext in <b>less than a quarter of a second</b> using just one core. That's less than the blink of an eye.
 
-# CLI Arguments
+# 💡 CLI Arguments
 The console offers some extra arguments that the config.ini file doesn't have. Any argument written in the console will override the one in config.ini. These are:
 <br/>
 
