@@ -45,6 +45,8 @@ namespace Cryptographer
 
         public string input = "";
 
+        public int totalDecryptions = 0;
+
         private bool CheckOutput(string output, string last, StringInfo info)
         {
             // aka useless string
@@ -140,6 +142,7 @@ namespace Cryptographer
                 StringInfo newInfo = new(output);
                 if (!CheckOutput(output, parentText, newInfo)) continue;
                 seenInputs.TryAdd(output, 0);
+                totalDecryptions++;
 
                 if (Config.debug && !printed)
                 {

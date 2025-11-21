@@ -175,9 +175,13 @@ class PrintUtils
             {
                 Thread.Sleep(250);
 
+                // change console name
+                Console.Title = $"Cryptographer {Config.version} | {searcher.totalDecryptions} Decryptions";
+
                 if ((int)searcher.status > 2) break;  // < 2 means not started or searching
                 if (asking > 0) continue;
 
+                // write Working...
                 ClearLine();
                 Console.Write($"{things[thing]} Working");
                 thing = (thing + 1) % (things.Count);
