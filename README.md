@@ -29,7 +29,7 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 - <b>Optional support for keyed ciphers</b> such as Vigenere or Playfair, <b>with fallback variants</b> if no key is provided.
 - <b>Custom searcher</b> that almost always finds the correct path, even with ciphers that barely modify the structure of the text.
 - <b>Multi-threading capabilities</b> for maximum performance.
-- Optimized down to the last speck of dust—Cryptographer can usually find the plaintext in <b>less than a quarter of a second</b> using just one core. That's less than the blink of an eye.
+- <b>Optimized down to the last speck of dust</b>—Cryptographer can usually find the plaintext in <b>less than a quarter of a second</b> using just one core. That's less than the blink of an eye.
 
 # CLI Arguments
 The console offers some extra arguments that the config.ini file doesn't have. Any argument written in the console will override the one in config.ini. These are:
