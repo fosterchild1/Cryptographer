@@ -12,7 +12,7 @@
         public static int searchTimeout = int.MaxValue;
 
         /// <summary> The max depth of the search, 0 = Default </summary>
-        public static byte maxDepth = 24;
+        public static byte maxDepth = 30;
 
         /// <summary> Amount of cpu cores to be used by the program, 0 = all of them </summary>
         public static byte threadCount = (byte)Environment.ProcessorCount;

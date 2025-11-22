@@ -6,11 +6,10 @@ namespace Cryptographer.DecryptionMethods
 {
     public class Baudot : IDecryptionMethod
     {
-
         private Dictionary<string, char> BaudotDictionary = MethodDictionaries.Baudot;
 
-        private readonly string SWITCH_TO_FIGURES = "11011";
-        private readonly string SWITCH_TO_LETTERS = "111111";
+        private const string SWITCH_TO_FIGURES = "11011";
+        private const string SWITCH_TO_LETTERS = "111111";
 
         public List<string> Decrypt(string input, StringInfo info, string _)
         {

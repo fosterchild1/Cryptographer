@@ -23,13 +23,13 @@ class PrintUtils
     }
 
     /// <summary>Console.ReadKey() except it doesn't detect stuff like the Win key</summary>
-    private static void ReadUntilValidKey()
+    private static ConsoleKeyInfo ReadUntilValidKey()
     {
         while (true)
         {
             ConsoleKeyInfo k = Console.ReadKey();
             if (k.KeyChar != 0)
-                break;
+                return k;
         }
     }
 
@@ -93,8 +93,8 @@ class PrintUtils
         {
             Console.Write($"Possible plaintext: {output} ({C_GREEN}y{C_GRAY}/{C_RED}n{C_GRAY})?");
 
-            ConsoleKeyInfo key = Console.ReadKey(true);
-
+            ConsoleKeyInfo key = ReadUntilValidKey();
+            //Console.WriteLine(key);
             if (key.Key != ConsoleKey.Y)
             {
                 ClearLine();
