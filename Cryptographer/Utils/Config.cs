@@ -90,7 +90,7 @@
                 if (split[0] == "help")
                     PrintUtils.DisplayHelpText();
 
-                argDict.TryAdd(split[0], split[1]);
+                argDict.TryAdd(split[0].ToLower(), split[1]);
             }
             CLIargs = argDict;
 

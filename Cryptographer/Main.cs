@@ -6,7 +6,7 @@ class Program
 {
     static int Main(string[] args)
     {
-        // CONFIG
+        // INITIALIZE
         Console.OutputEncoding = Encoding.UTF8;
         Console.Title = $"Cryptographer {Config.version} | static";
 
@@ -15,10 +15,10 @@ class Program
 
         Ngrams.Wake();
 
-        // SEARCHER
         string input = PrintUtils.GetInput(Config.CLIargs);
         string key = PrintUtils.GetKey(Config.CLIargs);
 
+        // START SEARCH
         Searcher searcher = new(input, key);
         PrintUtils.DisplayWorkText(searcher);
 
