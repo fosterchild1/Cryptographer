@@ -38,7 +38,7 @@ namespace Cryptographer.DecryptionMethods
             char c2 = analysis[1].Key;
             char c3 = analysis[2].Key;
 
-            List<List<char>> permutations = new(); MathUtils.GetPermutations(new() { c1, c2, c3 }, new(), permutations);
+            List<List<char>> permutations = new(); DecryptionUtils.GetPermutations(new() { c1, c2, c3 }, new(), permutations);
             List<string> output = new();
 
             foreach (List<char> perm in permutations)

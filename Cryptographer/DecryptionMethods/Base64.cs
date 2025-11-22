@@ -41,10 +41,9 @@ namespace Cryptographer.DecryptionMethods
         {
             CustomBase64(input, out byte[]? bytes);
             string output = Encoding.UTF8.GetString(bytes!);
- 
+
             return new() { output };
         }
-
         public double CalculateProbability(string input, StringInfo info)
         {
             // 64 + padding character

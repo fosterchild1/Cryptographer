@@ -1,6 +1,6 @@
 ﻿namespace Cryptographer.Utils
 {
-    internal class MathUtils
+    internal class DecryptionUtils
     {
         public static void GetPermutations<T>(List<T> list, List<T> current, List<List<T>> permutations)
         {

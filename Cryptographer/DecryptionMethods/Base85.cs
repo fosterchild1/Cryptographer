@@ -53,7 +53,7 @@ namespace Cryptographer.DecryptionMethods
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
             TryFromBase85String(input, out byte[]? output);
-            //Console.WriteLine(Encoding.UTF8.GetString(output));
+
             return new() { output != null ? Encoding.UTF8.GetString(output) : "" };
         }
 

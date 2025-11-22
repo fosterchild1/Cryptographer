@@ -49,6 +49,7 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<TargetPath>\config.ini</TargetPath>
 		</None>
+		<None Include="Utils\DecryptionUtils.cs" />
 	</ItemGroup>
 
 </Project>
