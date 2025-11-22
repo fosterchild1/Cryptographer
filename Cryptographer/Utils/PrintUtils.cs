@@ -84,7 +84,7 @@ class PrintUtils
     {
         askQueue.Enqueue(str);
 
-        // only one thread at a time is allowed to drain the queue
+        // only one thread is allowed to drain queue
         if (Interlocked.CompareExchange(ref asking, 1, 0) != 0)
             return false;
 
@@ -94,7 +94,7 @@ class PrintUtils
             Console.Write($"Possible plaintext: {output} ({C_GREEN}y{C_GRAY}/{C_RED}n{C_GRAY})?");
 
             ConsoleKeyInfo key = ReadUntilValidKey();
-            //Console.WriteLine(key);
+
             if (key.Key != ConsoleKey.Y)
             {
                 ClearLine();
@@ -143,8 +143,7 @@ class PrintUtils
 
     public static void StopTimer(string name)
     {
-        Stopwatch? timer;
-        if (!timers.TryGetValue(name, out timer)) return;
+        if (!timers.TryGetValue(name, out Stopwatch? timer)) return;
 
         timer.Stop();
         timers.Remove(name);
@@ -197,7 +196,7 @@ class PrintUtils
         if (status == searchStatus.SUCCESS)
         {
             ReadUntilValidKey();
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.ResetColor();
             return;
         }
 
@@ -206,14 +205,14 @@ class PrintUtils
         Console.WriteLine("sorry, i wasn't able to find a meaningful decryption =(");
 
         ReadUntilValidKey();
-        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.ResetColor();
     }
 
     public static void DisplayHelpText()
     {
         Console.WriteLine("Cryptographer\n" +
             "Source: https://github.com/fosterchild1/Cryptographer\n\n" +
-            "Example usage: cryptographer in=aHR0cHM6Ly9naXRodWIuY29tL2Zvc3RlcmNoaWxkMS8 maxdepth=2\n\n" +
+            "Example usage: cryptographer --in=aHR0cHM6Ly9naXRodWIuY29tL2Zvc3RlcmNoaWxkMS8 --maxdepth=2\n\n" +
             "Configuration:\n" +
             "Config Name | Default | What it does\n" +
             "h / help                Displays the help text.\n" +
@@ -237,7 +236,8 @@ class PrintUtils
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine($"APPLIED: {C_DARKYELLOW}{branch.Method.Name} {C_YELLOW}| ON: {C_DARKYELLOW}{'"'}{truncated}{'"'} {C_YELLOW}| AT DEPTH: {C_DARKYELLOW}" +
             $"{branch.Parent.Depth}");
-        Console.ForegroundColor = ConsoleColor.Gray;
+
+        Console.ResetColor();
     }
 
     // ENABLE COLORS
