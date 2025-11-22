@@ -49,14 +49,16 @@ namespace Cryptographer
 
         private void CheckPlaintext(string text, StringInfo info, DecryptionBranch branch)
         {
-            if (!(StringScorer.Score(text, info) > Config.scorePrintThreshold)) return;
+            StringType type = StringClassifier.Classify(text, info);
+            if (type == StringType.GIBBERISH) return;
+
             bool isStopped = !timer.IsRunning; // avoid starting if its stopped
 
             timer.Stop();
-            bool plaintext = PrintUtils.AskOutput(text, branch);
-            if (plaintext)
+            bool indeedPlaintext = PrintUtils.AskOutput(text, branch);
+            if (indeedPlaintext)
             {
-                Console.WriteLine($"Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
+                Console.WriteLine($"String type: {type.ToString().ToLowerInvariant()} | Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
                 status = searchStatus.SUCCESS;
                 return;
             }
@@ -110,7 +112,7 @@ namespace Cryptographer
             foreach (string output in outputs)
             {
                 StringInfo newInfo = new(output);
-                if (!StringScorer.IsValidDecryption(output, parentText, newInfo, seenInputs)) continue;
+                if (!StringClassifier.IsValid(output, parentText, newInfo, seenInputs)) continue;
                 seenInputs.TryAdd(output, true);
                 totalDecryptions++;
 
@@ -136,7 +138,7 @@ namespace Cryptographer
         public void Search()
         {
             // the input could just be gibberish
-            if (!StringScorer.IsValidDecryption(input, "", new(input), new())) { status = searchStatus.FAILED; return; }
+            if (!StringClassifier.IsValid(input, "", new(input), new())) { status = searchStatus.FAILED; return; }
             status = searchStatus.SEARCHING;
 
             // use a priority queue alongside a CalculateProbability function

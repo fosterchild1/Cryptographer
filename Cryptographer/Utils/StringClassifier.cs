@@ -1,8 +1,17 @@
 ﻿using System.Collections.Concurrent;
+using System.Text.RegularExpressions;
+
+enum StringType
+{
+    GIBBERISH = 0,
+    PLAINTEXT = 1,
+    LINK = 2,
+    CTF_FLAG = 3,
+}
 
 namespace Cryptographer.Utils
 {
-    internal class StringScorer
+    internal class StringClassifier
     {
         // link stuff
         private static List<string> prefixes = new() { "https://", "http://" };
@@ -15,7 +24,7 @@ namespace Cryptographer.Utils
         private static char[] CTFSymbols = { ':', '^', '-', '{' };
 
         // SEARCHER STUFF (makes more sense to be here tbh)
-        public static bool IsValidDecryption(string output, string last, StringInfo info, ConcurrentDictionary<string, bool> seenInputs)
+        public static bool IsValid(string output, string last, StringInfo info, ConcurrentDictionary<string, bool> seenInputs)
         {
             // aka useless string
             if (PrintUtils.RemoveWhitespaces(output).Length <= 3)
@@ -76,7 +85,7 @@ namespace Cryptographer.Utils
             }
 
             input = input.Replace("https://", "").Replace("http://", ""); // ugly
-            string[] split = input.Split(".");
+            string[] split = Regex.Split(input, "[./]");
             int splitLength = split.Length;
 
             // subdomains (www.)
@@ -97,12 +106,12 @@ namespace Cryptographer.Utils
 
         }
 
-        private static float CalculateScoreForType(string input, int step, Dictionary<string, float> dict)
+        private static float CalculateScoreForDict(string input, int step, Dictionary<string, float> dict)
         {
             // how this works: we have a window of either 4 or 3 characters and we check for those in a dictionry
             // each string has a score, if it doesnt then it gets penalized proportional to the string length
             // if it has a score, add its score proportional to the string length
-            // for smaller inputs, also keep track of seen strings and if we have seen those before we also penalize
+            // we also keep track of seen strings and if we have seen those before we also penalize
 
             if (dict == null) return 0;
 
@@ -131,23 +140,23 @@ namespace Cryptographer.Utils
             return score;
         }
 
-        public static float Score(string input, StringInfo info)
+        public static StringType Classify(string input, StringInfo info)
         {
-            // if it has less than 3 unique characters (and also check if there even is an analysis)
-            var analysis = info.frequencyAnalysis;
-            if (analysis.Count > 0 && analysis.Count <= 3)
+            if (info.uniqueCharacters > 0 && info.uniqueCharacters <= 3)
                 return 0;
 
-            if (IsLink(input) || IsCTF(input))
-            {
-                return float.MaxValue;
-            }
+            if (IsLink(input))
+                return StringType.LINK;
+            else if (IsCTF(input))
+                return StringType.CTF_FLAG;
 
             string modifiedInput = PrintUtils.RemoveWhitespaces(input).ToUpper();
 
             bool tri = Config.useTrigrams || modifiedInput.Length <= 6;
 
-            return CalculateScoreForType(modifiedInput, (tri ? 3 : 4), (tri ? Ngrams.trigrams! : Ngrams.quadgrams!));
+            float score = CalculateScoreForDict(modifiedInput, (tri ? 3 : 4), (tri ? Ngrams.trigrams! : Ngrams.quadgrams!));
+
+            return (score >= Config.scorePrintThreshold ? StringType.PLAINTEXT : StringType.GIBBERISH);
         }
     }
 }
