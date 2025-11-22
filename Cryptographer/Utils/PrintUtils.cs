@@ -25,6 +25,10 @@ class PrintUtils
     /// <summary>Console.ReadKey() except it doesn't detect stuff like the Win key</summary>
     private static ConsoleKeyInfo ReadUntilValidKey()
     {
+        // i hate buffer :(
+        while (Console.KeyAvailable)
+            Console.ReadKey(true);
+
         while (true)
         {
             ConsoleKeyInfo k = Console.ReadKey();
