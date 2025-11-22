@@ -4,7 +4,7 @@ using System.Text;
 
 class Program
 {
-    static void Main(string[] args)
+    static int Main(string[] args)
     {
         // CONFIG
         Console.OutputEncoding = Encoding.UTF8;
@@ -24,5 +24,7 @@ class Program
 
         searcher.Search();
         PrintUtils.HandleSearchResult(searcher.status);
+
+        return (int)searcher.status - 2;
     }
 }

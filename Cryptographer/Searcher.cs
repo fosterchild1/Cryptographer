@@ -58,7 +58,7 @@ namespace Cryptographer
             bool indeedPlaintext = PrintUtils.AskOutput(text, branch);
             if (indeedPlaintext)
             {
-                Console.WriteLine($"String type: {type.ToString().ToLowerInvariant()} | Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
+                Console.WriteLine($"String type: {type.ToString().ToLower()} | Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
                 status = searchStatus.SUCCESS;
                 return;
             }
