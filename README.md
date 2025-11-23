@@ -27,10 +27,9 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 # 💡 Features
 - <b>30+ supported decoders</b> for ciphers like Binary, Base64, and even Brainfuck.
 - <b>Optional support for keyed ciphers</b> such as Vigenere or Playfair, <b>with fallback variants</b> if no key is provided.
-- <b>Custom searcher</b> that almost always finds the correct path, even with ciphers that barely modify the structure of the text.
+- <b>Blazingly fast searcher</b>—Cryptographer can usually find the plaintext in <b>less than 100 milliseconds</b> using just a single core. That's less than the blink of an eye.
 - <b>Multi-threading capabilities</b> for maximum performance.
-- <b>Fast but accurate plaintext detector</b> that uses trigrams and quadgrams to classify strings into CTF flags, links, plaintext and gibberish.
-- <b>Optimized down to the last speck of dust</b>—Cryptographer can usually find the plaintext in <b>less than 100 milliseconds</b> using just a single core. That's less than the blink of an eye.
+- <b>Fast and accurate plaintext detector</b> that uses trigrams and quadgrams to classify strings into CTF flags, links, plaintext and gibberish.
 
 # 💡 CLI Arguments
 The console offers some extra arguments that the config.ini file doesn't have. Any argument written in the console will override the one in config.ini. These are:
