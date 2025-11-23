@@ -3,7 +3,7 @@ using Cryptographer.Decoders;
 
 namespace Cryptographer
 {
-    class DecoderFactory
+    static class DecoderFactory
     {
         private static readonly List<IDecoder> decoderList = new()
         {
@@ -15,10 +15,36 @@ namespace Cryptographer
             new Scytale(), new Vigenere(), new Beaufort(), new Polybius(), new TapCode(),
             new Playfair()
         };
+
+        private static readonly List<IDecoder> genericList = new();
+        private static readonly List<IDecoder> keyedList = new();
+
         public static List<IDecoder> GetAll()
         {
             return decoderList;
         }
 
+        public static List<IDecoder> GetKeyed()
+        {
+            return keyedList;
+        }
+
+        public static List<IDecoder> GetGeneric()
+        {
+            return genericList;
+        }
+        static DecoderFactory()
+        {
+            foreach (IDecoder decoder in decoderList)
+            {
+                if (decoder.RequiredKey == KeyLevel.Keyed)
+                {
+                    keyedList.Add(decoder);
+                    continue;
+                }
+
+                genericList.Add(decoder);
+            }
+        }
     }
 }

@@ -15,9 +15,6 @@ namespace Cryptographer
 {
     internal class Searcher
     {
-        // METHODS
-        private List<IDecoder> decoderList = DecoderFactory.GetAll();
-
         // PRUNING
         private HashSet<string> disallowedTwice = new() { "ROT-47", "Reverse", "Atbash", "Keyboard Substitution", "Caesar", "ASCII Shift", "Vigenère", "Beaufort" };
 
@@ -62,13 +59,12 @@ namespace Cryptographer
             string lastMethod = node.Method;
             bool failedAll = true;
 
+            List<IDecoder> decoderList = (key != "" ? DecoderFactory.GetAll() : DecoderFactory.GetGeneric());
+
             foreach (IDecoder method in decoderList)
             {
                 string methodName = method.Name;
                 if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
-                
-                // if method requires key but no key
-                if (method.RequiredKey == KeyLevel.Keyed && (!Config.UseKey || key == "")) continue;
 
                 // if method is fallback but not fallback OR method doesnt require fallback and is fallback
                 if (method.IsFallback ^ fallback != false) continue;

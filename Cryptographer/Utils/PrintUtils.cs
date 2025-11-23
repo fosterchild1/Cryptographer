@@ -29,7 +29,7 @@ class PrintUtils
 
         while (true)
         {
-            ConsoleKeyInfo k = Console.ReadKey();
+            ConsoleKeyInfo k = Console.ReadKey(true);
             if (k.KeyChar != 0)
                 return k;
         }
