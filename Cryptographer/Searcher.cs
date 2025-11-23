@@ -1,5 +1,4 @@
 ﻿using Cryptographer.Classes;
-using Cryptographer.Decoders;
 using Cryptographer.Utils;
 using System.Collections.Concurrent;
 using System.Diagnostics;
@@ -17,16 +16,7 @@ namespace Cryptographer
     internal class Searcher
     {
         // METHODS
-        private List<IDecoder> methods = new()
-        {
-            new Base64(), new Morse(), new Baconian(), new Binary(), new TapCode(), 
-            new DNA(), new Hexadecimal(), new Base32(), new Base85(), new Base62(), 
-            new Octal(), new Baudot(), new Trilateral(), new ROT47(), new uuencoding(),
-            new A1Z26(), new ASCII(), new Brainfuck(), new Base58(), new Base45(),
-            new Caesar(), new KeyboardSubstitution(), new Atbash(), new Reverse(), new ASCIIShift(),
-            new Scytale(), new Vigenere(), new Beaufort(), new Polybius(), new TapCode(),
-            new Playfair()
-        };
+        private List<IDecoder> decoderList = DecoderFactory.GetAll();
 
         // PRUNING
         private HashSet<string> disallowedTwice = new() { "ROT-47", "Reverse", "Atbash", "Keyboard Substitution", "Caesar", "ASCII Shift", "Vigenère", "Beaufort" };
@@ -72,7 +62,7 @@ namespace Cryptographer
             string lastMethod = node.Method;
             bool failedAll = true;
 
-            foreach (IDecoder method in methods)
+            foreach (IDecoder method in decoderList)
             {
                 string methodName = method.Name;
                 if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
