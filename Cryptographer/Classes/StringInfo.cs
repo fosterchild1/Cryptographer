@@ -3,10 +3,10 @@
 /// </summary>
 public class StringInfo // theres a C# class also called StringInfo but honestly i have no idea what else to name this
 {
-    public List<KeyValuePair<char, int>> frequencyAnalysis;
-    public int uniqueCharacters;
-    public char minChar = char.MaxValue;
-    public char maxChar = char.MinValue;
+    public readonly List<KeyValuePair<char, int>> frequencyAnalysis;
+    public readonly int uniqueCharacters;
+    public readonly char minChar = char.MaxValue;
+    public readonly char maxChar = char.MinValue;
 
     public StringInfo(string str)
     {

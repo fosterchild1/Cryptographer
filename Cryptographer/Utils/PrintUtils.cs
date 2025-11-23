@@ -8,11 +8,11 @@ using System.Text;
 class PrintUtils
 {
     // CLI UTILS
-    private static string C_RED = "\x1b[91m";
-    private static string C_GREEN = "\x1b[92m";
-    private static string C_DARKYELLOW = "\x1b[33m";
-    private static string C_YELLOW = "\x1b[93m";
-    private static string C_GRAY = "\x1b[37m";
+    private const string C_RED = "\x1b[91m";
+    private const string C_GREEN = "\x1b[92m";
+    private const string C_DARKYELLOW = "\x1b[33m";
+    private const string C_YELLOW = "\x1b[93m";
+    private const string C_GRAY = "\x1b[37m";
     private static void ClearLine()
     {
         int top = Console.CursorTop;

@@ -3,7 +3,7 @@
     internal class MethodDictionaries
     {
         // Morse Code
-        public static Dictionary<string, string> Morse = new()
+        public static readonly Dictionary<string, string> Morse = new()
         {
             ["/"] = " ", [ "-----"] = "0", [".----"] = "1", ["..---"] = "2", ["...--"] = "3",
             ["....-"] = "4", ["....."] = "5", ["-...."] = "6", ["--..."] = "7", ["---.."] = "8",
@@ -18,7 +18,7 @@
         };
 
         // Baconian
-        public static Dictionary<string, string> Baconian26 = new()
+        public static readonly Dictionary<string, string> Baconian26 = new()
         {
             ["AAAAA"] = "A", ["AAAAB"] = "B", ["AAABA"] = "C", ["AAABB"] = "D", ["AABAA"] = "E",
             ["AABAB"] = "F", ["AABBA"] = "G", ["AABBB"] = "H", ["ABAAA"] = "I", ["ABAAB"] = "J",
@@ -28,7 +28,7 @@
             ["BBAAB"] = "Z"
         };
 
-        public static Dictionary<string, string> Baconian24 = new()
+        public static readonly Dictionary<string, string> Baconian24 = new()
         {
             ["AAAAA"] = "A", ["AAAAB"] = "B", ["AAABA"] = "C", ["AAABB"] = "D", ["AABAA"] = "E",
             ["AABAB"] = "F", ["AABBA"] = "G", ["AABBB"] = "H", ["ABAAA"] = "I", ["ABAAA"] = "J",
@@ -40,13 +40,13 @@
 
         // Keyboard substituition
         // even though qwertz and azerty exist, they only change the position of 2 letters and are less likely to have a meaningful impact
-        public static string QwertyLayout = """`1234567890-=qwertyuiop[]\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?""";
-        public static string DvorakLayout = """`1234567890[]',.pyfgcrl/=\aoeuidhtns-;qjkxbmwvz~!@#$%^&*(){}"<>PYFGCRL?+|AOEUIDHTNS_:QJKXBMWVZ""";
-        public static string ColemakLayout = """`1234567890-=qwfpgjluy;[]\arstdhneio'zxcvbkm,./~!@#$%^&*()_+QWFPGJLUY:{}|ARSTDHNEIO"ZXCVBKM<>?""";
-        public static string WorkmanLayout = """`1234567890-=qdrwbjfup;[]\ashtgyneoi'zxmcvkl,./~!@#$%^&*()_+QDRWBJFUP:{}|ASHTGYNEOI"ZXMCVKL<>?""";
+        public const string QwertyLayout = """`1234567890-=qwertyuiop[]\asdfghjkl;'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:"ZXCVBNM<>?""";
+        public const string DvorakLayout = """`1234567890[]',.pyfgcrl/=\aoeuidhtns-;qjkxbmwvz~!@#$%^&*(){}"<>PYFGCRL?+|AOEUIDHTNS_:QJKXBMWVZ""";
+        public const string ColemakLayout = """`1234567890-=qwfpgjluy;[]\arstdhneio'zxcvbkm,./~!@#$%^&*()_+QWFPGJLUY:{}|ARSTDHNEIO"ZXCVBKM<>?""";
+        public const string WorkmanLayout = """`1234567890-=qdrwbjfup;[]\ashtgyneoi'zxmcvkl,./~!@#$%^&*()_+QDRWBJFUP:{}|ASHTGYNEOI"ZXMCVKL<>?""";
 
         // Tap code
-        public static List<List<string>> TapCode = new()
+        public static readonly List<List<string>> TapCode = new()
         {
             new List<string>() {"A", "B", "C", "D", "E"},
             new List<string>() {"F", "G", "H", "I", "J"},
@@ -56,7 +56,7 @@
         };
 
         // DNA cipher
-        public static Dictionary<string, string> DNA = new()
+        public static readonly Dictionary<string, string> DNA = new()
         {
             ["AAA"] = "A", ["AAC"] = "B", ["AAG"] = "C", ["AAT"] = "D", ["ACA"] = "E",
             ["ACC"] = "F", ["ACG"] = "G", ["ACT"] = "H", ["AGA"] = "I", ["AGC"] = "J",
@@ -67,7 +67,7 @@
         };
 
         // Base32
-        public static Dictionary<char, int> Base32Map = new()
+        public static readonly Dictionary<char, int> Base32Map = new()
         {
             {'A', 0}, {'B', 1}, {'C', 2}, {'D', 3}, {'E', 4}, {'F', 5}, {'G', 6}, {'H', 7},
             {'I', 8}, {'J', 9}, {'K', 10}, {'L', 11}, {'M', 12}, {'N', 13}, {'O', 14}, {'P', 15},
@@ -76,7 +76,7 @@
         };
 
         // Base45
-        public static Dictionary<char, int> Base45Map = new()
+        public static readonly Dictionary<char, int> Base45Map = new()
         {
             ['0'] = 0, ['1'] = 1, ['2'] = 2, ['3'] = 3, ['4'] = 4,
             ['5'] = 5, ['6'] = 6, ['7'] = 7, ['8'] = 8, ['9'] = 9,
@@ -90,12 +90,12 @@
         };
 
         // Base58 alphabets
-        public static string Base58BTC = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-        public static string Base58Flickr = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
-        public static string Base58Ripple = "rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz";
+        public const string Base58BTC = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
+        public const string Base58Flickr = "123456789abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ";
+        public const string Base58Ripple = "rpshnaf39wBUDNEGHJKLM4PQRST7VWXYZ2bcdeCg65jkm8oFqi1tuvAxyz";
 
         // Base62
-        public static Dictionary<char, int> Base62Map = new()
+        public static readonly Dictionary<char, int> Base62Map = new()
         {
             ['0'] = 0,  ['1'] = 1,  ['2'] = 2,  ['3'] = 3,  ['4'] = 4,
             ['5'] = 5,  ['6'] = 6,  ['7'] = 7,  ['8'] = 8,  ['9'] = 9,
@@ -113,7 +113,7 @@
         };
 
         // Base64
-        public static Dictionary<char, int> Base64Map = new()
+        public static readonly Dictionary<char, int> Base64Map = new()
         {
             ['A'] = 0, ['B'] = 1, ['C'] = 2, ['D'] = 3, ['E'] = 4,
             ['F'] = 5, ['G'] = 6, ['H'] = 7, ['I'] = 8, ['J'] = 9,
@@ -132,7 +132,7 @@
 
 
         // Base85
-        public static Dictionary<char, int> Base85Map = new()
+        public static readonly Dictionary<char, int> Base85Map = new()
         {
             {'!', 0}, {'"', 1}, {'#', 2}, {'$', 3}, {'%', 4}, {'&', 5}, {'\'', 6}, {'(', 7},
             {')', 8}, {'*', 9}, {'+', 10}, {',', 11}, {'-', 12}, {'.', 13}, {'/', 14},
@@ -148,7 +148,7 @@
         };
 
         // Baudot
-        public static Dictionary<string, char> Baudot = new()
+        public static readonly Dictionary<string, char> Baudot = new()
         {
             // letters
             ["00011"] = 'A', ["11001"] = 'B', ["01110"] = 'C', ["01001"] = 'D', ["00001"] = 'E',
@@ -171,7 +171,7 @@
         };
 
         // Trilateral
-        public static Dictionary<string, char> TrilateralNormal = new() 
+        public static readonly Dictionary<string, char> TrilateralNormal = new() 
         {
             ["AAA"] = 'A', ["AAB"] = 'B', ["AAC"] = 'C', ["ABA"] = 'D', ["ABB"] = 'E',
             ["ABC"] = 'F', ["ACA"] = 'G', ["ACB"] = 'H', ["ACC"] = 'I', ["BAA"] = 'J',
@@ -182,7 +182,7 @@
             ["CCC"] = ' '
         };
 
-        public static Dictionary<string, char> TrilateralSwapped = new()
+        public static readonly Dictionary<string, char> TrilateralSwapped = new()
         {
             ["AAA"] = ' ', ["AAB"] = 'A', ["AAC"] = 'B', ["ABA"] = 'C', ["ABB"] = 'D',
             ["ABC"] = 'E', ["ACA"] = 'F', ["ACB"] = 'G', ["ACC"] = 'H', ["BAA"] = 'I',
@@ -192,8 +192,8 @@
             ["CCC"] = 'Z'
         }; // the space in this one is swapped, and also P is the same as W for some reason. i chose P cause its more common
 
-        public static string DefaultTapAlphabet = "ABCDEFGHIJLMNOPQRSTUVWXYZ"; // without K
+        public const string DefaultTapAlphabet = "ABCDEFGHIJLMNOPQRSTUVWXYZ"; // without K
 
-        public static string DefaultPolybiusAlphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"; // without J
+        public const string DefaultPolybiusAlphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"; // without J
     }
 }

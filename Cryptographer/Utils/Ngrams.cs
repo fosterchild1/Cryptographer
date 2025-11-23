@@ -3,7 +3,7 @@ using System.Text.Json.Serialization.Metadata;
 
 public static class Ngrams
 {
-    private static JsonSerializerOptions options = new()
+    private static readonly JsonSerializerOptions options = new()
     {
         TypeInfoResolver = new DefaultJsonTypeInfoResolver()
     };
