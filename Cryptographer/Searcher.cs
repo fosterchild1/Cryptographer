@@ -1,5 +1,5 @@
 ﻿using Cryptographer.Classes;
-using Cryptographer.DecryptionMethods;
+using Cryptographer.Decoders;
 using Cryptographer.Utils;
 using System.Collections.Concurrent;
 using System.Diagnostics;
@@ -17,7 +17,7 @@ namespace Cryptographer
     internal class Searcher
     {
         // METHODS
-        private List<IDecryptionMethod> methods = new()
+        private List<IDecoder> methods = new()
         {
             new Base64(), new Morse(), new Baconian(), new Binary(), new TapCode(), 
             new DNA(), new Hexadecimal(), new Base32(), new Base85(), new Base62(), 
@@ -72,7 +72,7 @@ namespace Cryptographer
             string lastMethod = node.Method;
             bool failedAll = true;
 
-            foreach (IDecryptionMethod method in methods)
+            foreach (IDecoder method in methods)
             {
                 string methodName = method.Name;
                 if (methodName == lastMethod && disallowedTwice.Contains(methodName)) continue;
@@ -213,7 +213,7 @@ namespace Cryptographer
 
             if (status == searchStatus.SEARCHING) status = searchStatus.FAILED; 
         }
-
+        
         public Searcher(string inputIn, string keyIn)
         {
 

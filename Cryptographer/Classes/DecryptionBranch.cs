@@ -1,8 +1,8 @@
 using Cryptographer.Classes;
-using Cryptographer.DecryptionMethods;
-public class DecryptionBranch(DecryptionNode Parent, double Probability, IDecryptionMethod Method = default!)
+using Cryptographer.Decoders;
+public class DecryptionBranch(DecryptionNode Parent, double Probability, IDecoder Method = default!)
 {
-    public IDecryptionMethod Method = Method ?? new None();
+    public IDecoder Method = Method ?? new None();
     public double Probability = Probability;
     public DecryptionNode Parent = Parent;
 
@@ -11,3 +11,4 @@ public class DecryptionBranch(DecryptionNode Parent, double Probability, IDecryp
         return $"Method: {Method}, Probability: {Probability}";
     }
 }
+

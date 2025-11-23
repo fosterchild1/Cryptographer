@@ -15,11 +15,9 @@ class PrintUtils
     private const string C_GRAY = "\x1b[37m";
     private static void ClearLine()
     {
-        int top = Console.CursorTop;
-
-        Console.SetCursorPosition(0, top);
+        Console.SetCursorPosition(0, Console.CursorTop);
         Console.Write(new string(' ', Console.WindowWidth));
-        Console.SetCursorPosition(0, top);
+        Console.SetCursorPosition(0, Console.CursorTop);
     }
 
     /// <summary>Console.ReadKey() except it doesn't detect stuff like the Win key</summary>
