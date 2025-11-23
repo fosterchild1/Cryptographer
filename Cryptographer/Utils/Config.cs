@@ -3,7 +3,7 @@
     internal class Config
     {
         /// <summary> Self-explanatory </summary>
-        public static string version = "v3.0.0";
+        public static string version = "v3.0.1-indev";
 
         /// <summary> Minimum score needed for an output to be considered plaintext, 0 = Default </summary>
         public static float scorePrintThreshold = 10;

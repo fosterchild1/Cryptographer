@@ -33,6 +33,7 @@ namespace Cryptographer
         {
             return genericList;
         }
+
         static DecoderFactory()
         {
             foreach (IDecoder decoder in decoderList)
