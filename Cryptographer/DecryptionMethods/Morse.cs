@@ -33,10 +33,10 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
+            if (info.uniqueCharacters <= 2 || info.uniqueCharacters >= 5) return 1;
 
             // space, dot, dash, slash OR without slash. 3-4 chars
-            return ((analysis.Count <= 2 || analysis.Count >= 5) ? 1 : 0);
+            return 0;
         }
 
         public string Name { get { return "Morse"; } }

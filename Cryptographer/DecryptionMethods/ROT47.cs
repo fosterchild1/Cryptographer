@@ -28,10 +28,8 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-
             // alphabet of 94 chars
-            if (analysis.Count <= 2 || analysis.Count > 94) return 1;
+            if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 94) return 1;
 
             double currentCount = info.Exists(importantChars).Count;
             return Math.Pow(0.9, currentCount);

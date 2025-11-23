@@ -52,9 +52,7 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-
-            if (analysis.Count != 3 || input.Length % 3 != 0) return 1; // it should only have A, B, C
+            if (info.uniqueCharacters != 3 || input.Length % 3 != 0) return 1; // it should only have A, B, C
 
             return 0.05;
         }

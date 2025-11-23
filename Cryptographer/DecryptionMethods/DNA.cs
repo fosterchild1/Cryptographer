@@ -29,8 +29,7 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-            if (analysis.Count >= 4 || analysis.Count <= 2) return 1;
+            if (info.uniqueCharacters >= 4 || info.uniqueCharacters <= 2) return 1;
 
             return 0.3;
         }

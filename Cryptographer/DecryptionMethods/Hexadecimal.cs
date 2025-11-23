@@ -36,8 +36,7 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-            if (analysis.Count > 17 || analysis.Count <= 3) return 1;
+            if (info.uniqueCharacters > 17 || info.uniqueCharacters <= 3) return 1;
 
             string reg = Regex.Replace(input, "[0-9a-f]", string.Empty);
             return string.IsNullOrWhiteSpace(reg) ? 0.2 : 1;

@@ -35,11 +35,9 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-
             // if it has just 2 characters, that means its either morse, bacon or binary. we already change the characters in those
             // so we dont need to change
-            return (analysis.Count <= 2 ? 1 : 0.6);
+            return (info.uniqueCharacters <= 2 ? 1 : 0.6);
         }
 
         public string Name { get { return "Atbash"; } }

@@ -69,8 +69,7 @@ namespace Cryptographer.DecryptionMethods
         private HashSet<char> bfChars = new() { '>', '<', '+', '-', '.', '[', ']' };
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-            if (analysis.Count <= 2 || analysis.Count > bfChars.Count) return 1;
+            if (info.uniqueCharacters <= 2 || info.uniqueCharacters > bfChars.Count) return 1;
 
             foreach (char c in input)
             {

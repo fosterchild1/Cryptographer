@@ -44,12 +44,10 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-
             // legit the exact same as rot 47 but with 64 chars
 
             // alphabet of 64 chars
-            if (analysis.Count <= 2 || analysis.Count > 64) return 1;
+            if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 64) return 1;
 
             double currentCount = info.Exists(importantChars).Count;
             return Math.Pow(0.9, currentCount);

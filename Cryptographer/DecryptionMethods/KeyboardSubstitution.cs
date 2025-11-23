@@ -50,10 +50,8 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-
             // this means its more likely to be morse, bacon or binary
-            if (analysis.Count <= 3) return 1;
+            if (info.uniqueCharacters <= 3) return 1;
 
             return 0.65;
         }

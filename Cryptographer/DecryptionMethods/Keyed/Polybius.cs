@@ -36,8 +36,7 @@ namespace Cryptographer.DecryptionMethods
             if (input.Length % 2 != 0) return 1;
 
             // 1-9 only
-            var analysis = info.frequencyAnalysis;
-            if (analysis.Count <= 2 || analysis.Count >= 9) return 1;
+            if (info.uniqueCharacters <= 2 || info.uniqueCharacters >= 9) return 1;
 
             string withoutNum = Regex.Replace(input, "[0-9]", string.Empty);
             return withoutNum == string.Empty ? 0.15 : 1; // unlike others, this one doesnt have a seperator. so 0.15

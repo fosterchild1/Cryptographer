@@ -27,8 +27,7 @@ namespace Cryptographer.DecryptionMethods
         public double CalculateProbability(string input, StringInfo info)
         {
             // 0-9 and a seperator
-            var analysis = info.frequencyAnalysis;
-            if (analysis.Count <= 2 || analysis.Count >= 11) return 1;
+            if (info.uniqueCharacters <= 2 || info.uniqueCharacters >= 11) return 1;
 
             // check if it has numbers and then on the numberless string check if it has a seperator
             // if it does have one then the string should only look like "------", and if we trim the first character we should get an empty string

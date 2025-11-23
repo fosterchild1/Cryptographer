@@ -36,8 +36,7 @@ namespace Cryptographer.DecryptionMethods
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            var analysis = info.frequencyAnalysis;
-            if (analysis.Count > 11) return 1; // it should only have 0-9 and a space.
+            if (info.uniqueCharacters > 11) return 1; // it should only have 0-9 and a space.
 
             string withoutNum = Regex.Replace(input, "[0-9]", string.Empty);
             return string.IsNullOrWhiteSpace(withoutNum) ? 0.3 : 1;
