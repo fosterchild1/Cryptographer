@@ -1,4 +1,5 @@
 ﻿using Cryptographer.Classes;
+using Cryptographer.Utils;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -26,7 +27,7 @@ namespace Cryptographer.Decoders
             foreach (string hex in input.Split(" "))
             {
                 string converted = ConvertHex(hex);
-                if (string.IsNullOrEmpty(converted)) return new();
+                if (string.IsNullOrEmpty(converted)) return DecryptionUtils.EmptyResult;
 
                 output.Append(converted);
             }

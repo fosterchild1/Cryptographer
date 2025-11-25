@@ -22,7 +22,7 @@ namespace Cryptographer.Decoders
 
                 bool s = int.TryParse(bigram[0].ToString(), out int n1);
                 bool s2 = int.TryParse(bigram[1].ToString(), out int n2);
-                if (!s || !s2) return new();
+                if (!s || !s2) return DecryptionUtils.EmptyResult;
    
                 int keyIdx = 5 * (n1 - 1) + n2 - 1;
                 output.Append(key[keyIdx]);

@@ -1,4 +1,5 @@
 ﻿using Cryptographer.Classes;
+using Cryptographer.Utils;
 using System.Text;
 
 namespace Cryptographer.Decoders
@@ -22,7 +23,7 @@ namespace Cryptographer.Decoders
                     break;
 
                 if (pointer >= 1023)
-                    return new();
+                    return DecryptionUtils.EmptyResult;
 
                 char c = input[i];
 
@@ -50,7 +51,7 @@ namespace Cryptographer.Decoders
 
                     case ']':
 
-                        if (loops.Count == 0) return new(); // invalid bf string
+                        if (loops.Count == 0) return DecryptionUtils.EmptyResult; // invalid bf string
 
                         if (tape[pointer] != 0)
                         {

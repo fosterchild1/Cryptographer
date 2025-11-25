@@ -1,4 +1,5 @@
 ﻿using Cryptographer.Classes;
+using Cryptographer.Utils;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -14,8 +15,8 @@ namespace Cryptographer.Decoders
                 // handle double/triple/quadruple/... spaces between nums
                 if (string.IsNullOrWhiteSpace(s)) continue;
 
-                if (!int.TryParse(s, out int integer)) return new();
-                if (integer <= 0 || integer > 127) return new();
+                if (!int.TryParse(s, out int integer)) return DecryptionUtils.EmptyResult;
+                if (integer <= 0 || integer > 127) return DecryptionUtils.EmptyResult;
 
                 output.Append((char)integer);
             }

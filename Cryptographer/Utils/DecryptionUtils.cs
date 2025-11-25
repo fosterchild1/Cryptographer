@@ -2,6 +2,7 @@
 {
     internal class DecryptionUtils
     {
+        public static readonly List<string> EmptyResult = new();
         public static void GetPermutations<T>(List<T> list, List<T> current, List<List<T>> permutations)
         {
             if (list.Count == 0)

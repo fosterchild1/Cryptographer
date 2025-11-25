@@ -150,7 +150,7 @@ namespace Cryptographer
                         // get next branch and decide if should break
                         if (!queue.TryDequeue(out DecryptionBranch branch, out double _, workerIndex))
                         {
-                            if ((queue.IsEmpty() && Volatile.Read(ref active) == 0)) break;
+                            if (queue.IsEmpty() && Volatile.Read(ref active) == 0) break;
                             Thread.Sleep(64);
                             continue;
                         }

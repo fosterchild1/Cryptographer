@@ -14,14 +14,14 @@ namespace Cryptographer.Utils
     internal class StringClassifier
     {
         // link stuff
-        private static List<string> prefixes = new() { "https://", "http://" };
-        private static HashSet<string> subdomains = new() { "ww.", "api", "dev", "docs", "store", "en", "fr", "wiki", "ro" };
-        private static HashSet<string> topdomains = new() { "com", "net", "org", "tv", "fr", "en", "ro", "edu", "gov", "pro", "lol", "io", "co" };
-        private static HashSet<string> extensions = new() { "htm", "html", "php", "css", "js", "json", "txt" };
+        private static readonly List<string> prefixes = new() { "https://", "http://" };
+        private static readonly HashSet<string> subdomains = new() { "www", "api", "dev", "docs", "store", "en", "fr", "wiki", "ro" };
+        private static readonly HashSet<string> topdomains = new() { "com", "net", "org", "tv", "fr", "en", "ro", "edu", "gov", "pro", "lol", "io", "co", "dev" };
+        private static readonly HashSet<string> extensions = new() { "htm", "html", "php", "css", "js", "json", "txt" };
 
         // CTF
-        private static HashSet<string> CTFprefixes = new() { "flag", "ctf", "httb", "thm", "cftlearn", "picoctf", "dctf" };
-        private static char[] CTFSymbols = { ':', '^', '-', '{' };
+        private static readonly HashSet<string> CTFprefixes = new() { "flag", "ctf", "httb", "thm", "cftlearn", "picoctf", "dctf" };
+        private static readonly char[] CTFSymbols = { ':', '^', '-', '{' };
 
         // SEARCHER STUFF (makes more sense to be here tbh)
         public static bool IsValid(string output, string last, StringInfo info, ConcurrentDictionary<string, bool> seenInputs)

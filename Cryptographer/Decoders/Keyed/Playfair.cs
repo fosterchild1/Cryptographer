@@ -1,4 +1,5 @@
 ﻿using Cryptographer.Classes;
+using Cryptographer.Utils;
 using System.Text;
 
 namespace Cryptographer.Decoders
@@ -14,11 +15,11 @@ namespace Cryptographer.Decoders
             {
                 char c1 = input[i - 1];
                 char c2 = input[i];
-                if (c1 == c2) return new();
+                if (c1 == c2) return DecryptionUtils.EmptyResult;
 
                 int n1 = key.IndexOf(c1);
                 int n2 = key.IndexOf(c2);
-                if (n1 == -1 || n2 == -1) return new();
+                if (n1 == -1 || n2 == -1) return DecryptionUtils.EmptyResult;
 
                 // mega ugly alert
                 int row1 = (int)MathF.Floor(n1 / 5);

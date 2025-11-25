@@ -19,12 +19,12 @@ namespace Cryptographer.Decoders
             foreach (string s in input.Split(" "))
             {
                 // baudot is stricly 5 characters
-                if (s.Length != 5) return new();
+                if (s.Length != 5) return DecryptionUtils.EmptyResult;
 
                 if (s == SWITCH_TO_FIGURES) useFigures = true;
                 if (s == SWITCH_TO_LETTERS) useFigures = false;
 
-                if (!BaudotDictionary.TryGetValue(useFigures ? s + "_" : s, out char c)) return new();
+                if (!BaudotDictionary.TryGetValue(useFigures ? s + "_" : s, out char c)) return DecryptionUtils.EmptyResult;
                 output.Append(c);
             }
 

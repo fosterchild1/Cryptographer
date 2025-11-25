@@ -1,4 +1,5 @@
 ﻿using Cryptographer.Classes;
+using Cryptographer.Utils;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -13,9 +14,9 @@ namespace Cryptographer.Decoders
             
             foreach (string s in input.Split("-"))
             {
-                if (!int.TryParse(s, out int i)) return new();
-                if (i < 0 || i > 26) return new();
-
+                if (!int.TryParse(s, out int i)) return DecryptionUtils.EmptyResult;
+                if (i < 0 || i > 26) return DecryptionUtils.EmptyResult;
+                
                 char c = (char)i;
                 bool isSpace = c == 0;
                 output.Append(isSpace ? " " : (char)(c + 64));

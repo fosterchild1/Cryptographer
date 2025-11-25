@@ -1,4 +1,5 @@
 ﻿using Cryptographer.Classes;
+using Cryptographer.Utils;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -24,10 +25,10 @@ namespace Cryptographer.Decoders
             StringBuilder output = new();
             foreach (string s in input.Split(" "))
             {
-                if (!int.TryParse(s, out int integer)) return new();
+                if (!int.TryParse(s, out int integer)) return DecryptionUtils.EmptyResult;
 
                 string str = ConvertOctal(s);
-                if (str == "") return new();
+                if (str == "") return DecryptionUtils.EmptyResult;
                 output.Append(str);
             }
 
