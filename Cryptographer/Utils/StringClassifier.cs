@@ -112,7 +112,6 @@ namespace Cryptographer.Utils
             // each string has a score, if it doesnt then it gets penalized proportional to the string length
             // if it has a score, add its score proportional to the string length
             // we also keep track of seen strings and if we have seen those before we also penalize
-
             if (dict == null) return 0;
 
             int length = input.Length;
@@ -122,7 +121,7 @@ namespace Cryptographer.Utils
 
             for (int i = 0; i < length; i++)
             {
-                string substr = input.AsSpan(i, Math.Min(step, length - i)).ToString();
+                string substr = input.Substring(i, Math.Min(step, length - i));
 
                 float val = dict.GetValueOrDefault(substr);
                 if (val == 0f)

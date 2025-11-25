@@ -1,7 +1,6 @@
 ﻿using Cryptographer.Classes;
 using Cryptographer.Utils;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Cryptographer.Decoders
 {
@@ -35,12 +34,13 @@ namespace Cryptographer.Decoders
             return new() { output.ToString() };
         }
 
+        private HashSet<char> allowedChars = @"0123456789abcdefABCDEF".ToHashSet();
+
         public double CalculateProbability(string input, StringInfo info)
         {
             if (info.uniqueCharacters > 17 || info.uniqueCharacters <= 3) return 1;
 
-            string reg = Regex.Replace(input, "[0-9a-f]", string.Empty);
-            return string.IsNullOrWhiteSpace(reg) ? 0.2 : 1;
+            return info.IsExclusive(allowedChars) ? 0 : 1;
         }
 
         public string Name { get { return "Hexadecimal"; } }

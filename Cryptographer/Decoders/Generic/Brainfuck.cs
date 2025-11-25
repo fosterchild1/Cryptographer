@@ -72,10 +72,8 @@ namespace Cryptographer.Decoders
         {
             if (info.uniqueCharacters <= 2 || info.uniqueCharacters > bfChars.Count) return 1;
 
-            foreach (char c in input)
-            {
-                if (!bfChars.Contains(c)) return 1;
-            }
+            if (!info.IsExclusive(bfChars))
+                return 1;
 
             return 0;
         }

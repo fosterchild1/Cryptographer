@@ -1,7 +1,6 @@
 ﻿using Cryptographer.Classes;
 using Cryptographer.Utils;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Cryptographer.Decoders
 {
@@ -33,10 +32,10 @@ namespace Cryptographer.Decoders
             // check if it has numbers and then on the numberless string check if it has a seperator
             // if it does have one then the string should only look like "------", and if we trim the first character we should get an empty string
 
-            string withoutNum = Regex.Replace(input, "[0-9]", string.Empty);
+            bool isNumberString = info.IsExclusive(DecryptionUtils.numberHashset);
+            if (!isNumberString) return 1;
 
-            if (withoutNum == string.Empty) return 0.3;
-            return withoutNum.Trim(withoutNum[0]) == string.Empty ? 0.3 : 1;
+            return 0.3;
         }
 
         public string Name { get { return "A1Z26"; } }

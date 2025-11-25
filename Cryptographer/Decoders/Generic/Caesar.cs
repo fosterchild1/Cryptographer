@@ -1,6 +1,5 @@
 ﻿using Cryptographer.Classes;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Cryptographer.Decoders
 {
@@ -29,11 +28,12 @@ namespace Cryptographer.Decoders
             return output;
         }
 
+        private HashSet<char> nonLetters = @"0123456789!@#$%^&*()-=_+[{]}|/?.>,<;:'""`~".ToHashSet();
+
         public double CalculateProbability(string input, StringInfo info)
         {
-            // check if its just numbers
-            string withoutNum = Regex.Replace(input, "[0-9]", string.Empty);
-            if (string.IsNullOrWhiteSpace(withoutNum))
+            // check if there arent any letters
+            if (info.IsExclusive(nonLetters))
                 return 1;
 
             return 0.4;

@@ -24,8 +24,8 @@ public class StringInfo // theres a C# class also called StringInfo but honestly
         uniqueCharacters = frequencyAnalysis.Count;
     }
 
-    /// <param name="candidates">The characters you want to search for</param>
-    /// <returns>A hashset of the candidates seen in the analysis. O(n).</returns>
+    /// <param name="candidates">The characters you want to search for. O(n).</param>
+    /// <returns>A hashset of the candidates seen in the analysis.</returns>
     public HashSet<char> Exists(HashSet<char> candidates)
     {
         if (candidates == null) return new();
@@ -33,10 +33,32 @@ public class StringInfo // theres a C# class also called StringInfo but honestly
         HashSet<char> seen = new();
         foreach (KeyValuePair<char, int> kvp in frequencyAnalysis)
         {
-            if (!candidates.Contains(kvp.Key) || seen.Contains(kvp.Key)) continue;
-            seen.Add(kvp.Key);
+            char key = kvp.Key;
+            if (!candidates.Contains(key) || seen.Contains(key)) continue;
+            seen.Add(key);
         }
 
         return seen;
+    }
+
+	/// <summary>Exists to replace checking the same thing with Regex.Replace, which is slow.<br/></summary>
+	/// <param name="candidates">The characters you want to search for. O(n).</param>
+	/// <returns>
+	/// <see langword="true"/> if the string is only composed of those characters, excluding whitespaces;
+	/// <see langword="false"/> otherwise.
+	/// </returns>
+	public bool IsExclusive(HashSet<char> candidates)
+    {
+        if (candidates == null) return new();
+
+        foreach (KeyValuePair<char, int> kvp in frequencyAnalysis)
+        {
+            // exclude whitespaces since encoded string is valid with them 99% of the time
+            if (char.IsWhiteSpace(kvp.Key)) continue;
+
+            if (!candidates.Contains(kvp.Key)) return false;
+        }
+
+        return true;
     }
 }
