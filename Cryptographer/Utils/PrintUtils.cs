@@ -3,7 +3,6 @@ using Cryptographer.Utils;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Text;
 
 class PrintUtils
 {
@@ -151,19 +150,6 @@ class PrintUtils
         timers.Remove(name);
 
         Console.WriteLine($"{name}: {timer.ElapsedMilliseconds}ms");
-    }
-    public static string RemoveWhitespaces(string input)
-    {
-        StringBuilder withoutWhitespaces = new();
-
-        foreach (char c in input)
-        {
-            if (char.IsWhiteSpace(c)) continue;
-
-            withoutWhitespaces.Append(c);
-        }
-
-        return withoutWhitespaces.ToString();
     }
 
     public static void DisplayWorkText(Searcher searcher)

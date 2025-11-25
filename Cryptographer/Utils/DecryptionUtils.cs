@@ -1,4 +1,6 @@
-﻿namespace Cryptographer.Utils
+﻿using System.Text;
+
+namespace Cryptographer.Utils
 {
     internal class DecryptionUtils
     {
@@ -27,6 +29,19 @@
                 GetPermutations(remaining, current, permutations);
                 current.RemoveAt(current.Count - 1);
             }
+        }
+        public static string RemoveWhitespaces(string input)
+        {
+            StringBuilder withoutWhitespaces = new();
+
+            foreach (char c in input)
+            {
+                if (char.IsWhiteSpace(c)) continue;
+
+                withoutWhitespaces.Append(c);
+            }
+
+            return withoutWhitespaces.ToString();
         }
     }
 }

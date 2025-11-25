@@ -27,7 +27,7 @@ namespace Cryptographer.Utils
         public static bool IsValid(string output, string last, StringInfo info, ConcurrentDictionary<string, bool> seenInputs)
         {
             // aka useless string
-            if (PrintUtils.RemoveWhitespaces(output).Length <= 3)
+            if (DecryptionUtils.RemoveWhitespaces(output).Length <= 3)
                 return false;
 
             // TO NOT LOG IN CONSOLE
@@ -149,7 +149,7 @@ namespace Cryptographer.Utils
             else if (IsCTF(input))
                 return StringType.CTF_FLAG;
 
-            string modifiedInput = PrintUtils.RemoveWhitespaces(input).ToUpper();
+            string modifiedInput = DecryptionUtils.RemoveWhitespaces(input).ToUpper();
 
             bool tri = Config.useTrigrams || modifiedInput.Length <= 6;
 
