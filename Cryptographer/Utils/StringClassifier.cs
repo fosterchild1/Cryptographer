@@ -62,7 +62,7 @@ namespace Cryptographer.Utils
             if (index == -1)
                 return false;
 
-            string split = input.AsSpan(0, index).ToString();
+            string split = input.Substring(0, index);
             if (split != null && CTFprefixes.Contains(split))
                 return true;
 

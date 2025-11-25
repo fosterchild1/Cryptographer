@@ -233,7 +233,7 @@ class PrintUtils
     public static void PrintDbgDecryption(DecryptionBranch branch, int workerIndex)
     {
         string text = branch.Parent.Text;
-        string truncated = text.Length >= 60 ? $"{text.AsSpan(0, 60).ToString()}.. [truncated]" : text;
+        string truncated = text.Length >= 60 ? $"{text.Substring(0, 60)}.. [truncated]" : text;
 
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.WriteLine($"APPLIED: {C_DARKYELLOW}{branch.Method.Name} {C_YELLOW}| ON: {C_DARKYELLOW}{'"'}{truncated}{'"'} {C_YELLOW}| AT DEPTH: {C_DARKYELLOW}" +
