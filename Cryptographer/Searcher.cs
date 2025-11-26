@@ -23,7 +23,7 @@ namespace Cryptographer
         // WHATEVER
         public searchStatus status = searchStatus.NOT_STARTED;
 
-        public SearchQueue<DecryptionBranch, double> queue = new(Config.threadCount);
+        public PriorityQueue<DecryptionBranch, double> queue = new();
 
         public Stopwatch timer = new();
 
@@ -53,7 +53,7 @@ namespace Cryptographer
             if (!isStopped) timer.Start();
         }
 
-        private void ExpandNode(DecryptionNode node, StringInfo info, int workerIndex, bool fallback = false)
+        private void ExpandNode(DecryptionNode node, StringInfo info, bool fallback = false)
         {
             string nodeText = node.Text;
             string lastMethod = node.Method;
@@ -75,15 +75,15 @@ namespace Cryptographer
                 if (probability < 0.7)
                     failedAll = false;
 
-                queue.Enqueue(new(node, probability, method), probability, workerIndex);
+                queue.Enqueue(new(node, probability, method), probability);
             }
 
             // fallbacks
             if (!failedAll || fallback) return;
-            ExpandNode(node, info, workerIndex, true);
+            ExpandNode(node, info, true);
         }
 
-        private void ExpandBranch(DecryptionBranch branch, int workerIndex)
+        private void ExpandBranch(DecryptionBranch branch)
         {
             DecryptionNode branchParent = branch.Parent;
             byte depth = branchParent.Depth;
@@ -104,7 +104,7 @@ namespace Cryptographer
 
                 if (Config.debug && !printed)
                 {
-                    PrintUtils.PrintDbgDecryption(branch, workerIndex);
+                    PrintUtils.PrintDbgDecryption(branch);
                     printed = true;
                 }
 
@@ -114,11 +114,11 @@ namespace Cryptographer
                 DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
 
                 failedAll = false;
-                ExpandNode(node, newInfo, workerIndex);
+                ExpandNode(node, newInfo);
             }
 
             if (!failedAll || branch.Method.IsFallback) return;
-            ExpandNode(branchParent, info, workerIndex, true);
+            ExpandNode(branchParent, info, true);
         }
 
         public void Search()
@@ -130,71 +130,32 @@ namespace Cryptographer
             // use a priority queue alongside a CalculateProbability function
             // probabilities > 0.9 don't get checked
             DecryptionNode root = new(input, 1, "", new DecryptionNode());
-            ExpandNode(root, new(input), 0);
-
-            int workers = Config.threadCount;
-
-            int active = 0;
-            Task[] tasks = new Task[workers];
+            ExpandNode(root, new(input));
 
             // loop
             timer.Start();
-            for (int i = 0; i < workers; i++)
+            while (queue.TryDequeue(out DecryptionBranch? branch, out double _))
             {
-                int index = i;
-                tasks[i] = Task.Factory.StartNew(() =>
+                if (status != searchStatus.SEARCHING || timer.ElapsedMilliseconds / 1000 >= Config.searchTimeout)
+                    break;
+
+                // expand branch
+                try
                 {
-                    int workerIndex = index; // needed....... sadly
-                    while (true)
-                    {
-                        // get next branch and decide if should break
-                        if (!queue.TryDequeue(out DecryptionBranch branch, out double _, workerIndex))
-                        {
-                            if (queue.IsEmpty() && Volatile.Read(ref active) == 0) break;
-                            Thread.Sleep(64);
-                            continue;
-                        }
+                    DecryptionNode node = branch.Parent;
+                    if (node.Depth > Config.maxDepth) continue;
 
-                        if (status != searchStatus.SEARCHING || timer.ElapsedMilliseconds / 1000 >= Config.searchTimeout)
-                            break;
-
-                        // expand branch
-                        Interlocked.Increment(ref active);
-                        try
-                        {
-                            DecryptionNode node = branch.Parent;
-                            if (node.Depth > Config.maxDepth) continue;
-
-                            ExpandBranch(branch, workerIndex);
-                        }
-                        finally
-                        {
-                            Interlocked.Decrement(ref active);
-                        }
-
-                    }
-                },
-
-                CancellationToken.None,
-                TaskCreationOptions.LongRunning,
-                TaskScheduler.Default
-
-                );
-            }
-
-            // wait for all to finish
-            try
-            {
-                Task.WaitAll(tasks);
-            }
-            catch (AggregateException ae)
-            {
-                foreach (Exception ex in ae.InnerExceptions)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Task failed: {ex.Message}\n{ex.StackTrace!.Split("""--- End of stack""")[0]}");
+                    ExpandBranch(branch);
                 }
-                throw;
+                catch (AggregateException exception)
+                {
+                    foreach (Exception ex in exception.InnerExceptions)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine($"Task failed: {ex.Message}\n{ex.StackTrace!.Split("""--- End of stack""")[0]}");
+                    }
+                }
+
             }
 
             if (status == searchStatus.SEARCHING) status = searchStatus.FAILED; 

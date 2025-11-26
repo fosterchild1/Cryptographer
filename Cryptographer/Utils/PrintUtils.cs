@@ -1,6 +1,5 @@
 ﻿using Cryptographer;
 using Cryptographer.Utils;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -79,56 +78,49 @@ class PrintUtils
         return key ?? "";
     }
 
-    private static ConcurrentQueue<string> askQueue = new();
-    public static int asking = 0;
+    private static bool asking = false;
     public static bool AskOutput(string str, DecryptionBranch branch)
     {
-        askQueue.Enqueue(str);
-
-        // only one thread is allowed to drain queue
-        if (Interlocked.CompareExchange(ref asking, 1, 0) != 0)
-            return false;
-
         ClearLine();
-        while (askQueue.TryDequeue(out string? output))
+        asking = true;
+
+        Console.Write($"Possible plaintext: {str} ({C_GREEN}y{C_GRAY}/{C_RED}n{C_GRAY})?");
+
+        ConsoleKeyInfo key = ReadUntilValidKey();
+
+        if (key.Key != ConsoleKey.Y)
         {
-            Console.Write($"Possible plaintext: {output} ({C_GREEN}y{C_GRAY}/{C_RED}n{C_GRAY})?");
+            ClearLine();
 
-            ConsoleKeyInfo key = ReadUntilValidKey();
+            asking = false;
+            return false;
+        }
+        // then its plaintext
 
-            if (key.Key != ConsoleKey.Y)
+        if (Config.showStackTrace)
+        {
+            // show cipher used to get to the plaintext by backtracking up the tree
+            Console.ForegroundColor = ConsoleColor.Blue;
+
+            List<string> methods = new() { branch.Method.Name };
+            DecryptionNode node = branch.Parent;
+
+            while (node != null && node.Method != "")
             {
-                ClearLine();
-                continue;
-            };
-
-            // then its plaintext
-            if (Config.showStackTrace)
-            {
-                // show cipher used to get to the plaintext by backtracking up the tree
-                Console.ForegroundColor = ConsoleColor.Blue;
-
-                List<string> methods = new() { branch.Method.Name };
-                DecryptionNode node = branch.Parent;
-
-                while (node != null && node.Method != "")
-                {
-                    methods.Add(node.Method);
-                    node = node.Parent!;
-                }
-
-                Console.WriteLine("\nMethods Used:");
-                for (int i=methods.Count - 1; i>=0; i--)
-                    Console.WriteLine($" -{methods[i]}");
+                methods.Add(node.Method);
+                node = node.Parent!;
             }
 
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Green;
-            return true;
+            Console.WriteLine("\nMethods Used:");
+            for (int i = methods.Count - 1; i >= 0; i--)
+                Console.WriteLine($" -{methods[i]}");
         }
 
-        Interlocked.Exchange(ref asking, 0);
-        return false;
+        Console.WriteLine();
+        Console.ForegroundColor = ConsoleColor.Green;
+
+        asking = false;
+        return true;
     }
 
     [Obsolete("only for debugging")]
@@ -165,8 +157,8 @@ class PrintUtils
                 // change console name
                 Console.Title = $"Cryptographer {Config.version} | {searcher.totalDecryptions} Decryptions";
 
-                if ((int)searcher.status > 2) break;  // < 2 means not started or searching
-                if (asking > 0) continue;
+                if ((int)searcher.status >= 2) break;  // < 2 means not started or searching
+                if (asking) continue;
 
                 // write Working...
                 ClearLine();
@@ -216,7 +208,7 @@ class PrintUtils
         Environment.Exit(0);
     }
 
-    public static void PrintDbgDecryption(DecryptionBranch branch, int workerIndex)
+    public static void PrintDbgDecryption(DecryptionBranch branch)
     {
         string text = branch.Parent.Text;
         string truncated = text.Length >= 60 ? $"{text.Substring(0, 60)}.. [truncated]" : text;
