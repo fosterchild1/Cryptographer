@@ -1,5 +1,4 @@
 ﻿using System.Collections.Concurrent;
-using System.Text.RegularExpressions;
 
 enum StringType
 {
@@ -85,7 +84,7 @@ namespace Cryptographer.Utils
             }
 
             input = input.Replace("https://", "").Replace("http://", ""); // ugly
-            string[] split = Regex.Split(input, "[./]");
+            string[] split = input.Split("./".ToCharArray());
             int splitLength = split.Length;
 
             // subdomains (www.)

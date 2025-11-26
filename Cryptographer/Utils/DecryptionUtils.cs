@@ -30,18 +30,25 @@ namespace Cryptographer.Utils
                 current.RemoveAt(current.Count - 1);
             }
         }
+
+
         public static string RemoveWhitespaces(string input)
         {
-            StringBuilder withoutWhitespaces = new();
+            StringBuilder sb = new(input, input.Length);
 
-            foreach (char c in input)
+            int i = 0;
+            while (i < sb.Length)
             {
-                if (char.IsWhiteSpace(c)) continue;
+                if (!char.IsWhiteSpace(sb[i]))
+                {
+                    i++;
+                    continue;
+                }
 
-                withoutWhitespaces.Append(c);
+                sb.Remove(i, 1);
             }
 
-            return withoutWhitespaces.ToString();
+            return sb.ToString();
         }
     }
 }
