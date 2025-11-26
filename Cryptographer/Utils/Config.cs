@@ -6,7 +6,7 @@
         public static string version = "v3.0.1-indev";
 
         /// <summary> Minimum score needed for an output to be considered plaintext, 0 = Default </summary>
-        public static float scorePrintThreshold = 10;
+        public static float scorePrintThreshold = 25;
 
         /// <summary> Max time the search can go on for (in seconds), 0 = Default </summary>
         public static int searchTimeout = int.MaxValue;

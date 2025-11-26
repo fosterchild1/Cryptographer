@@ -103,6 +103,24 @@ namespace Cryptographer.Utils
 
         }
 
+        private static double LettersToSymbolsRatio(StringInfo info)
+        {
+            double symbols = 0; double letters = 0;
+
+            foreach (KeyValuePair<char, int> kvp in info.frequencyAnalysis)
+            {
+                if (DecryptionUtils.letterHashset.Contains(kvp.Key))
+                {
+                    letters += kvp.Value;
+                    continue;
+                }
+
+                symbols += kvp.Value;
+            }
+
+            return symbols / letters;
+        }
+
         private static float CalculateScoreForDict(string input, int step, Dictionary<string, float> dict)
         {
             // how this works: we have a window of either 4 or 3 characters and we check for those in a dictionry
@@ -147,9 +165,11 @@ namespace Cryptographer.Utils
                 return StringType.CTF_FLAG;
 
             string modifiedInput = DecryptionUtils.RemoveWhitespaces(input).ToUpper();
+            double symbolRatio = LettersToSymbolsRatio(info);
 
-            bool tri = Config.useTrigrams || modifiedInput.Length <= 6;
-
+            // TODO: refactor this trigram calculation stuff
+            bool tri = Config.useTrigrams || symbolRatio <= (double)1/2 * Math.Min(60-input.Length, 0.9) || input.Length <= 6;
+            
             float score = CalculateScoreForDict(modifiedInput, (tri ? 3 : 4), (tri ? Ngrams.trigrams! : Ngrams.quadgrams!));
 
             return (score >= Config.scorePrintThreshold ? StringType.PLAINTEXT : StringType.GIBBERISH);
