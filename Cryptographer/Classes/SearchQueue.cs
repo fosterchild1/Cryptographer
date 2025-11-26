@@ -1,5 +1,6 @@
 // work stealing priority queue 
 // sorry about the name not being descriptive, i didnt want it to be long :(
+[Obsolete("multithreading is not needed anymore", true)]
 public class SearchQueue<TElement, TPriority>
 {
     // thread-level queue

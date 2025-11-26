@@ -198,10 +198,10 @@ class PrintUtils
             "h / help                Displays the help text.\n" +
             "plaintext=    float     Minimum score needed for an output to be considered plaintext, 0 = Default.\n" +
             "maxdepth=     byte      The max depth of the search, 0 = Default.\n" +
-            "threads=      byte      Amount of cpu cores to be used by the program, 0 = all of them. 1 thread is almost always enough.\n" +
             "trigrams=     boolean   Use trigrams instead of quadgrams when determining plaintext.\n" +
             "stacktrace=   boolean   Shows the ciphers used to get to the plaintext.\n" +
             "timeout=      int       Max time the search can go on for (in seconds), 0 = Default.\n" +
+            "dbg=          boolean   Shows decryptions happening in real time.\n" +
             "usekey=       boolean   Enables keyed ciphers such as Vigenère.\n"
         );
 

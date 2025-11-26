@@ -14,9 +14,6 @@
         /// <summary> The max depth of the search, 0 = Default </summary>
         public static byte maxDepth = 30;
 
-        /// <summary> Amount of cpu cores to be used by the program, 0 = all of them </summary>
-        public static byte threadCount = (byte)Environment.ProcessorCount;
-
         /// <summary> Use trigrams instead of quadgrams when determining plaintext </summary>
         public static bool useTrigrams = false;
 
@@ -53,7 +50,6 @@
             // this is ugly
             TryParse(args, "plaintext", ref scorePrintThreshold);
             TryParse(args, "maxdepth", ref maxDepth);
-            TryParse(args, "threads", ref threadCount);
             TryParse(args, "trigrams", ref useTrigrams);
             TryParse(args, "stacktrace", ref showStackTrace);
             TryParse(args, "timeout", ref searchTimeout);
@@ -61,7 +57,7 @@
             TryParse(args, "usekey", ref UseKey);
         }
 
-        private static List<string> cfgList = new() { "plaintext", "maxdepth", "threads", "trigrams", "stacktrace", "timeout", "dbg", "usekey" };
+        private static List<string> cfgList = new() { "plaintext", "maxdepth", "trigrams", "stacktrace", "timeout", "dbg", "usekey" };
         public static void SetFromFile(string path)
         {
             IniFile file = new(path);
