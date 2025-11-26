@@ -40,7 +40,7 @@ namespace Cryptographer.Decoders
 
             char c1 = analysis[0].Key;
             char c2 = analysis[1].Key;
-            char c3 = analysis.Count == 3 ? analysis[2].Key : ' ';
+            char c3 = analysis.Length == 3 ? analysis[2].Key : ' ';
 
             List<List<char>> permutations = new(); DecryptionUtils.GetPermutations(new() { c1, c2, c3 }, new(), permutations);
             List<string> output = new();

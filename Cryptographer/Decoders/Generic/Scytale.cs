@@ -39,7 +39,7 @@ namespace Cryptographer.Decoders
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            return 0.6; // i dont see it that much
+            return 0.4; // same as caesar because theres no way to detect it
         }
 
         public string Name { get { return "Scytale"; } }

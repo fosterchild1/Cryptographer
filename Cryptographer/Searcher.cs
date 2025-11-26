@@ -38,7 +38,9 @@ namespace Cryptographer
             StringType type = StringClassifier.Classify(text, info);
             if (type == StringType.GIBBERISH) return;
 
-            bool isStopped = !timer.IsRunning; // avoid starting if its stopped
+            // detect if we already agreed to a plaintext
+            bool isStopped = !timer.IsRunning;
+            if (isStopped) return;
 
             timer.Stop();
             bool indeedPlaintext = PrintUtils.AskOutput(text, branch);
@@ -49,7 +51,7 @@ namespace Cryptographer
                 return;
             }
 
-            if (!isStopped) timer.Start();
+            timer.Start();
         }
 
         private void ExpandNode(DecryptionNode node, StringInfo info, bool fallback = false)

@@ -3,7 +3,7 @@
 /// </summary>
 public class StringInfo // theres a C# class also called StringInfo but honestly i have no idea what else to name this
 {
-    public readonly List<KeyValuePair<char, int>> frequencyAnalysis;
+    public readonly KeyValuePair<char, int>[] frequencyAnalysis;
     public readonly int uniqueCharacters;
     public readonly char minChar = char.MaxValue;
     public readonly char maxChar = char.MinValue;
@@ -19,8 +19,8 @@ public class StringInfo // theres a C# class also called StringInfo but honestly
             maxChar = (char)Math.Max(maxChar, c);
         }
 
-        frequencyAnalysis = analysis.OrderByDescending(pair => pair.Value).ToList();
-        uniqueCharacters = frequencyAnalysis.Count;
+        frequencyAnalysis = analysis.OrderByDescending(pair => pair.Value).ToArray();
+        uniqueCharacters = frequencyAnalysis.Length;
     }
 
     /// <param name="candidates">The characters you want to search for. O(n).</param>
