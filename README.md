@@ -28,7 +28,6 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 - <b>30+ supported decoders</b> for ciphers like Binary, Base64, and even Brainfuck.
 - <b>Optional support for keyed ciphers</b> such as Vigenere or Playfair, <b>with fallback variants</b> if no key is provided.
 - <b>Blazingly fast searcher</b>—Cryptographer can usually find the plaintext in <b>less than 100 milliseconds</b> using just a single core. That's less than the blink of an eye.
-- <b>Multi-threading capabilities</b> for maximum performance.
 - <b>Fast and accurate plaintext detector</b> that uses trigrams and quadgrams to classify strings into CTF flags, links, plaintext and gibberish.
 
 # 💡 CLI Arguments
