@@ -1,6 +1,4 @@
-﻿using System.Collections.Concurrent;
-
-enum StringType
+﻿enum StringType
 {
     GIBBERISH = 0,
     PLAINTEXT = 1,
@@ -23,14 +21,14 @@ namespace Cryptographer.Utils
         private static readonly char[] CTFSymbols = { ':', '^', '-', '{' };
 
         // SEARCHER STUFF (makes more sense to be here tbh)
-        public static bool IsValid(string output, string last, StringInfo info, ConcurrentDictionary<string, bool> seenInputs)
+        public static bool IsValid(string output, string last, StringInfo info, HashSet<string> seenInputs)
         {
             // aka useless string
             if (DecryptionUtils.RemoveWhitespaces(output).Length <= 3)
                 return false;
 
             // TO NOT LOG IN CONSOLE
-            if (seenInputs.ContainsKey(output))
+            if (seenInputs.Contains(output))
                 return false;
 
             // hasnt changed

@@ -1,6 +1,5 @@
 ﻿using Cryptographer.Classes;
 using Cryptographer.Utils;
-using System.Collections.Concurrent;
 using System.Diagnostics;
 
 enum searchStatus
@@ -18,7 +17,7 @@ namespace Cryptographer
         // PRUNING
         private HashSet<string> disallowedTwice = new() { "ROT-47", "Reverse", "Atbash", "Keyboard Substitution", "Caesar", "ASCII Shift", "Vigenère", "Beaufort" };
 
-        private ConcurrentDictionary<string, bool> seenInputs = new();
+        private HashSet<string> seenInputs = new();
 
         // WHATEVER
         public searchStatus status = searchStatus.NOT_STARTED;
@@ -99,7 +98,7 @@ namespace Cryptographer
             {
                 StringInfo newInfo = new(output);
                 if (!StringClassifier.IsValid(output, parentText, newInfo, seenInputs)) continue;
-                seenInputs.TryAdd(output, true);
+                seenInputs.Add(output);
                 totalDecryptions++;
 
                 if (Config.debug && !printed)
