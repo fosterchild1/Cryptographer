@@ -6,7 +6,7 @@ namespace Cryptographer.Decoders
 {
     public class Base32 : IDecoder
     {
-        private Dictionary<char, int> Base32Map = MethodDictionaries.Base32Map;
+        private const string Base32Characters = MethodDictionaries.Base32Characters;
         private bool TryFromBase32String(string input, out byte[]? output)
         {
             output = null;
@@ -20,7 +20,8 @@ namespace Cryptographer.Decoders
 
             foreach (char c in input)
             {
-                if (!Base32Map.TryGetValue(c, out int val)) return false;
+                sbyte val = (sbyte)Base32Characters.IndexOf(c);
+                if (val == -1) return false;
 
                 // make space for new 5-bit value and add it onto buffer
                 buffer = (buffer << 5) + val;

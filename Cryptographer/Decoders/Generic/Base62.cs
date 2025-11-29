@@ -7,7 +7,7 @@ namespace Cryptographer.Decoders
 {
     public class Base62 : IDecoder
     {
-        private Dictionary<char, int> Base62Map = MethodDictionaries.Base62Map;
+        private const string Base62Characters = MethodDictionaries.Base62Characters;
         private bool TryFromBase62String(string input, out byte[]? output)
         {
             output = default!;
@@ -16,7 +16,8 @@ namespace Cryptographer.Decoders
 
             foreach (char c in input)
             {
-                if (!Base62Map.TryGetValue(c, out int val)) return false;
+                sbyte val = (sbyte)Base62Characters.IndexOf(c);
+                if (val == -1) return false;
 
                 buffer = buffer * 62 + val;
             }

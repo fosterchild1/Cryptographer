@@ -6,7 +6,7 @@ namespace Cryptographer.Decoders
 {
     public class Base64 : IDecoder
     {
-        private Dictionary<char, int> Base64Map = MethodDictionaries.Base64Map;
+        private const string Base64Characters = MethodDictionaries.Base64Characters;
         private bool CustomBase64(string input, out byte[]? output)
         {
             // Convert.TryFromBase64String is weird and sometimes doesn't consider base64 without padding as base64
@@ -21,7 +21,8 @@ namespace Cryptographer.Decoders
 
             foreach (char c in input)
             {
-                if (!Base64Map.TryGetValue(c, out int val)) return false;
+                sbyte val = (sbyte)Base64Characters.IndexOf(c);
+                if (val == -1) return false;
 
                 buffer = (buffer << 6) + val;
                 bitsLeft += 6;

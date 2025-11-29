@@ -6,12 +6,12 @@ namespace Cryptographer.Decoders
 {
     public class Base45 : IDecoder
     {
-        private Dictionary<char, int> Base45Map = MethodDictionaries.Base45Map;
+        private const string Base45Characters = MethodDictionaries.Base45Characters;
 
         private int CharToVal(char c)
         {
-            bool success = Base45Map.TryGetValue(c, out int i);
-            return (!success ? 255 : i);
+            sbyte i = (sbyte)Base45Characters.IndexOf(c);
+            return (i == -1 ? 255 : i);
         }
         private bool TryFromBase45String(string input, out byte[]? output)
         {

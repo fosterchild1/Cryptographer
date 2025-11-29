@@ -6,7 +6,7 @@ namespace Cryptographer.Decoders
 {
     public class Base85 : IDecoder
     {
-        private Dictionary<char, int> Base85Map = MethodDictionaries.Base85Map;
+        private const string Base85Characters = MethodDictionaries.Base85Characters;
         private bool TryFromBase85String(string input, out byte[]? output)
         {
             output = null;
@@ -18,7 +18,8 @@ namespace Cryptographer.Decoders
 
             foreach (char c in input)
             {
-                if (!Base85Map.TryGetValue(c, out int val)) return false;
+                sbyte val = (sbyte)Base85Characters.IndexOf(c);
+                if (val == -1) return false;
 
                 // add byte onto the buffer
                 buffer = buffer * 85 + val;
