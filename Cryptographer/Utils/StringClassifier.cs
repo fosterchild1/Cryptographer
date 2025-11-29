@@ -168,7 +168,7 @@ namespace Cryptographer.Utils
             double symbolRatio = LettersToSymbolsRatio(info);
 
             // TODO: refactor this trigram calculation stuff
-            bool tri = Config.useTrigrams || symbolRatio <= (double)1/2 * Math.Min(60-input.Length, 0.9) || input.Length <= 6;
+            bool tri = Config.useTrigrams || symbolRatio >= (double)1/3 * (input.Length/20) || input.Length <= 6;
             
             float score = CalculateScoreForDict(modifiedInput, (tri ? 3 : 4), (tri ? Ngrams.trigrams! : Ngrams.quadgrams!));
 

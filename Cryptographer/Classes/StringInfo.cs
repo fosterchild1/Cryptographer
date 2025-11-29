@@ -10,7 +10,7 @@ public class StringInfo // theres a C# class also called StringInfo but honestly
 
     public StringInfo(string str)
     {
-        Dictionary<char, int> analysis = new();
+        SortedDictionary<char, int> analysis = new();
         foreach (char c in str)
         {
             analysis[c] = analysis.GetValueOrDefault(c) + 1;
@@ -19,7 +19,7 @@ public class StringInfo // theres a C# class also called StringInfo but honestly
             maxChar = (char)Math.Max(maxChar, c);
         }
 
-        frequencyAnalysis = analysis.OrderByDescending(pair => pair.Value).ToArray();
+        frequencyAnalysis = analysis.Reverse().ToArray();
         uniqueCharacters = frequencyAnalysis.Length;
     }
 
