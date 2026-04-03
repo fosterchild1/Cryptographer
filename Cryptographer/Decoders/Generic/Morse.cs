@@ -15,9 +15,8 @@ namespace Cryptographer.Decoders
             StringBuilder output = new();
             foreach (string morse in input.Split(" "))
             {
-                string? find;
-                MorseDictionary.TryGetValue(morse, out find);
-                if (string.IsNullOrEmpty(find)) { continue; }
+                MorseDictionary.TryGetValue(morse, out string? find);
+                if (string.IsNullOrEmpty(find)) continue;
 
                 output.Append(find);
             }

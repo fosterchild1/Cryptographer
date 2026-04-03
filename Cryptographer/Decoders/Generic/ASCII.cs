@@ -15,7 +15,7 @@ namespace Cryptographer.Decoders
                 if (string.IsNullOrWhiteSpace(s)) continue;
 
                 if (!int.TryParse(s, out int integer)) return DecryptionUtils.EmptyResult;
-                if (integer <= 0 || integer > 127) return DecryptionUtils.EmptyResult;
+                if (integer < 1 || integer > 127) return DecryptionUtils.EmptyResult;
 
                 output.Append((char)integer);
             }

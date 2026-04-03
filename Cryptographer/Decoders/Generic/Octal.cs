@@ -24,11 +24,10 @@ namespace Cryptographer.Decoders
             StringBuilder output = new();
             foreach (string s in input.Split(" "))
             {
-                if (!int.TryParse(s, out int integer)) return DecryptionUtils.EmptyResult;
+                string converted = ConvertOctal(s);
+                if (converted == "") return DecryptionUtils.EmptyResult;
 
-                string str = ConvertOctal(s);
-                if (str == "") return DecryptionUtils.EmptyResult;
-                output.Append(str);
+                output.Append(converted);
             }
 
             return new() { output.ToString() };

@@ -18,7 +18,7 @@ namespace Cryptographer.Decoders
 
             foreach (char c in input)
             {
-                sbyte val = (sbyte)Base85Characters.IndexOf(c);
+                int val = Base85Characters.IndexOf(c);
                 if (val == -1) return false;
 
                 // add byte onto the buffer

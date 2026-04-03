@@ -22,8 +22,7 @@ namespace Cryptographer.Decoders
             for (int i=0; i <= length - 5; i += 5) 
             {
                 string bacon = modifiedInput.Substring(i, Math.Min(5, length - i));
-                string? find;
-                dict.TryGetValue(bacon, out find);
+                dict.TryGetValue(bacon, out string? find);
                 if (string.IsNullOrEmpty(find)) continue;
 
                 output.Append(find);

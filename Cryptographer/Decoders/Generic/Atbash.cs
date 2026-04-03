@@ -10,7 +10,7 @@ namespace Cryptographer.Decoders
             char[] chars = input.ToCharArray();
             StringBuilder sb = new();
 
-            foreach (int c in chars)
+            foreach (char c in chars)
             {
                 if (c >= 'A' && c <= 'Z')
                 {
@@ -27,7 +27,7 @@ namespace Cryptographer.Decoders
                     continue;
                 }
 
-                sb.Append((char)c);
+                sb.Append(c);
             }
 
             return new() { sb.ToString() };

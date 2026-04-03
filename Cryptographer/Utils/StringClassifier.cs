@@ -77,17 +77,19 @@ namespace Cryptographer.Utils
                 break;
             }
 
-            input = input.Replace("https://", "").Replace("http://", ""); // ugly
+            bool hasHttps = input.Contains("://"); // avoid replacing "https://" or "http://"
+
             string[] split = input.Split("./".ToCharArray());
             int splitLength = split.Length;
+            int splitStart = hasHttps ? 2 : 0;
 
             // subdomains (www.)
-            string subdomain = split[0];
+            string subdomain = split[splitStart];
             if (subdomains.Contains(subdomain))
                 score += 2;
 
             // topdomains (.com)
-            if ((splitLength >= 2 && topdomains.Contains(split[1])) || (splitLength >= 3 && topdomains.Contains(split[2])))
+            if ((splitLength >= 2 && topdomains.Contains(split[splitStart + 1])) || (splitLength >= 3 && topdomains.Contains(split[splitStart + 2])))
                 score += 4;
 
             // extensions (.html)

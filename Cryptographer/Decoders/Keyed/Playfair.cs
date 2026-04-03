@@ -11,6 +11,7 @@ namespace Cryptographer.Decoders
             // Decoding is vigenere but instead of text - key its key - text.
             StringBuilder output = new();
 
+            // this is some slop code.
             for (int i = 1; i < input.Length; i+=2)
             {
                 char c1 = input[i - 1];

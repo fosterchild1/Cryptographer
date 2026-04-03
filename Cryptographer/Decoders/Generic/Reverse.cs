@@ -10,7 +10,7 @@ namespace Cryptographer.Decoders
             Array.Reverse(letters);
             string output = new(letters);
 
-            return new List<string>() { output };
+            return new() { output };
         }
 
         public double CalculateProbability(string input, StringInfo info)

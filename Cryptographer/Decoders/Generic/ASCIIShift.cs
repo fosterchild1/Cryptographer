@@ -5,7 +5,6 @@ namespace Cryptographer.Decoders
 {
     public class ASCIIShift : IDecoder
     {
-
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
             List<string> outputs = new();
