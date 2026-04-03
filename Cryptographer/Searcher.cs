@@ -98,10 +98,11 @@ namespace Cryptographer
 
             foreach (string output in outputs)
             {
+                totalDecryptions++;
+
                 StringInfo newInfo = new(output);
                 if (seenInputs.Contains(output) || !StringClassifier.IsValid(output, parentText, newInfo)) continue;
                 seenInputs.Add(output);
-                totalDecryptions++;
 
                 if (Config.debug && !printed)
                 {

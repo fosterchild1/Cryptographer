@@ -34,18 +34,12 @@ namespace Cryptographer.Utils
 
         public static string RemoveWhitespaces(string input)
         {
-            StringBuilder sb = new(input, input.Length);
+            StringBuilder sb = new(input.Length);
 
-            int i = 0;
-            while (i < sb.Length)
+            foreach (char c in input)
             {
-                if (!char.IsWhiteSpace(sb[i]))
-                {
-                    i++;
-                    continue;
-                }
-
-                sb.Remove(i, 1);
+                if (char.IsWhiteSpace(c)) continue;
+                sb.Append(c);
             }
 
             return sb.ToString();
