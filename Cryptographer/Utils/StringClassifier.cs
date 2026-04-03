@@ -11,7 +11,7 @@ namespace Cryptographer.Utils
     internal class StringClassifier
     {
         // link stuff
-        private static readonly List<string> prefixes = new() { "https://", "http://" };
+        private static readonly List<string> prefixes = new() { "https:", "http:" };
         private static readonly HashSet<string> subdomains = new() { "www", "api", "dev", "docs", "store", "en", "fr", "wiki", "ro" };
         private static readonly HashSet<string> topdomains = new() { "com", "net", "org", "tv", "fr", "en", "ro", "edu", "gov", "pro", "lol", "io", "co", "dev" };
         private static readonly HashSet<string> extensions = new() { "htm", "html", "php", "css", "js", "json", "txt" };
@@ -68,19 +68,15 @@ namespace Cryptographer.Utils
 
             int score = 0;
 
-            // prefixes (https://)
-            foreach (string pref in prefixes)
-            {
-                if (!input.StartsWith(pref)) continue;
-
-                score += 5;
-                break;
-            }
-
-            bool hasHttps = input.Contains("://"); // avoid replacing "https://" or "http://"
+            bool hasHttps = input.Contains("://"); // evil https hack
 
             string[] split = input.Split("./".ToCharArray());
             int splitLength = split.Length;
+
+            // prefixes
+            if (hasHttps && prefixes.Contains(split[0]))
+                score += 5;
+
             int splitStart = hasHttps ? 2 : 0;
 
             // subdomains (www.)
