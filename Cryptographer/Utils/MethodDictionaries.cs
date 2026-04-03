@@ -48,11 +48,11 @@
         // Tap code
         public static readonly List<List<string>> TapCode = new()
         {
-            new List<string>() {"A", "B", "C", "D", "E"},
-            new List<string>() {"F", "G", "H", "I", "J"},
-            new List<string>() {"L", "M", "N", "O", "P"},
-            new List<string>() {"Q", "R", "S", "T", "U"},
-            new List<string>() {"V", "W", "X", "Y", "Z"}
+            new() {"A", "B", "C", "D", "E"},
+            new() {"F", "G", "H", "I", "J"},
+            new() {"L", "M", "N", "O", "P"},
+            new() {"Q", "R", "S", "T", "U"},
+            new() {"V", "W", "X", "Y", "Z"}
         };
 
         // DNA cipher

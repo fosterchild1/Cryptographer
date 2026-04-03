@@ -1,25 +1,34 @@
-/// <summary>
-/// Provides info about a string such as frequency analysis in O(n log n) time.
-/// </summary>
+public struct CharCount(char c, int amount)
+{
+    public char Char = c;
+    public int count = amount;
+}
+
 public class StringInfo // theres a C# class also called StringInfo but honestly i have no idea what else to name this
 {
-    public readonly KeyValuePair<char, int>[] frequencyAnalysis;
-    public readonly int uniqueCharacters;
-    public readonly char minChar = char.MaxValue;
-    public readonly char maxChar = char.MinValue;
+    public CharCount[] frequencyAnalysis;
+    public int uniqueCharacters;
+    public char minChar = char.MaxValue;
+    public char maxChar = char.MinValue;
 
     public StringInfo(string str)
     {
-        SortedDictionary<char, int> analysis = new();
+        int[] analysis = new int[128];
+        char[] used = new char[128];
+        int usedCount = 0;
+        
         foreach (char c in str)
         {
-            analysis[c] = analysis.GetValueOrDefault(c) + 1;
+            if (analysis[c] == 0)
+                used[usedCount++] = c;
+                
+            analysis[c] += 1;
 
             minChar = (char)Math.Min(minChar, c);
             maxChar = (char)Math.Max(maxChar, c);
         }
-
-        frequencyAnalysis = analysis.Reverse().ToArray();
+        
+        for
         uniqueCharacters = frequencyAnalysis.Length;
     }
 
@@ -30,9 +39,9 @@ public class StringInfo // theres a C# class also called StringInfo but honestly
         if (candidates == null) return new();
 
         HashSet<char> seen = new();
-        foreach (KeyValuePair<char, int> kvp in frequencyAnalysis)
+        foreach (CharCount cc in frequencyAnalysis)
         {
-            char key = kvp.Key;
+            char key = cc.Char;
             if (!candidates.Contains(key) || seen.Contains(key)) continue;
             seen.Add(key);
         }
@@ -50,12 +59,12 @@ public class StringInfo // theres a C# class also called StringInfo but honestly
     {
         if (candidates == null) return new();
 
-        foreach (KeyValuePair<char, int> kvp in frequencyAnalysis)
+        foreach (CharCount cc in frequencyAnalysis)
         {
             // exclude whitespaces since encoded string is valid with them 99% of the time
-            if (char.IsWhiteSpace(kvp.Key)) continue;
+            if (char.IsWhiteSpace(cc.Char)) continue;
 
-            if (!candidates.Contains(kvp.Key)) return false;
+            if (!candidates.Contains(cc.Char)) return false;
         }
 
         return true;
