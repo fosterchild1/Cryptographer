@@ -1,7 +1,7 @@
 public struct CharCount(char c, int amount)
 {
-    public char Char = c;
-    public int count = amount;
+    public readonly char Char = c;
+    public readonly int count = amount;
 }
 
 public class StringInfo // theres a C# class also called StringInfo but honestly i have no idea what else to name this
@@ -13,23 +13,30 @@ public class StringInfo // theres a C# class also called StringInfo but honestly
 
     public StringInfo(string str)
     {
-        int[] analysis = new int[128];
-        char[] used = new char[128];
         int usedCount = 0;
+        int min = char.MaxValue; int max = char.MinValue;
+
+        int[] analysis = new int[128];
+        char[] used = new char[Math.Min(str.Length, 128)];
 
         // build analysis and get min chars and max chars
         foreach (char c in str)
         {
-            minChar = (char)Math.Min(minChar, c);
-            maxChar = (char)Math.Max(maxChar, c);
-            if (c >= 128) continue;
+            if (c > 127) {
+                min = Math.Min(min, c);
+                max = Math.Max(max, c);
+                continue;
+            }
 
-            if (analysis[c] == 0)
-                used[usedCount++] = c;
+            // add to analysis[c] and raise unique count
+            if (++analysis[c] != 1) continue;
 
-            analysis[c] += 1;
+            min = Math.Min(min, c);
+            max = Math.Max(max, c);
+            used[usedCount++] = c;
         }
 
+        minChar = (char)min; maxChar = (char)max;
         frequencyAnalysis = new CharCount[usedCount];
         uniqueCharacters = usedCount;
 
