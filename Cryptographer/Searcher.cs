@@ -99,7 +99,7 @@ namespace Cryptographer
             foreach (string output in outputs)
             {
                 StringInfo newInfo = new(output);
-                if (!StringClassifier.IsValid(output, parentText, newInfo, seenInputs)) continue;
+                if (seenInputs.Contains(output) || !StringClassifier.IsValid(output, parentText, newInfo)) continue;
                 seenInputs.Add(output);
                 totalDecryptions++;
 
@@ -125,7 +125,7 @@ namespace Cryptographer
         public void Search()
         {
             // the input could just be gibberish
-            if (!StringClassifier.IsValid(input, "", new(input), new())) { status = searchStatus.FAILED; return; }
+            if (!StringClassifier.IsValid(input, "", new(input))) { status = searchStatus.FAILED; return; }
             status = searchStatus.SEARCHING;
 
             // use a priority queue alongside a CalculateProbability function

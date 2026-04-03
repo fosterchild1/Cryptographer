@@ -21,14 +21,10 @@ namespace Cryptographer.Utils
         private static readonly char[] CTFSymbols = { ':', '^', '-', '{' };
 
         // SEARCHER STUFF (makes more sense to be here tbh)
-        public static bool IsValid(string output, string last, StringInfo info, HashSet<string> seenInputs)
+        public static bool IsValid(string output, string last, StringInfo info)
         {
             // aka useless string
             if (DecryptionUtils.RemoveWhitespaces(output).Length <= 3)
-                return false;
-
-            // TO NOT LOG IN CONSOLE
-            if (seenInputs.Contains(output))
                 return false;
 
             // hasnt changed
