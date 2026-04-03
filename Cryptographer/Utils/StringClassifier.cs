@@ -107,15 +107,15 @@ namespace Cryptographer.Utils
         {
             double symbols = 0; double letters = 0;
 
-            foreach (KeyValuePair<char, int> kvp in info.frequencyAnalysis)
+            foreach (CharCount cc in info.frequencyAnalysis)
             {
-                if (DecryptionUtils.letterHashset.Contains(kvp.Key))
+                if (DecryptionUtils.letterHashset.Contains(cc.Char))
                 {
-                    letters += kvp.Value;
+                    letters += cc.count;
                     continue;
                 }
 
-                symbols += kvp.Value;
+                symbols += cc.count;
             }
 
             return symbols / letters;

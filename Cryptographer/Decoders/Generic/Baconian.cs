@@ -37,8 +37,8 @@ namespace Cryptographer.Decoders
             var analysis = info.frequencyAnalysis;
 
             // they can be either ah or bah
-            string c1 = analysis[0].Key.ToString();
-            string c2 = analysis[1].Key.ToString();
+            string c1 = analysis[0].Char.ToString();
+            string c2 = analysis[1].Char.ToString();
 
             List<string> output = new()
             {

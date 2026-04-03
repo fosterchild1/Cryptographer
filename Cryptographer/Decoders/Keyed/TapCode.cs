@@ -16,7 +16,7 @@ namespace Cryptographer.Decoders
             StringBuilder output = new();
             int length = input.Length;
 
-            string modifiedInput = input.Replace(info.frequencyAnalysis[1].Key, ' ').TrimStart(' ').TrimEnd(' ');
+            string modifiedInput = input.Replace(info.frequencyAnalysis[1].Char, ' ').TrimStart(' ').TrimEnd(' ');
             string[] split = modifiedInput.Split(" ");
             for (int i = 1; i < split.Length; i+=2)
             {

@@ -6,30 +6,41 @@ public struct CharCount(char c, int amount)
 
 public class StringInfo // theres a C# class also called StringInfo but honestly i have no idea what else to name this
 {
-    public CharCount[] frequencyAnalysis;
-    public int uniqueCharacters;
-    public char minChar = char.MaxValue;
-    public char maxChar = char.MinValue;
+    public readonly CharCount[] frequencyAnalysis;
+    public readonly int uniqueCharacters;
+    public readonly char minChar = char.MaxValue;
+    public readonly char maxChar = char.MinValue;
 
     public StringInfo(string str)
     {
         int[] analysis = new int[128];
         char[] used = new char[128];
         int usedCount = 0;
-        
+
+        // build analysis and get min chars and max chars
         foreach (char c in str)
         {
-            if (analysis[c] == 0)
-                used[usedCount++] = c;
-                
-            analysis[c] += 1;
-
             minChar = (char)Math.Min(minChar, c);
             maxChar = (char)Math.Max(maxChar, c);
+            if (c >= 128) continue;
+
+            if (analysis[c] == 0)
+                used[usedCount++] = c;
+
+            analysis[c] += 1;
         }
-        
-        for
-        uniqueCharacters = frequencyAnalysis.Length;
+
+        frequencyAnalysis = new CharCount[usedCount];
+        uniqueCharacters = usedCount;
+
+        // build then sort frequency analysis
+        for (int i = 0; i < usedCount; i++)
+        {
+            char c = used[i];
+            frequencyAnalysis[i] = new(c, analysis[c]);
+        }
+
+        Array.Sort(frequencyAnalysis, (a, b) => b.count.CompareTo(a.count));
     }
 
     /// <param name="candidates">The characters you want to search for. O(n).</param>

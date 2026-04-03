@@ -34,9 +34,9 @@ namespace Cryptographer.Decoders
 
             var analysis = info.frequencyAnalysis;
 
-            char c1 = analysis[0].Key;
-            char c2 = analysis[1].Key;
-            char c3 = analysis[2].Key;
+            char c1 = analysis[0].Char;
+            char c2 = analysis[1].Char;
+            char c3 = analysis[2].Char;
 
             List<List<char>> permutations = new(); DecryptionUtils.GetPermutations(new() { c1, c2, c3 }, new(), permutations);
             List<string> output = new();
