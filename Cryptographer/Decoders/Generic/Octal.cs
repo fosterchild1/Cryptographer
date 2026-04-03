@@ -1,7 +1,6 @@
 ﻿using Cryptographer.Classes;
 using Cryptographer.Utils;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Cryptographer.Decoders
 {
@@ -39,8 +38,11 @@ namespace Cryptographer.Decoders
         {
             if (info.uniqueCharacters > 11) return 1; // it should only have 0-9 and a space.
 
-            string withoutNum = Regex.Replace(input, "[0-9]", string.Empty);
-            return string.IsNullOrWhiteSpace(withoutNum) ? 0.3 : 1;
+            // is only numbers
+            if (!info.IsExclusive(DecryptionUtils.numberHashset))
+                return 1;
+
+            return 0.3;
         }
 
         public string Name { get { return "Octal"; } }
