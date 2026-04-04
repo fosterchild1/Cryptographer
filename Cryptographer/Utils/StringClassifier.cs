@@ -23,10 +23,6 @@ namespace Cryptographer.Utils
         // SEARCHER STUFF (makes more sense to be here tbh)
         public static bool IsValid(string output, string last, StringInfo info)
         {
-            // aka useless string
-            if (DecryptionUtils.RemoveWhitespaces(output).Length <= 3)
-                return false;
-
             // hasnt changed
             if (last == output)
                 return false;
@@ -36,12 +32,14 @@ namespace Cryptographer.Utils
                 return false;
 
             // anything that's under SPACE, created mostly by running base methods on non-base encrypted inputs
-            char min = info.minChar;
-            if (min < 32 && min != 10) // exclude line feed
+            if (info.minChar < 32 && info.minChar != 10) // exclude line feed
                 return false;
 
             // currently doesnt support base65536 or base2048 or those typa stuff
             if (info.maxChar > 127)
+                return false;
+
+            if (DecryptionUtils.RemoveWhitespaces(output).Length <= 3)
                 return false;
 
             return true;
@@ -124,6 +122,7 @@ namespace Cryptographer.Utils
             if (dict == null) return 0;
 
             int length = input.Length;
+            float substrIncrement = length / 4f;
             float score = 0;
 
             Dictionary<string, short> seen = new();
@@ -132,8 +131,7 @@ namespace Cryptographer.Utils
             {
                 string substr = input.Substring(i, Math.Min(step, length - i));
 
-                float val = dict.GetValueOrDefault(substr);
-                if (val == 0f)
+                if (!dict.TryGetValue(substr, out float val))
                 {
                     score -= length; // penalize by str length
                     continue;
@@ -142,7 +140,7 @@ namespace Cryptographer.Utils
                 short substrSeenAmount = (short)(seen.GetValueOrDefault(substr) + 1);
 
                 seen[substr] = substrSeenAmount;
-                score += val * length / substrSeenAmount / 4f; // fine tuned value that stops most non-plaintext strings
+                score += val * substrIncrement / substrSeenAmount;
             }
 
             return score;

@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-namespace Cryptographer.Utils
+﻿namespace Cryptographer.Utils
 {
     internal class DecryptionUtils
     {
@@ -34,15 +32,16 @@ namespace Cryptographer.Utils
 
         public static string RemoveWhitespaces(string input)
         {
-            StringBuilder sb = new(input.Length);
+            char[] buf = new char[input.Length];
+            int idx = 0;
 
             foreach (char c in input)
             {
                 if (char.IsWhiteSpace(c)) continue;
-                sb.Append(c);
+                buf[idx++] = c;
             }
 
-            return sb.ToString();
+            return new(buf, 0, idx);
         }
     }
 }

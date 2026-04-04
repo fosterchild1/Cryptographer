@@ -76,7 +76,7 @@ namespace Cryptographer
                 if (probability < 0.7)
                     failedAll = false;
 
-                queue.Enqueue(new(node, probability, method), probability);
+                queue.Enqueue(new(node, probability, info, method), probability);
             }
 
             // fallbacks
@@ -89,8 +89,8 @@ namespace Cryptographer
             DecryptionNode branchParent = branch.Parent;
             byte depth = branchParent.Depth;
             string parentText = branchParent.Text;
+            StringInfo info = branch.info;
 
-            StringInfo info = new(parentText);
             List<string> outputs = branch.Method.Decrypt(parentText, info, key);
 
             bool printed = false;
@@ -101,8 +101,7 @@ namespace Cryptographer
                 totalDecryptions++;
 
                 StringInfo newInfo = new(output);
-                if (seenInputs.Contains(output) || !StringClassifier.IsValid(output, parentText, newInfo)) continue;
-                seenInputs.Add(output);
+                if (!seenInputs.Add(output) || !StringClassifier.IsValid(output, parentText, newInfo)) continue;
 
                 if (Config.debug && !printed)
                 {

@@ -11,6 +11,7 @@
 		<RepositoryUrl>https://github.com/fosterchild1/Cryptographer</RepositoryUrl>
 		<ApplicationIcon>icon.ico</ApplicationIcon>
 		<PublishTrimmed>True</PublishTrimmed>
+		<PublishSingleFile>true</PublishSingleFile>
 		<PlatformTarget>AnyCPU</PlatformTarget>
 		<SignAssembly>False</SignAssembly>
 		<PublishReadyToRun>true</PublishReadyToRun>
