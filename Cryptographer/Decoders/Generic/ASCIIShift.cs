@@ -1,5 +1,4 @@
 ﻿using Cryptographer.Classes;
-using System.Text;
 
 namespace Cryptographer.Decoders
 {
@@ -9,16 +8,18 @@ namespace Cryptographer.Decoders
         {
             List<string> outputs = new();
 
+            char[] shifted = new char[input.Length];
             for (int i=1; i<=127; i++)
             {
-                StringBuilder shifted = new();
+                int shiftedIdx = 0;
+
                 foreach (char c in input)
                 {
                     char shiftedChar = (char)((c + i) % 128);
-                    shifted.Append(shiftedChar);
+                    shifted[shiftedIdx++] = shiftedChar;
                 }
 
-                outputs.Add(shifted.ToString());
+                outputs.Add(new(shifted));
             }
 
             return outputs;

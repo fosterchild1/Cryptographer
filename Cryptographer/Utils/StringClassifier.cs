@@ -125,7 +125,8 @@ namespace Cryptographer.Utils
             float substrIncrement = length / 4f;
             float score = 0;
 
-            Dictionary<string, short> seen = new();
+            int capacity = length / (step - 1);
+            Dictionary<string, short> seen = new(capacity);
 
             for (int i = 0; i < length; i++)
             {

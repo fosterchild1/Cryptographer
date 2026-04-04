@@ -1,5 +1,4 @@
 ﻿using Cryptographer.Classes;
-using System.Text;
 
 namespace Cryptographer.Decoders
 {
@@ -18,20 +17,22 @@ namespace Cryptographer.Decoders
             // the amount you move each time is equal to FLOOR(input len / letters)
             // but when you warp back to the start you move 1 extra
 
+            char[] output = new char[input.Length];
+
             for (int move = 2; move < maxLetters; move++)
             {
-                StringBuilder output = new();
+                int outputIdx = 0;
                 int pos = 0;
 
-                while (output.Length < length)
+                while (outputIdx < length)
                 {
-                    output.Append(input[pos]);
+                    output[outputIdx++] = input[pos];
 
                     bool willWarp = (pos + move > end);
                     pos = pos + move - (willWarp ? end : 0);
                 }
 
-                outputs.Add(output.ToString());
+                outputs.Add(new(output));
             }
 
             return outputs;

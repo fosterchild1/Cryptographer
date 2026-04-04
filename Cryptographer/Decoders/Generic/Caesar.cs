@@ -1,5 +1,4 @@
 ﻿using Cryptographer.Classes;
-using System.Text;
 
 namespace Cryptographer.Decoders
 {
@@ -8,22 +7,25 @@ namespace Cryptographer.Decoders
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
             List<string> output = new();
+
+            char[] transformed = new char[input.Length];
             for (int i = 0; i <= 25; i++) // 26 = no transformation
             {
-                StringBuilder transformed = new();
+                int transIdx = 0;
+
                 foreach (char c in input) 
                 {
                     if (c >= 'A' && c <= 'Z')
-                        transformed.Append((char)(((c - 'A' + i) % 26) + 'A'));
+                        transformed[transIdx++] = (char)(((c - 'A' + i) % 26) + 'A');
 
                     else if (c >= 'a' && c <= 'z')
-                        transformed.Append((char)(((c - 'a' + i) % 26) + 'a'));
+                        transformed[transIdx++] = (char)(((c - 'a' + i) % 26) + 'a');
 
                     else
-                        transformed.Append(c);
+                        transformed[transIdx++] = c;
                 }
 
-                output.Add(transformed.ToString());
+                output.Add(new(transformed));
             }
             return output;
         }

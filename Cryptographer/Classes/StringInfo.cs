@@ -60,7 +60,7 @@ public class StringInfo // theres a C# class also called StringInfo but honestly
         foreach (CharCount cc in frequencyAnalysis)
         {
             char key = cc.Char;
-            if (!candidates.Contains(key) || seen.Contains(key)) continue;
+            if (!candidates.Contains(key)) continue;
             seen.Add(key);
         }
 
