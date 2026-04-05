@@ -7,7 +7,7 @@ namespace Cryptographer.Decoders
     {
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
-            StringBuilder output = new();
+            StringBuilder output = new(input.Length);
             foreach (char c in input)
             {
                 if (c < 33 || c > 126)

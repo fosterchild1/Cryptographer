@@ -6,10 +6,10 @@ namespace Cryptographer.Decoders
     {
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
-            List<string> output = new();
+            List<string> output = new(25);
 
             char[] transformed = new char[input.Length];
-            for (int i = 0; i <= 25; i++) // 26 = no transformation
+            for (int i = 1; i <= 25; i++) // 26 = no transformation
             {
                 int transIdx = 0;
 

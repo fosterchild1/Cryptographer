@@ -7,7 +7,7 @@ namespace Cryptographer.Decoders
     {
         public List<string> Decrypt(string input, StringInfo info, string key)
         {
-            StringBuilder output = new();
+            StringBuilder output = new(input.Length);
             int keyLength = key.Length;
             int keyIdx = 0;
 

@@ -17,7 +17,7 @@ namespace Cryptographer.Decoders
         private string SubstituteLayout(string input, string layout, string layout2)
         {
             // split at each space
-            StringBuilder output = new();
+            StringBuilder output = new(input.Length);
             foreach (char c in input.ToCharArray())
             {
                 int idx = layout.IndexOf(c);

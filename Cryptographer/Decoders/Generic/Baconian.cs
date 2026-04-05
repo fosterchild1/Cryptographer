@@ -15,8 +15,8 @@ namespace Cryptographer.Decoders
         {
             string modifiedInput = input.Replace(ah, "A").Replace(bah, "B").Replace(" ", "");
 
-            StringBuilder output = new();
             int length = modifiedInput.Length;
+            StringBuilder output = new(length/5);
             // split every 5 characters
 
             for (int i=0; i <= length - 5; i += 5) 

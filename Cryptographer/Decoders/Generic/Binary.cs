@@ -12,7 +12,7 @@ namespace Cryptographer.Decoders
             input = input.Replace(one, '1').Replace(zero, '0').Replace(space.ToString(), "");
             int length = input.Length;
 
-            StringBuilder sb = new();
+            StringBuilder sb = new(length/8);
 
             for (int i = 0; i <= length - 8; i += 8)
             {
@@ -43,7 +43,7 @@ namespace Cryptographer.Decoders
             char c3 = analysis.Length == 3 ? analysis[2].Char : ' ';
 
             List<List<char>> permutations = new(); DecryptionUtils.GetPermutations(new() { c1, c2, c3 }, new(), permutations);
-            List<string> output = new();
+            List<string> output = new(permutations.Count);
 
             foreach (List<char> perm in permutations)
             {

@@ -8,7 +8,7 @@ namespace Cryptographer.Decoders
         public List<string> Decrypt(string input, StringInfo info, string key)
         {
             // Decoding is vigenere but instead of text - key its key - text.
-            StringBuilder output = new();
+            StringBuilder output = new(input.Length);
             int keyLength = key.Length;
             int keyIdx = 0;
 

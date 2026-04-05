@@ -12,7 +12,7 @@ namespace Cryptographer.Decoders
             input = input.Replace(" ", "");
 
             int length = input.Length;
-            StringBuilder output = new();
+            StringBuilder output = new(length/3);
 
             for (int i = 0; i <= length - 3; i += 3)
             {
@@ -29,7 +29,7 @@ namespace Cryptographer.Decoders
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            if (info.uniqueCharacters >= 4 || info.uniqueCharacters <= 2) return 1;
+            if (info.uniqueCharacters > 4 || info.uniqueCharacters <= 2) return 1;
 
             return 0.3;
         }

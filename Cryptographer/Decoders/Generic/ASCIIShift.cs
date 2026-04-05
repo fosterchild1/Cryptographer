@@ -6,7 +6,7 @@ namespace Cryptographer.Decoders
     {
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
-            List<string> outputs = new();
+            List<string> outputs = new(127);
 
             char[] shifted = new char[input.Length];
             for (int i=1; i<=127; i++)

@@ -8,7 +8,7 @@ namespace Cryptographer.Decoders
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
             char[] chars = input.ToCharArray();
-            StringBuilder sb = new();
+            StringBuilder sb = new(input.Length);
 
             foreach (char c in chars)
             {
