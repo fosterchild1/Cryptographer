@@ -92,16 +92,17 @@ namespace Cryptographer
             StringInfo info = branch.info;
 
             List<string> outputs = branch.Method.Decrypt(parentText, info, key);
+            totalDecryptions += outputs.Count;
 
             bool printed = false;
             bool failedAll = true;
 
             foreach (string output in outputs)
             {
-                totalDecryptions++;
+                if (!seenInputs.Add(output)) continue;
 
                 StringInfo newInfo = new(output);
-                if (!seenInputs.Add(output) || !StringClassifier.IsValid(output, parentText, newInfo)) continue;
+                if (!StringClassifier.IsValid(output, parentText, newInfo)) continue;
 
                 if (Config.debug && !printed)
                 {

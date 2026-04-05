@@ -11,12 +11,10 @@ namespace Cryptographer.Decoders
         private byte CharToVal(char c)
         {
             int i = Base45Characters.IndexOf(c);
-            return (byte)(i == -1 ? 255 : i);
+            return (byte)i;
         }
-        private bool TryFromBase45String(string input, out byte[]? output)
+        private bool FromBase45String(string input, out byte[] output)
         {
-            output = null;
-
             List<byte> result = new();
 
             // pad
@@ -28,8 +26,7 @@ namespace Cryptographer.Decoders
                 byte c = CharToVal(input[i]);
                 byte d = CharToVal(input[i + 1]);
                 byte e = CharToVal(input[i + 2]);
-                if (c == 255 || d == 255 || e == 255) return false; // aka failed in chartoval
-
+                
                 int n = c + (d * 45) + (e * 45 * 45);
                 byte secondByte = (byte)((n >> 8) & 0xFF);
 
@@ -43,9 +40,9 @@ namespace Cryptographer.Decoders
 
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
-            TryFromBase45String(input, out byte[]? output);
+            FromBase45String(input, out byte[] output);
 
-            return new() { output != null ? Encoding.UTF8.GetString(output) : "" };
+            return new() { Encoding.UTF8.GetString(output) };
         }
 
 
@@ -55,7 +52,7 @@ namespace Cryptographer.Decoders
             if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 45) return 1;
             if (info.minChar < '$' || info.maxChar > 'Z') return 1;
 
-            return !TryFromBase45String(input, out byte[]? output) ? 1 : 0;
+            return DecryptionUtils.IsContainedString(input, Base45Characters) ? 0 : 1;
         }
 
         public string Name { get { return "Base45"; } }

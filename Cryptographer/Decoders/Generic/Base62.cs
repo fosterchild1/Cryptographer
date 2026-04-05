@@ -8,17 +8,14 @@ namespace Cryptographer.Decoders
     public class Base62 : IDecoder
     {
         private const string Base62Characters = MethodDictionaries.Base62Characters;
-        private bool TryFromBase62String(string input, out byte[]? output)
-        {
-            output = default!;
 
+        private bool FromBase62String(string input, out byte[] output)
+        {
             BigInteger buffer = 0;
 
             foreach (char c in input)
             {
                 int val = Base62Characters.IndexOf(c);
-                if (val == -1) return false;
-
                 buffer = buffer * 62 + val;
             }
 
@@ -28,8 +25,8 @@ namespace Cryptographer.Decoders
 
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
-            TryFromBase62String(input, out byte[]? output);
-            return new() { output != null ? Encoding.UTF8.GetString(output) : "" };
+            FromBase62String(input, out byte[] output);
+            return new() { Encoding.UTF8.GetString(output) };
         }
 
         public double CalculateProbability(string input, StringInfo info)
@@ -37,7 +34,7 @@ namespace Cryptographer.Decoders
             if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 62) return 1;
             if (info.minChar < '0' || info.maxChar > 'z') return 1;
 
-            return TryFromBase62String(input, out byte[]? _) ? 0 : 1;
+            return DecryptionUtils.IsContainedString(input, Base62Characters) ? 0 : 1;
         }
 
         public string Name { get { return "Base62"; } }

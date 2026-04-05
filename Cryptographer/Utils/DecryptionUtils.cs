@@ -43,5 +43,15 @@
 
             return new(buf, 0, idx);
         }
+
+        public static bool IsContainedString(string input, string allowedChars)
+        {
+            foreach (char c in input)
+            {
+               if (allowedChars.IndexOf(c) == -1) return false;
+            }
+
+            return true;
+        }
     }
 }

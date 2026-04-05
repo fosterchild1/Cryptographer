@@ -7,10 +7,9 @@ namespace Cryptographer.Decoders
     public class Base32 : IDecoder
     {
         private const string Base32Characters = MethodDictionaries.Base32Characters;
-        private bool TryFromBase32String(string input, out byte[]? output)
-        {
-            output = null;
 
+        private bool FromBase32String(string input, out byte[] output)
+        {
             input = input.TrimEnd('=').ToUpper();
 
             List<byte> result = new();
@@ -21,7 +20,6 @@ namespace Cryptographer.Decoders
             foreach (char c in input)
             {
                 sbyte val = (sbyte)Base32Characters.IndexOf(c);
-                if (val == -1) return false;
 
                 // make space for new 5-bit value and add it onto buffer
                 buffer = (buffer << 5) + val;
@@ -40,9 +38,8 @@ namespace Cryptographer.Decoders
 
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
-            TryFromBase32String(input, out byte[]? output);
-
-            return new() { output != null ? Encoding.UTF8.GetString(output) : "" };
+            FromBase32String(input, out byte[] output);
+            return new() { Encoding.UTF8.GetString(output) };
         }
 
 
@@ -52,7 +49,8 @@ namespace Cryptographer.Decoders
             if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 33) return 1;
             if (info.minChar < '2' || info.maxChar > 'Z') return 1;
 
-            return !TryFromBase32String(input, out byte[]? output) ? 1 : 0;
+            string cleaned = input.TrimEnd('=').ToUpper();
+            return DecryptionUtils.IsContainedString(cleaned, Base32Characters) ? 0 : 1;
         }
 
         public string Name { get { return "Base32"; } }

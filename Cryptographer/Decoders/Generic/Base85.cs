@@ -7,10 +7,8 @@ namespace Cryptographer.Decoders
     public class Base85 : IDecoder
     {
         private const string Base85Characters = MethodDictionaries.Base85Characters;
-        private bool TryFromBase85String(string input, out byte[]? output)
+        private bool FromBase85String(string input, out byte[] output)
         {
-            output = null;
-
             List<byte> result = new();
 
             int count = 0;
@@ -19,7 +17,6 @@ namespace Cryptographer.Decoders
             foreach (char c in input)
             {
                 int val = Base85Characters.IndexOf(c);
-                if (val == -1) return false;
 
                 // add byte onto the buffer
                 buffer = buffer * 85 + val;
@@ -53,9 +50,9 @@ namespace Cryptographer.Decoders
         }
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
-            TryFromBase85String(input, out byte[]? output);
+            FromBase85String(input, out byte[] output);
 
-            return new() { output != null ? Encoding.UTF8.GetString(output) : "" };
+            return new() {Encoding.UTF8.GetString(output)};
         }
 
 
@@ -65,7 +62,7 @@ namespace Cryptographer.Decoders
             if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 86) return 1;
             if (info.minChar < '!' || info.maxChar > 'z') return 1;
 
-            return !TryFromBase85String(input, out byte[]? output) ? 1 : 0;
+            return DecryptionUtils.IsContainedString(input, Base85Characters) ? 0 : 1;
         }
 
         public string Name { get { return "Base85"; } }

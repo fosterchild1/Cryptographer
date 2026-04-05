@@ -6,7 +6,6 @@ namespace Cryptographer.Decoders
 {
     public class KeyboardSubstitution : IDecoder
     {
-
         // try as many different layouts without having too many outputs, AZERTY and QWERTZ only have 1 character difference
         private List<string> Layouts = new() {
             MethodDictionaries.QwertyLayout,
