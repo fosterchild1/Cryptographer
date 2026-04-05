@@ -40,7 +40,17 @@ namespace Cryptographer.Decoders
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            return 0.4; // same as caesar because theres no way to detect it
+            // https://www.dcode.fr/scytale-cipher: "The message length should not be a prime number"
+            // ...thats the only heuristic for scytale
+
+            int length = input.Length;
+
+            for (int i=1; i<Math.Sqrt(length); i++)
+            {
+                if (length % i == 0) return 0.4;
+            }
+
+            return 1;
         }
 
         public string Name { get { return "Scytale"; } }
