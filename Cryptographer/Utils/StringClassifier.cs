@@ -21,12 +21,20 @@ namespace Cryptographer.Utils
         private static readonly char[] CTFSymbols = { ':', '^', '-', '{' };
 
         // SEARCHER STUFF (makes more sense to be here tbh)
-        public static bool IsValid(string output, string last, StringInfo info)
+        public static bool IsLooseValid(string output, string last)
         {
             // hasnt changed
             if (last == output)
                 return false;
 
+            if (DecryptionUtils.RemoveWhitespaces(output).Length <= 3)
+                return false;
+
+            return true;
+        }
+
+        public static bool IsValid(StringInfo info)
+        {
             // a single character
             if (info.uniqueCharacters < 2)
                 return false;
@@ -37,9 +45,6 @@ namespace Cryptographer.Utils
 
             // currently doesnt support base65536 or base2048 or those typa stuff
             if (info.maxChar > 127)
-                return false;
-
-            if (DecryptionUtils.RemoveWhitespaces(output).Length <= 3)
                 return false;
 
             return true;
