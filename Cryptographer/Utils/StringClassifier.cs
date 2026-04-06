@@ -11,13 +11,13 @@ namespace Cryptographer.Utils
     internal class StringClassifier
     {
         // link stuff
-        private static readonly List<string> prefixes = new() { "https:", "http:" };
-        private static readonly HashSet<string> subdomains = new() { "www", "api", "dev", "docs", "store", "en", "fr", "wiki", "ro" };
-        private static readonly HashSet<string> topdomains = new() { "com", "net", "org", "tv", "fr", "en", "ro", "edu", "gov", "pro", "lol", "io", "co", "dev" };
-        private static readonly HashSet<string> extensions = new() { "htm", "html", "php", "css", "js", "json", "txt" };
+        private static readonly List<string> prefixes = new() { "HTTPS:", "HTTP:" };
+        private static readonly HashSet<string> subdomains = new() { "WWW", "API", "DEV", "DOCS", "STORE", "EN", "FR", "WIKI", "RO" };
+        private static readonly HashSet<string> topdomains = new() { "COM", "NET", "ORG", "TV", "FR", "EN", "RO", "EDU", "GOV", "PRO", "LOL", "IO", "CO", "DEV" };
+        private static readonly HashSet<string> extensions = new() { "HTM", "HTML", "PHP", "CSS", "JS", "JSON", "TXT" };
 
         // CTF
-        private static readonly HashSet<string> CTFprefixes = new() { "flag", "ctf", "httb", "thm", "cftlearn", "picoctf", "dctf" };
+        private static readonly HashSet<string> CTFprefixes = new() { "FLAG", "CTF", "HTTB", "THM", "CTFLEARN", "PICOCTF", "DCTF" };
         private static readonly char[] CTFSymbols = { ':', '^', '-', '{' };
 
         // SEARCHER STUFF (makes more sense to be here tbh)
@@ -47,8 +47,6 @@ namespace Cryptographer.Utils
 
         private static bool IsCTF(string input)
         {
-            input = input.ToLower();
-
             int index = input.IndexOfAny(CTFSymbols);
             if (index == -1)
                 return false;
@@ -62,12 +60,10 @@ namespace Cryptographer.Utils
 
         private static bool IsLink(string input)
         {
-            input = input.ToLower();
-
             int score = 0;
 
             bool hasHttps = input.Contains("://"); // evil https hack
-
+            
             string[] split = input.Split("./".ToCharArray());
             int splitLength = split.Length;
 
@@ -125,7 +121,7 @@ namespace Cryptographer.Utils
             float substrIncrement = length / 4f;
 
             float score = 0;
-            float exitScore = -(length * 4);
+            float exitScore = -(length * 6);
 
             int capacity = length / (step - 1);
             Dictionary<string, short> seen = new(capacity);
@@ -145,16 +141,18 @@ namespace Cryptographer.Utils
                 short substrSeenAmount = (short)(seen.GetValueOrDefault(substr) + 1);
 
                 seen[substr] = substrSeenAmount;
-                score += val * substrIncrement / substrSeenAmount;
+                score += val * substrIncrement / (substrSeenAmount * 2);
             }
 
             return score;
         }
 
         public static StringType Classify(string input, StringInfo info)
-        {
+		  {
             if (info.uniqueCharacters > 0 && info.uniqueCharacters <= 3)
                 return StringType.GIBBERISH;
+
+            input = input.ToUpper();
 
             // check other types of text
             if (IsLink(input))
@@ -163,14 +161,14 @@ namespace Cryptographer.Utils
                 return StringType.CTF_FLAG;
 
             // calculate score
-            string modifiedInput = DecryptionUtils.RemoveWhitespaces(input).ToUpper();
+            string modifiedInput = DecryptionUtils.RemoveWhitespaces(input);
             double symbolRatio = LettersToSymbolsRatio(info);
+            if (symbolRatio > 3.0 / 4) return StringType.GIBBERISH;
 
             // TODO: refactor this trigram calculation stuff
             bool tri = Config.useTrigrams || symbolRatio >= (double)1/60 * input.Length || input.Length <= 6;
 
             float score = CalculateScoreForDict(modifiedInput, (tri ? 3 : 4), (tri ? Ngrams.trigrams! : Ngrams.quadgrams!));
-
             return (score >= Config.scorePrintThreshold ? StringType.PLAINTEXT : StringType.GIBBERISH);
         }
     }

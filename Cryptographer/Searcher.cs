@@ -136,7 +136,7 @@ namespace Cryptographer
 
             // loop
             timer.Start();
-            while (queue.TryDequeue(out DecryptionBranch? branch, out double _))
+            while (queue.TryDequeue(out DecryptionBranch branch, out double _))
             {
                 if (status != searchStatus.SEARCHING || timer.ElapsedMilliseconds / 1000 >= Config.searchTimeout)
                     break;

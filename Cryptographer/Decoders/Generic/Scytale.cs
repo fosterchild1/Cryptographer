@@ -7,18 +7,16 @@ namespace Cryptographer.Decoders
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
             // simple to bruteforce: all you need is one number 1 through CEIL(input len / 2)
-            List<string> outputs = new();
-
             int length = input.Length;
             int end = length - 1;
             int maxLetters = (int)MathF.Ceiling(length / 2);
 
+            List<string> outputs = new(maxLetters - 2);
             // solution that doesnt require a 2d matrix
             // the amount you move each time is equal to FLOOR(input len / letters)
             // but when you warp back to the start you move 1 extra
 
             char[] output = new char[input.Length];
-
             for (int move = 2; move < maxLetters; move++)
             {
                 int outputIdx = 0;
