@@ -123,7 +123,9 @@ namespace Cryptographer.Utils
 
             int length = input.Length;
             float substrIncrement = length / 4f;
+
             float score = 0;
+            float exitScore = -(length * 5);
 
             int capacity = length / (step - 1);
             Dictionary<string, short> seen = new(capacity);
@@ -135,6 +137,8 @@ namespace Cryptographer.Utils
                 if (!dict.TryGetValue(substr, out float val))
                 {
                     score -= length; // penalize by str length
+                    if (score < exitScore) return 0;
+
                     continue;
                 }
 
@@ -150,19 +154,21 @@ namespace Cryptographer.Utils
         public static StringType Classify(string input, StringInfo info)
         {
             if (info.uniqueCharacters > 0 && info.uniqueCharacters <= 3)
-                return 0;
+                return StringType.GIBBERISH;
 
+            // check other types of text
             if (IsLink(input))
                 return StringType.LINK;
             else if (IsCTF(input))
                 return StringType.CTF_FLAG;
 
+            // calculate score
             string modifiedInput = DecryptionUtils.RemoveWhitespaces(input).ToUpper();
             double symbolRatio = LettersToSymbolsRatio(info);
 
             // TODO: refactor this trigram calculation stuff
-            bool tri = Config.useTrigrams || symbolRatio >= (double)1/3 * (input.Length/20) || input.Length <= 6;
-            
+            bool tri = Config.useTrigrams || symbolRatio >= (double)1/60 * input.Length || input.Length <= 6;
+
             float score = CalculateScoreForDict(modifiedInput, (tri ? 3 : 4), (tri ? Ngrams.trigrams! : Ngrams.quadgrams!));
 
             return (score >= Config.scorePrintThreshold ? StringType.PLAINTEXT : StringType.GIBBERISH);

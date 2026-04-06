@@ -8,10 +8,9 @@ namespace Cryptographer.Decoders
     {
         private const string Base45Characters = MethodDictionaries.Base45Characters;
 
-        private byte CharToVal(char c)
+        private int CharToVal(char c)
         {
-            int i = Base45Characters.IndexOf(c);
-            return (byte)i;
+            return Base45Characters.IndexOf(c);
         }
         private bool FromBase45String(string input, out byte[] output)
         {
@@ -23,9 +22,9 @@ namespace Cryptographer.Decoders
             for (int i = 0; i < input.Length; i += 3)
             {
                 //n=c+(d×45)+(e×45^2)
-                byte c = CharToVal(input[i]);
-                byte d = CharToVal(input[i + 1]);
-                byte e = CharToVal(input[i + 2]);
+                int c = CharToVal(input[i]);
+                int d = CharToVal(input[i + 1]);
+                int e = CharToVal(input[i + 2]);
                 
                 int n = c + (d * 45) + (e * 45 * 45);
                 byte secondByte = (byte)((n >> 8) & 0xFF);
