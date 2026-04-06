@@ -47,10 +47,10 @@ namespace Cryptographer.Decoders
 
             for (int i=1; i<Math.Sqrt(length); i++)
             {
-                if (length % i == 0) return 0.4;
+                if (length % i == 0) return 0.4; // not prime, has divisor
             }
 
-            return 1;
+            return 1; // prime
         }
 
         public string Name { get { return "Scytale"; } }

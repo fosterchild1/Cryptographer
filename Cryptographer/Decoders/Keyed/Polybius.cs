@@ -18,13 +18,17 @@ namespace Cryptographer.Decoders
             for (int i = 0; i < length; i+=2)
             {
                 // idx = 5n1 - (5 - n2) - 1 = 5(n1 - 1) + n2 - 1
+                // get n1 and n2
                 string bigram = input.Substring(i, Math.Min(2, length - i));
 
                 bool s = int.TryParse(bigram[0].ToString(), out int n1);
                 bool s2 = int.TryParse(bigram[1].ToString(), out int n2);
                 if (!s || !s2) return DecryptionUtils.EmptyResult;
    
+                // get keyidx, if it lands outside its not polybius
                 int keyIdx = 5 * (n1 - 1) + n2 - 1;
+                if (keyIdx >= key.Length || keyIdx < 0) return DecryptionUtils.EmptyResult;
+
                 output.Append(key[keyIdx]);
             }
 
