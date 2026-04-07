@@ -1,10 +1,10 @@
-public readonly struct CharCount(char c, int amount)
+public readonly struct CharCount(char c, ushort amount)
 {
     public readonly char Char = c;
-    public readonly int count = amount;
+    public readonly ushort count = amount;
 }
 
-public readonly struct StringInfo // theres a C# class also called StringInfo but honestly i have no idea what else to name this
+public class StringInfo // theres a C# class also called StringInfo but honestly i have no idea what else to name this
 {
     public readonly CharCount[] frequencyAnalysis;
     public readonly byte uniqueCharacters;
@@ -16,7 +16,7 @@ public readonly struct StringInfo // theres a C# class also called StringInfo bu
         byte usedCount = 0;
         int min = char.MaxValue; int max = char.MinValue;
 
-        int[] analysis = new int[128];
+        ushort[] analysis = new ushort[128];
         char[] used = new char[Math.Min(str.Length, 128)];
 
         // build analysis and get min chars and max chars

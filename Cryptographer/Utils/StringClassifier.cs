@@ -21,7 +21,7 @@ namespace Cryptographer.Utils
         private static readonly char[] CTFSymbols = { ':', '^', '-', '{' };
 
         // SEARCHER STUFF (makes more sense to be here tbh)
-        public static bool IsLooseValid(string output, string last)
+        public static bool IsValid(string output, string last)
         {
             // hasnt changed
             if (last == output)
@@ -30,21 +30,31 @@ namespace Cryptographer.Utils
             if (DecryptionUtils.RemoveWhitespaces(output).Length <= 3)
                 return false;
 
-            return true;
-        }
+            // we have this to avoid building stringinfo which builds analysis too. its not needed here.
+            char minChar = char.MaxValue;
+            char maxChar = char.MinValue;
+            bool singleCharacterString = true;
 
-        public static bool IsValid(StringInfo info)
-        {
-            // a single character
-            if (info.uniqueCharacters < 2)
+            foreach (char c in output)
+            {
+                minChar = (char)Math.Min(minChar, c);
+                maxChar = (char)Math.Max(maxChar, c);
+
+                if (minChar != c || maxChar != c)
+                {
+                    singleCharacterString = false;
+                }
+            }
+
+            if (singleCharacterString)
                 return false;
 
             // anything that's under SPACE, created mostly by running base methods on non-base encrypted inputs
-            if (info.minChar < 32 && info.minChar != 10) // exclude line feed
+            if (minChar < 32 && minChar != 10) // exclude line feed
                 return false;
 
             // currently doesnt support base65536 or base2048 or those typa stuff
-            if (info.maxChar > 127)
+            if (maxChar > 127)
                 return false;
 
             return true;
@@ -174,7 +184,8 @@ namespace Cryptographer.Utils
             bool tri = Config.useTrigrams || symbolRatio >= (double)1/60 * input.Length || input.Length <= 6;
 
             float score = CalculateScoreForDict(modifiedInput, (tri ? 3 : 4), (tri ? Ngrams.trigrams! : Ngrams.quadgrams!));
-            return (score >= Config.scorePrintThreshold ? StringType.PLAINTEXT : StringType.GIBBERISH);
+            return StringType.GIBBERISH;
+            //return (score >= Config.scorePrintThreshold ? StringType.PLAINTEXT : StringType.GIBBERISH);
         }
     }
 }

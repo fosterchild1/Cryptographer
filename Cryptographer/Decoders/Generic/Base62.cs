@@ -11,6 +11,7 @@ namespace Cryptographer.Decoders
 
         private bool FromBase62String(string input, out byte[] output)
         {
+            
             BigInteger buffer = 0;
 
             foreach (char c in input)

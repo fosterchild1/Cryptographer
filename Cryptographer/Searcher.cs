@@ -76,7 +76,7 @@ namespace Cryptographer
                 if (probability < 0.7)
                     failedAll = false;
 
-                queue.Enqueue(new(node, probability, info, method), probability);
+                queue.Enqueue(new(node, probability, DecoderFactory.ToId(method)), probability);
             }
 
             // fallbacks
@@ -86,12 +86,13 @@ namespace Cryptographer
 
         private void ExpandBranch(DecryptionBranch branch)
         {
-            DecryptionNode branchParent = branch.Parent;
-            byte depth = branchParent.Depth;
-            string parentText = branchParent.Text;
-            StringInfo info = branch.info;
+            DecryptionNode branchNode = branch.Parent;
+            byte depth = branchNode.Depth;
+            string parentText = branchNode.Text;
+            StringInfo info = branchNode.info;
 
-            List<string> outputs = branch.Method.Decrypt(parentText, info, key);
+            IDecoder branchMethod = DecoderFactory.FromId(branch.MethodId);
+            List<string> outputs = branchMethod.Decrypt(parentText, info, key);
             totalDecryptions += outputs.Count;
 
             bool printed = false;
@@ -99,10 +100,8 @@ namespace Cryptographer
 
             foreach (string output in outputs)
             {
-                if (!seenInputs.Add(output) || !StringClassifier.IsLooseValid(output, parentText)) continue;
-
-                StringInfo newInfo = new(output);
-                if (!StringClassifier.IsValid(newInfo)) continue;
+                if (!seenInputs.Add(output)) continue;
+                if (!StringClassifier.IsValid(output, parentText)) continue;
 
                 if (Config.debug && !printed)
                 {
@@ -111,27 +110,28 @@ namespace Cryptographer
                 }
 
                 // score it
+                StringInfo newInfo = new(output);
                 CheckPlaintext(output, newInfo, branch);
 
-                DecryptionNode node = new(output, (byte)(depth + 1), branch.Method.Name, branchParent);
+                DecryptionNode node = new(output, (byte)(depth + 1), branchMethod.Name, info, branchNode);
 
                 failedAll = false;
                 ExpandNode(node, newInfo);
             }
 
-            if (!failedAll || branch.Method.IsFallback) return;
-            ExpandNode(branchParent, info, true);
+            if (!failedAll || branchMethod.IsFallback) return;
+            ExpandNode(branchNode, info, true);
         }
 
         public void Search()
         {
             // the input could just be gibberish
-            if (!StringClassifier.IsValid(new(input))) { status = searchStatus.FAILED; return; }
+            if (!StringClassifier.IsValid(input, "")) { status = searchStatus.FAILED; return; }
             status = searchStatus.SEARCHING;
 
             // use a priority queue alongside a CalculateProbability function
             // probabilities > 0.9 don't get checked
-            DecryptionNode root = new(input, 1, "", new DecryptionNode());
+            DecryptionNode root = new(input, 1, "", new(input), new DecryptionNode());
             ExpandNode(root, new(input));
 
             // loop

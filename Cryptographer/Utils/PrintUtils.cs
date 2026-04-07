@@ -1,4 +1,5 @@
 ﻿using Cryptographer;
+using Cryptographer.Classes;
 using Cryptographer.Utils;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -102,7 +103,8 @@ class PrintUtils
             // show cipher used to get to the plaintext by backtracking up the tree
             Console.ForegroundColor = ConsoleColor.Blue;
 
-            List<string> methods = new() { branch.Method.Name };
+            IDecoder branchMethod = DecoderFactory.FromId(branch.MethodId);
+            List<string> methods = new() { branchMethod.Name };
             DecryptionNode node = branch.Parent;
 
             while (node != null && node.Method != "")
@@ -213,8 +215,10 @@ class PrintUtils
         string text = branch.Parent.Text;
         string truncated = text.Length >= 60 ? $"{text.Substring(0, 60)}.. [truncated]" : text;
 
+        IDecoder branchMethod = DecoderFactory.FromId(branch.MethodId);
+
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine($"APPLIED: {C_DARKYELLOW}{branch.Method.Name} {C_YELLOW}| ON: {C_DARKYELLOW}{'"'}{truncated}{'"'} {C_YELLOW}| AT DEPTH: {C_DARKYELLOW}" +
+        Console.WriteLine($"APPLIED: {C_DARKYELLOW}{branchMethod.Name} {C_YELLOW}| ON: {C_DARKYELLOW}{'"'}{truncated}{'"'} {C_YELLOW}| AT DEPTH: {C_DARKYELLOW}" +
             $"{branch.Parent.Depth}");
 
         Console.ResetColor();
