@@ -8,8 +8,8 @@ public static class Ngrams
         TypeInfoResolver = new DefaultJsonTypeInfoResolver()
     };
 
-    private static string json = File.ReadAllText($"{AppContext.BaseDirectory}/resources/trigrams.json");
-    public static string qjson = File.ReadAllText($"{AppContext.BaseDirectory}/resources/quadgrams.json");
+    private static byte[] json = File.ReadAllBytes($"{AppContext.BaseDirectory}/resources/trigrams.json");
+    public static byte[] qjson = File.ReadAllBytes($"{AppContext.BaseDirectory}/resources/quadgrams.json");
 
     public static Dictionary<string, float>? trigrams;
 

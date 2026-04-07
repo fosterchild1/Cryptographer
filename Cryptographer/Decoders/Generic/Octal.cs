@@ -6,16 +6,16 @@ namespace Cryptographer.Decoders
 {
     public class Octal : IDecoder
     {
-        private string ConvertOctal(string oct)
+        private char ConvertOctal(string oct)
         {
             try
             {
                 int val = Convert.ToInt32(oct, 8);
-                return ((char)val).ToString();
+                return (char)val;
             }
             catch
             {
-                return "";
+                return '\0';
             }
         }
 
@@ -24,8 +24,8 @@ namespace Cryptographer.Decoders
             StringBuilder output = new();
             foreach (string s in input.Split(" "))
             {
-                string converted = ConvertOctal(s);
-                if (converted == "") return DecryptionUtils.EmptyResult;
+                char converted = ConvertOctal(s);
+                if (converted == '\0') return DecryptionUtils.EmptyResult;
 
                 output.Append(converted);
             }
@@ -35,7 +35,7 @@ namespace Cryptographer.Decoders
 
         public double CalculateProbability(string input, StringInfo info)
         {
-            if (info.uniqueCharacters > 11) return 1; // it should only have 0-9 and a space.
+            if (info.uniqueCharacters > 8) return 1; // it should only have 0-7 and a space.
 
             // is only numbers
             if (!info.IsExclusive(DecryptionUtils.numberHashset))

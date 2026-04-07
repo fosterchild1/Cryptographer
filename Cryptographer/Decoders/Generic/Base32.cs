@@ -10,7 +10,7 @@ namespace Cryptographer.Decoders
 
         private bool FromBase32String(string input, out byte[] output)
         {
-            input = input.TrimEnd('=').ToUpper();
+            input = input.TrimEnd('=').ToUpperInvariant();
 
             List<byte> result = new();
 
@@ -49,7 +49,7 @@ namespace Cryptographer.Decoders
             if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 33) return 1;
             if (info.minChar < '2' || info.maxChar > 'Z') return 1;
 
-            string cleaned = input.TrimEnd('=').ToUpper();
+            string cleaned = input.TrimEnd('=').ToUpperInvariant();
             return DecryptionUtils.IsContainedString(cleaned, Base32Characters) ? 0 : 1;
         }
 

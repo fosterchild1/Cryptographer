@@ -167,7 +167,7 @@ namespace Cryptographer.Utils
             if (info.uniqueCharacters > 0 && info.uniqueCharacters <= 3)
                 return StringType.GIBBERISH;
 
-            input = input.ToUpper();
+            input = input.ToUpperInvariant();
 
             // check other types of text
             if (IsLink(input))

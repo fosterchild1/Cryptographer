@@ -46,7 +46,7 @@ namespace Cryptographer
             bool indeedPlaintext = PrintUtils.AskOutput(text, branch);
             if (indeedPlaintext)
             {
-                Console.WriteLine($"String type: {type.ToString().ToLower()} | Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
+                Console.WriteLine($"String type: {type.ToString().ToLowerInvariant()} | Took {Math.Round(timer.Elapsed.TotalMilliseconds / 1000, 3)} seconds.");
                 status = searchStatus.SUCCESS;
                 return;
             }
@@ -56,6 +56,7 @@ namespace Cryptographer
 
         private void ExpandNode(DecryptionNode node, StringInfo info, bool fallback = false)
         {
+
             string nodeText = node.Text;
             string lastMethod = node.Method;
             bool failedAll = true;
@@ -91,13 +92,18 @@ namespace Cryptographer
             string parentText = branchNode.Text;
             StringInfo info = branchNode.info;
 
+            // decode
             IDecoder branchMethod = DecoderFactory.FromId(branch.MethodId);
             List<string> outputs = branchMethod.Decrypt(parentText, info, key);
             totalDecryptions += outputs.Count;
 
+            if (depth >= Config.maxDepth)
+                return;
+
             bool printed = false;
             bool failedAll = true;
 
+            // from each new output, validate it and form a new node for it
             foreach (string output in outputs)
             {
                 if (!seenInputs.Add(output)) continue;
@@ -109,7 +115,7 @@ namespace Cryptographer
                     printed = true;
                 }
 
-                // score it
+                // score it and add branches to node
                 StringInfo newInfo = new(output);
                 CheckPlaintext(output, newInfo, branch);
 
@@ -145,8 +151,6 @@ namespace Cryptographer
                 try
                 {
                     DecryptionNode node = branch.Parent;
-                    if (node.Depth > Config.maxDepth) continue;
-
                     ExpandBranch(branch);
                 }
                 catch (AggregateException exception)
