@@ -184,8 +184,7 @@ namespace Cryptographer.Utils
             bool tri = Config.useTrigrams || symbolRatio >= (double)1/60 * input.Length || input.Length <= 6;
 
             float score = CalculateScoreForDict(modifiedInput, (tri ? 3 : 4), (tri ? Ngrams.trigrams! : Ngrams.quadgrams!));
-            return StringType.GIBBERISH;
-            //return (score >= Config.scorePrintThreshold ? StringType.PLAINTEXT : StringType.GIBBERISH);
+            return (score >= Config.scorePrintThreshold ? StringType.PLAINTEXT : StringType.GIBBERISH);
         }
     }
 }

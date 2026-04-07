@@ -76,7 +76,7 @@ namespace Cryptographer
                 if (probability < 0.7)
                     failedAll = false;
 
-                queue.Enqueue(new(node, probability, DecoderFactory.ToId(method)), probability);
+                queue.Enqueue(new(node, DecoderFactory.ToId(method)), probability);
             }
 
             // fallbacks
