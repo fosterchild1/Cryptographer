@@ -31,7 +31,7 @@ namespace Cryptographer.Decoders
             // alphabet of 94 chars
             if (info.uniqueCharacters <= 2 || info.uniqueCharacters > 94) return 1;
 
-            double currentCount = info.Exists(importantChars).Count;
+            double currentCount = info.Exists(importantChars);
             return Math.Pow(0.9, currentCount);
         }
 

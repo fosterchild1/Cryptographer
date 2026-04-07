@@ -52,19 +52,18 @@ public class StringInfo // theres a C# class also called StringInfo but honestly
 
     /// <param name="candidates">The characters you want to search for. O(n).</param>
     /// <returns>A hashset of the candidates seen in the analysis.</returns>
-    public HashSet<char> Exists(HashSet<char> candidates)
+    public int Exists(HashSet<char> candidates)
     {
         if (candidates == null) return new();
 
-        HashSet<char> seen = new();
+        int usedCount = 0;
         foreach (CharCount cc in frequencyAnalysis)
         {
-            char key = cc.Char;
-            if (!candidates.Contains(key)) continue;
-            seen.Add(key);
+            if (!candidates.Contains(cc.Char)) continue;
+            usedCount += 1;
         }
 
-        return seen;
+        return usedCount;
     }
 
 	/// <summary>Exists to replace checking the same thing with Regex.Replace, which is slow.<br/></summary>
