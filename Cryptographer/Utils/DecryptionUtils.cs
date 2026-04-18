@@ -53,5 +53,18 @@
 
             return true;
         }
+
+        public static char FromBase(string nums, int toBase)
+        {
+            try
+            {
+                int val = Convert.ToInt32(nums, toBase);
+                return (char)val;
+            }
+            catch
+            {
+                return '\0';
+            }
+        }
     }
 }

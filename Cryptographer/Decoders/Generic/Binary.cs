@@ -7,6 +7,7 @@ namespace Cryptographer.Decoders
 
     public class Binary : IDecoder
     {
+
         private string DecodeBinary(string input, char zero, char one, char space)
         {
             input = input.Replace(one, '1').Replace(zero, '0').Replace(space.ToString(), "");
@@ -16,18 +17,14 @@ namespace Cryptographer.Decoders
 
             for (int i = 0; i <= length - 8; i += 8)
             {
-                try
-                {
-                    string bin = input.Substring(i, Math.Min(8, length - i));
-                    char c = (char)Convert.ToInt32(bin, 2);
+                string bin = input.Substring(i, Math.Min(8, length - i));
+                char c = DecryptionUtils.FromBase(bin, 2);
 
-                    // outside binary range
-                    if (c > 255 || c < 0)
-                        continue;
+                // outside binary range
+                if (c > 255 || c < 1)
+                    return "";
 
-                    sb.Append(c);
-                }
-                catch { }
+                sb.Append(c);
             }
 
             return sb.ToString();

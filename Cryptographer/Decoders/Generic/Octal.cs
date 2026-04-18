@@ -6,25 +6,13 @@ namespace Cryptographer.Decoders
 {
     public class Octal : IDecoder
     {
-        private char ConvertOctal(string oct)
-        {
-            try
-            {
-                int val = Convert.ToInt32(oct, 8);
-                return (char)val;
-            }
-            catch
-            {
-                return '\0';
-            }
-        }
 
         public List<string> Decrypt(string input, StringInfo info, string _)
         {
             StringBuilder output = new();
             foreach (string s in input.Split(" "))
             {
-                char converted = ConvertOctal(s);
+                char converted = DecryptionUtils.FromBase(s, 8);
                 if (converted == '\0') return DecryptionUtils.EmptyResult;
 
                 output.Append(converted);

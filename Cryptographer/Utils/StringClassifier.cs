@@ -164,7 +164,7 @@ namespace Cryptographer.Utils
 
         public static StringType Classify(string input, StringInfo info)
 		  {
-            if (info.uniqueCharacters > 0 && info.uniqueCharacters <= 3)
+            if (info.uniqueCharacters > 0 && info.uniqueCharacters <= 4)
                 return StringType.GIBBERISH;
 
             input = input.ToUpperInvariant();

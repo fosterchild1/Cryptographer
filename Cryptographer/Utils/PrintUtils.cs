@@ -12,11 +12,19 @@ class PrintUtils
     private const string C_DARKYELLOW = "\x1b[33m";
     private const string C_YELLOW = "\x1b[93m";
     private const string C_GRAY = "\x1b[37m";
-    private static void ClearLine()
+
+    private static void ClearLines(int numLines)
     {
-        Console.SetCursorPosition(0, Console.CursorTop);
-        Console.Write(new string(' ', Console.WindowWidth));
-        Console.SetCursorPosition(0, Console.CursorTop);
+        int currentTop = Console.CursorTop;
+        int startLine = Math.Max(0, currentTop - numLines + 1);
+
+        for (int line = currentTop; line >= startLine; line--)
+        {
+            Console.SetCursorPosition(0, line);
+            Console.Write(new string(' ', Console.WindowWidth));
+        }
+
+        Console.SetCursorPosition(0, startLine);
     }
 
     /// <summary>Console.ReadKey() except it doesn't detect stuff like the Win key</summary>
@@ -82,7 +90,7 @@ class PrintUtils
     private static bool asking = false;
     public static bool AskOutput(string str, DecryptionBranch branch)
     {
-        ClearLine();
+        ClearLines(1);
         asking = true;
 
         Console.Write($"Possible plaintext: {str} ({C_GREEN}y{C_GRAY}/{C_RED}n{C_GRAY})?");
@@ -91,7 +99,8 @@ class PrintUtils
 
         if (key.Key != ConsoleKey.Y)
         {
-            ClearLine();
+            int lineCount = str.Split('\n').Length;
+            ClearLines(lineCount);
 
             asking = false;
             return false;
@@ -148,7 +157,7 @@ class PrintUtils
 
     public static void DisplayWorkText(Searcher searcher)
     {
-        List<char> things = new() { '|', '/', '-', '\\', '|', '/', '-', '\\' };
+        List<char> things = new() { '|', '/', '-', '\\' };
         new Thread(() =>
         {
             int thing = 1;
@@ -163,7 +172,7 @@ class PrintUtils
                 if (asking) continue;
 
                 // write Working...
-                ClearLine();
+                ClearLines(1);
                 Console.Write($"{things[thing]} Working");
                 thing = (thing + 1) % (things.Count);
             }
@@ -173,7 +182,7 @@ class PrintUtils
 
     public static void HandleSearchResult(searchStatus status)
     {
-        ClearLine();
+        ClearLines(1);
 
         if (status == searchStatus.SUCCESS)
         {
