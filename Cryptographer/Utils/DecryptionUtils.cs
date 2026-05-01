@@ -54,11 +54,15 @@
             return true;
         }
 
-        public static char FromBase(string nums, int toBase)
+        /// <summary> Converts a string of numbers to another base. </summary>
+        /// <param name="nums"></param>
+        /// <param name="toBase">base to convert from</param>
+        /// <returns>0 if failed</returns>
+        public static char FromBase(string nums, int fromBase)
         {
             try
             {
-                int val = Convert.ToInt32(nums, toBase);
+                int val = Convert.ToInt32(nums, fromBase);
                 return (char)val;
             }
             catch
