@@ -1,4 +1,8 @@
-﻿namespace Cryptographer.Utils
+﻿/*
+ * Holds default values for the program.
+ * All boolean values must be kept false, so cli arguments have a better user experience. like i care much about that anyway.
+ */
+namespace Cryptographer.Utils
 {
     internal class Config
     {
@@ -18,7 +22,7 @@
         public static bool useTrigrams = false;
 
         /// <summary> Shows the ciphers used to get to the plaintext </summary>
-        public static bool showStackTrace = true;
+        public static bool showStackTrace = false;
 
         /// <summary> Shows decryptions happening in real time </summary>
         public static bool debug = false;
@@ -82,8 +86,8 @@
             foreach (string s in args)
             {
                 string[] split = s.TrimStart('-').Split("=");
-
-                if (split[0] == "help")
+                    
+                if (split[0] == "help" || split[0] == "h")
                     PrintUtils.DisplayHelpText();
 
                 argDict.TryAdd(split[0].ToLower(), split[1]);
@@ -94,6 +98,17 @@
                 SetFromFile(path);
 
             TrySet(argDict); // override config with cli arguments
+        }
+
+        public static void Update(string[] args=default!)
+        {
+            if (args == null || args.Length == 0)
+            {
+                SetFromFile("config.ini");
+                return;
+            }
+
+            SetFromCLI(args);
         }
     }
 }

@@ -10,8 +10,7 @@ class Program
         Console.OutputEncoding = Encoding.UTF8;
         Console.Title = $"Cryptographer {Config.version} | static";
 
-        Config.SetFromFile("config.ini");
-        Config.SetFromCLI(args);
+        Config.Update(args);
 
         Ngrams.Wake();
 
