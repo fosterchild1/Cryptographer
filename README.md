@@ -24,13 +24,13 @@ A program that deciphers encoded strings, even if they have multiple layers of e
 <b>Two stars</b> means that they only work when using the <b>usekey</b> config.
 </details>
 
-# 💡 Features
+# Features
 - <b>30+ supported decoders</b> for ciphers like Binary, Base64, and even Brainfuck.
 - <b>Optional support for keyed ciphers</b> such as Vigenere or Playfair, <b>with fallback variants</b> if no key is provided.
-- <b>Blazingly fast searcher</b>: Cryptographer can usually find the plaintext in <b>less than 40 milliseconds</b> using just a single core. That's less than the blink of an eye.
+- <b>Super fast searcher</b>: Cryptographer can usually find the plaintext in <b>less than 40ms</b> using just a single core.
 - <b>Fast and accurate plaintext detector</b> that uses trigrams and quadgrams to classify strings into CTF flags, links, plaintext and gibberish.
 
-# 💡 CLI Arguments
+# CLI Arguments
 The console offers some extra arguments that the config.ini file doesn't have. Any argument written in the console will override the one in config.ini. These are:
 <br/>
 
@@ -42,7 +42,7 @@ The console offers some extra arguments that the config.ini file doesn't have. A
 <br/>
 Plus the ones in config.ini. (eg. <code>Cryptographer.exe --in=encrypted.txt --maxdepth=1</code>)
 
-# Build instructions (Windows, macOS & Linux)
+# Build instructions
 ### Build prerequisites: .NET SDK 9.0
-1. Get the code: <code>git clone https://github.com/fosterchild1/Cryptographer.git</code> <b>&&</b> <code>cd Cryptographer</code>
-2. Build: <code>dotnet build Cryptographer.sln -c Release</code>
+1. <code>git clone https://github.com/fosterchild1/Cryptographer.git</code> <b>&&</b> <code>cd Cryptographer</code>
+2. <code>dotnet build Cryptographer.sln -c Release</code>
